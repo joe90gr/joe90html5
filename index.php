@@ -8,7 +8,12 @@
 	</head>
 	<body class="fire">
 		<header>
-			Header Container.
+			<div class="button-panel">
+				<button>Button 1</button>
+				<button>Button 2</button>
+				<button>Button 3</button>
+				<button>Button 4</button>
+			</div>
 		</header>
 		<section>
 			<div id="dump">If you see this Jquery is not working v2</div>	
