@@ -1,0 +1,64 @@
+/* START: Reset CSS.
+--------------------------------------------------------------------*/
+	@import "reset";
+/*--------------------------------------------------------------------
+-- STOP : Reset CSS. */
+
+
+@import "sublayout";
+
+
+$header-height: 75px;
+$footer-height: 30px;
+
+
+/*-- START: Page common style structure.
+--------------------------------------------------------------------*/
+.top-level{
+	width: 100%;
+	position: absolute;
+	left:0px;
+}
+
+html{
+	height: 100%;
+	
+	body{
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+		z-index: 0;
+		
+		>header{
+			@extend .top-level;
+			height: $header-height;
+			background: Coral;
+			top:0px;
+			z-index: 3;
+		}
+		>section{
+			@extend .top-level;
+			height: 100%;
+			background: IndianRed;
+			top: $header-height;
+			z-index: 1;
+		}
+		>footer{
+			@extend .top-level;
+			height: $footer-height;
+			background: SaddleBrown;
+			bottom: 0;
+			z-index: 2;
+		}
+	}
+}
+
+/*--------------------------------------------------------------------
+---- STOP : Page common style structure. */
+
+
+
+/*-- START: 
+--------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+---- STOP : */
