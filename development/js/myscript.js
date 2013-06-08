@@ -7,10 +7,10 @@ requirejs.config({
 		"jquery":"libs/jquery",
 		"underscore":"libs/underscore",
 		"backbone":"libs/backbone"
-	},
+	}
 
 });
 
-requirejs(['./mainr'],function(main){
+requirejs(['./main'],function(main){
 
 })
