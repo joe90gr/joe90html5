@@ -8,9 +8,8 @@ requirejs.config({
 		"underscore":"libs/underscore",
 		"backbone":"libs/backbone"
 	}
-
 });
 
 requirejs(['./main'],function(main){
 
-})
+});
