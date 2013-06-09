@@ -70,7 +70,7 @@ html body {
   z-index: 0;
 }
 html body > header {
-  height: 50px;
+  height: 100px;
   background: Coral;
   top: 0px;
   z-index: 3;
@@ -78,7 +78,7 @@ html body > header {
 html body > section {
   height: 100%;
   background: IndianRed;
-  top: 50px;
+  top: 100px;
   z-index: 1;
 }
 html body > footer {

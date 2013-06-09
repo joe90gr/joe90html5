@@ -7,6 +7,8 @@
     "dependencies":{
         "grunt-contrib-copy":"*",
         "grunt-contrib-compress":"*",
+        "grunt-contrib-sass":"*",
+        "grunt-contrib-watch":"*",
 		"grunt-contrib-uglify":"*"
     },
 	"devDependencies": {

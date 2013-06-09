@@ -10,13 +10,26 @@ module.exports = function(grunt) {
                 options:{
                     mode: 'gzip'
                 },
-
-
                 expand: true,
                 cwd: 'production/',
                 src: ['**'],
                 dest: 'zipped'
-
+            }
+        },
+        sass: {
+            options: {
+                style: 'expanded'
+            },
+            dist: {
+                files: {
+                    'development/css/layout.css': 'development/css/sass/layout.scss'
+                }
+            }
+        },
+        watch: {
+            scripts: {
+                files: ['development/**/layout.scss'],
+                tasks: ['sass']
             }
         },
 		uglify: {
@@ -30,6 +43,8 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.registerTask('default', ['compress', 'copy']);
 };
