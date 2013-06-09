@@ -6,6 +6,7 @@ requirejs.config({
 		"modernizr":"libs/modernizr",	
 		"jquery":"libs/jquery",
 		"underscore":"libs/underscore",
+        "chai":"libs/chai",
 		"backbone":"libs/backbone"
 	}
 });
