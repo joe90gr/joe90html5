@@ -7,7 +7,7 @@ requirejs.config({
 		"jquery":"libs/jquery",
 		"underscore":"libs/underscore",
         "chai":"libs/chai",
-		"backbone":"libs/backbone"
+		"Backbone":"libs/backbone"
 	}
 });
 

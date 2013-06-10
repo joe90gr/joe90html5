@@ -1,8 +1,5 @@
-define(function (require) {
-		var mdz = require("modernizr");
-		//var $ = require("jquery");
-		var _ = require("underscore");
-		var bb = require("backbone");
+define(['require', 'modernizr', 'underscore', 'Backbone'], function (require) {
+
 
 // THE MODEL___________________________________________________________
 
@@ -60,7 +57,7 @@ define(function (require) {
 //_______________________________________________________________________		
 		sidebar = new Sidebar({name: 'hermit'});
 		
-		var menus = new Menus([
+		var namelists = new Menus([
 			{name: 'Joey Ruggieri'},
 			{name: 'Sylwia Skorska'}
 		]);
@@ -68,12 +65,12 @@ define(function (require) {
 		home = new Home();
 	
 		sidebar.on('change:color', function(model, color) {
-			console.log('on',model);
+			console.log('on color',model);
 			$('#sidebar').css({background: color});
 		});
 		
 		sidebar.on('change:size', function(model, size) {
-			console.log('on',model);
+			console.log('on size',model);
 			$('#sidebar').css({'font-size': size});
 		});
 
@@ -91,12 +88,10 @@ define(function (require) {
 		
 		setTimeout(function(){
 			sidebar.trigger('change:color','green','green');
-		},1000);
+            console.log('added the green color delay');
+		},5000);
 		
 		sidebar.init();
 		sidebar.promptColor();
-		
-		
-		
-		$('#dump').html('it works v2');	
+
 });

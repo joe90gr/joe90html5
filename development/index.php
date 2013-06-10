@@ -16,7 +16,6 @@
 			</div>
 		</header>
 		<section>
-			<div id="dump">If you see this Jquery is not working v2</div>	
 			<div id="sidebar">yy</div>		
 		</section>
 		<footer>
