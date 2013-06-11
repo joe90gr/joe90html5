@@ -1,97 +1,102 @@
-define(['require', 'modernizr', 'underscore', 'Backbone'], function (require) {
+define([ 'modernizr' , 'backbone'], function (mod, Backbone) {
 
 
 // THE MODEL___________________________________________________________
-
-		var Sidebar = Backbone.Model.extend({
-			url: '/user',
-			
-			defaults: {
-				name: 'default name j'
-			},
-			
-			init: function() {
-				//ceated this function because i need initialise to execute once
-				this.addEventListeners()
-			},
-			
-			initialize: function(data,d1){
-				console.log('model initialize',data,d1);
-			},
-		
-			promptColor: function() {
-				var cssColor = prompt("Please enter a CSS color:");
-				this.set({color: cssColor});
-			},
-			
-			addEventListeners: function() {
-				console.log('ADDING EVENT LISTENERS');
-				this.on('change:name',function(model){
-					console.log('name has been changed',' the model :',model);
-				});
-			}
-			
-		});
+    var Tweet = Backbone.Model.extend({
+        defaults: function(){
+            return{
+                author: '',
+                status: ''
+            }
+        }
+    });
 //______________________________________________________________________
 
 // THE COLLECTION_______________________________________________________		
-		var Menus = Backbone.Collection.extend({
-			model: Sidebar,
-			url: '#'
-		});
+    var TweetList = Backbone.Collection.extend({
+        model: Tweet
+    });
+    var tweetsCollection = new TweetList();
 //______________________________________________________________________
 
-// THE VIEW_____________________________________________________________		
-		var Home = Backbone.View.extend({
-			el: '#sidebar',
-			initialize: function(){
-				console.log('INITIALIZE VIEW');
-				this.render();
-			},
-			render: function(){
-				this.$el.append('<h1>this is a test</h1>');
-				console.log('render',this.el);
-				return this;
-			}
-		});		
-//_______________________________________________________________________		
-		sidebar = new Sidebar({name: 'hermit'});
-		
-		var namelists = new Menus([
-			{name: 'Joey Ruggieri'},
-			{name: 'Sylwia Skorska'}
-		]);
-		
-		home = new Home();
-	
-		sidebar.on('change:color', function(model, color) {
-			console.log('on color',model);
-			$('#sidebar').css({background: color});
-		});
-		
-		sidebar.on('change:size', function(model, size) {
-			console.log('on size',model);
-			$('#sidebar').css({'font-size': size});
-		});
+// THE VIEWS_____________________________________________________________
+    var TweetView = Backbone.View.extend({
+        model: new Tweet(),
+        tagName: 'div',
+        events:{
+            'click .edit': 'edit',
+            'click .delete': 'delete',
+            'blur .status': 'close',
+            'keypress .status': 'onEnterUpdate'
+        },
+        initialize: function(){
+            this.template = _.template($('#tweet-template').html());
+        },
+        edit: function(e){
+            e.preventDefault();
+            this.$('.status').attr('contenteditable', true).focus();
+            console.log('testing edit', this.model.get('author'));
+        },
+        close: function(){
+            var status = this.$('.status').text();
+            this.model.set('status', status);
+            this.$('.status').removeAttr('contenteditable');
+        },
+        onEnterUpdate: function(e){
+          var self = this;
+          if(e.keyCode === 13){
+              _.delay(function(){
+                  self.$('.status').blur();
+              },100);
+          }
 
-		//sidebar.set({color: 'red'});
-		sidebar.listenTo(sidebar,'change:color',function(){
-			console.log('listening',this);
-		});
+        },
+        delete: function(e){
+            e.preventDefault();
+            tweetsCollection.remove(this.model);
+            console.log('testing delete');
+        },
+        render: function(){
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
 
-		sidebar.trigger('change:color','orange','orange');
-		
-		//sidebar.off('change:color');
-		sidebar.trigger('change:size','size','30px');
-		
+    var TweetsView = Backbone.View.extend({
+        model: tweetsCollection,
+        el: $('#tweets-container'),
+        initialize: function(){
+            this.model.on('add', this.render, this);
+            this.model.on('remove', this.render, this);
+        },
+        render: function(){
+            var self = this;
+            self.$el.html('');
+            _.each(this.model.toArray(), function(tweet, i){
+                self.$el.append((new TweetView({model: tweet})).render().$el );
+            })
+            return this;
+        }
+    });
+    var appview = new TweetsView();
+//_______________________________________________________________________
 
-		
-		setTimeout(function(){
-			sidebar.trigger('change:color','green','green');
-            console.log('added the green color delay');
-		},5000);
-		
-		sidebar.init();
-		sidebar.promptColor();
+
+//    var tweet1 = new Tweet({author:'joe', status: 'developer'});
+//    var tweet2 = new Tweet({author:'sylwia', status: 'teacher'});
+//    var tweet3 = new Tweet({author:'joe90', status: 'agent'});
+//    var tweets = new TweetList([tweet1,tweet2,tweet3]);
+
+
+    $('#new-tweet').submit(function(e){
+        var tweet = new Tweet({
+            author:$('#author-name').val(),
+            status: $('#status-update').val()
+        });
+        tweetsCollection.add(tweet);
+        console.log(tweetsCollection.toJSON());
+        return false;
+    });
+
 
 });

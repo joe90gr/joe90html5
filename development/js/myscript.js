@@ -3,14 +3,21 @@ requirejs.config({
 	"waitSeconds": 7,
 	"useSourceUrl":false,
 	"paths":{
-		"modernizr":"libs/modernizr",	
-		"jquery":"libs/jquery",
-		"underscore":"libs/underscore",
+		"modernizr":"libs/modernizr",
         "chai":"libs/chai",
-		"Backbone":"libs/backbone"
-	}
+        "backbone":"libs/backbone"
+	},
+    shim: {
+        'backbone':{
+            deps: ['libs/underscore', 'libs/jquery'],
+            exports: 'Backbone'
+        },
+        'underscore': {
+            exports: '_'
+        }
+    }
 });
 
-requirejs(['./main'],function(main){
+require(['main'],function(main){
 
 });
