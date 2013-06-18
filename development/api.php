@@ -32,14 +32,13 @@ function get_app_list()
   //normally this info would be pulled from a database.
   //build JSON array
   //$app_list = array(array("author" => "test 1", "status" => "Web Demo"), array("author" => "test 2", "status" => "Audio Countdown"), array("author" => "test 3", "status" => "The Tab Key"), array("author" => "test 4", "status" => "Music Sleep Timer"));
-      $hd = mysql_connect("local-html5.com:3306", "root", "") or die ("Unable to connect");
-      mysql_select_db ("rest", $hd) or die ("Unable to select database");
-      $res = mysql_query("SELECT * FROM tweets", $hd) or die ("Unable to run query");
+      $hd = new mysqli("local-html5.com:3306", "root", "", "rest");
+      $res = $hd->query("SELECT * FROM tweets") or die ("Unable to run query");
 
 
     $app_info = array();
-      while($val = mysql_fetch_row($res)){
-          $array[] = array( mysql_field_name($res,1) => $val[1], mysql_field_name($res,2) => $val[2] );
+      while($val = $res->fetch_row()){
+          $array[] = array( $res->fetch_field_direct(1)->name  => $val[1], $res->fetch_field_direct(2)->name => $val[2] );
       }
       $app_list = $array;
   return $app_list;
