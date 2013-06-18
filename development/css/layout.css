@@ -371,6 +371,10 @@ table {
 
 /*--------------------------------------------------------------------
 -- STOP : Reset CSS. */
+/* START: Mixins.
+--------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+-- STOP : Mixins. */
 /*-- START: Page common style structure.
 --------------------------------------------------------------------*/
 .top-level, html body > header, html body > section, html body > footer {
@@ -411,9 +415,73 @@ body > header .button-panel {
   width: 580px;
   margin: 20px auto;
 }
+body > header .button-panel .error {
+  display: none;
+  color: #f00;
+}
 
 /*--------------------------------------------------------------------
 ---- STOP : Page common style structure. */
+/*-- START:  Modal Popup Styling
+--------------------------------------------------------------------*/
+/* Start  */
+.overlay-positioning, .modal-overlay, .modal-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.modal-overlay {
+  background: #000;
+  opacity: 0.7;
+  z-index: 10;
+  display: none;
+}
+
+.modal-container {
+  display: none;
+  position: relative;
+  z-index: 11;
+}
+.modal-container .box {
+  -moz-box-shadow:  0 0 30px black;
+  -webkit-box-shadow:  0 0 30px black;
+  box-shadow:  0 0 30px black;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 5px;
+  background: #fff;
+  min-width: 20%;
+  max-width: 70%;
+}
+.modal-container .box .title {
+  position: relative;
+  height: 26px;
+  background: blue;
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  vertical-align: middle;
+}
+.modal-container .box .title button {
+  color: inherit;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.modal-container .box .content {
+  padding: 10px;
+}
+
+/*--------------------------------------------------------------------
+---- STOP : Modal Popup Styling */
 /*-- START: 
 --------------------------------------------------------------------*/
 /*--------------------------------------------------------------------

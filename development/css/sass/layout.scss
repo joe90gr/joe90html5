@@ -12,8 +12,21 @@ $header-height: 100px;
 $footer-height: 30px;
 
 
+/* START: Mixins.
+--------------------------------------------------------------------*/
+  @mixin drop-shadow($type, $x-offset, $y-offset, $spread, $base-color ) {
+    -moz-box-shadow: unquote($type) $x-offset $y-offset $spread $base-color;
+    -webkit-box-shadow :unquote($type) $x-offset $y-offset $spread $base-color;
+    box-shadow: unquote($type) $x-offset $y-offset $spread $base-color;
+  }
+/*--------------------------------------------------------------------
+-- STOP : Mixins. */
+
+
 /*-- START: Page common style structure.
 --------------------------------------------------------------------*/
+
+
 .top-level{
 	width: 100%;
 	position: absolute;
@@ -56,11 +69,81 @@ body > header{
 	.button-panel{
 		width:580px;
 		margin: 20px auto;
+      .error{
+        display:none;
+        color: #f00;
+      }
 	}
 }
-
 /*--------------------------------------------------------------------
 ---- STOP : Page common style structure. */
+
+
+/*-- START:  Modal Popup Styling
+--------------------------------------------------------------------*/
+   /* Start  */
+  .overlay-positioning{
+    width :100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+  }
+
+.modal-overlay{
+  @extend .overlay-positioning;
+    background: #000;
+    opacity:0.7;;
+    z-index: 10;
+    display: none;
+  }
+
+.modal-container{
+  @extend .overlay-positioning;
+  display: none;
+  position:relative;
+  z-index: 11;
+
+  .box{
+    @include drop-shadow("",0,0,30px,#000);
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    overflow:hidden;
+    display:inline-block;
+    border-radius: 5px;
+    background: #fff;
+    min-width: 20%;
+    max-width: 70%;
+
+    .title {
+      position: relative;
+      height: 26px;
+      background:blue;
+      text-align: center;
+      color: #fff;
+      width:100%;
+      vertical-align: middle;
+
+      button {
+        color: inherit;
+        background: none;
+        border: none;
+        position: absolute;
+        top: 0;
+        right: 0 ;
+      }
+    }
+    .content{
+      padding: 10px;
+    }
+  }
+}
+/*--------------------------------------------------------------------
+---- STOP : Modal Popup Styling */
+
+
+
 
 
 
