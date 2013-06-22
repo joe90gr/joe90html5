@@ -2,7 +2,8 @@ module.exports = function(grunt) {
 	grunt.initConfig({
         copy: {
             main: {
-                files: [{expand: true, cwd: 'development/', src: ['**'], dest: 'production/'}]
+                files: [{expand: true, cwd: 'development/',
+                    src: ['**'], dest: 'production/'}]
             }
         },
         compress:{
@@ -18,7 +19,7 @@ module.exports = function(grunt) {
         },
         sass: {
             options: {
-                style: 'expanded'
+                style: '{{expanded}}'
             },
             dist: {
                 files: {
@@ -38,8 +39,19 @@ module.exports = function(grunt) {
 					'js/output.min.js': ['development/js/myJs.js']
 				}
 			}
-		}
+		},
+        'sasso': {
+            dev : {},
+            dist : {}
+        }
 	});
+
+
+    grunt.registerMultiTask('sasso','blah', function(){
+        var sassjson = JSON.parse(JSON.stringify(grunt.config().sass).replace( /{{expanded}}/g, 'expanded' ));
+        grunt.config('sass',sassjson);
+        grunt.task.run('sass');
+    });
 
     grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-compress');

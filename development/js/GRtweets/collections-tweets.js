@@ -1,5 +1,5 @@
 define(['backbone',
-    '../GRtweets/model-tweets'],
+    'GRtweets/model-tweets'],
     function (Backbone,
               Tweet) {
 
@@ -7,7 +7,7 @@ define(['backbone',
         model: Tweet,
         url:'http://local-html5.com/api.php?action=get_app_list'
     });
-    tweetsCollection = new TweetList();
+    var tweetsCollection = new TweetList();
     tweetsCollection.fetch();
     return tweetsCollection;
 });

@@ -5,7 +5,8 @@ requirejs.config({
 	"paths":{
 		"modernizr":"libs/modernizr",
         "chai":"libs/chai",
-        "backbone":"libs/backbone"
+        "backbone":"libs/backbone",
+        "text": "libs/text"
 	},
     shim: {
         'backbone':{

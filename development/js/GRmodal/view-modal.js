@@ -1,9 +1,12 @@
 define(['backbone',
-        'GRmodal/model-modal'
+        'GRmodal/model-modal',
+        'GRmodal/collections-modal'
 ], function (Backbone,
-             ModalModel) {
+             ModalModel,
+             modalCollection) {
 
 
+     console.log(modalCollection);
     var ModalOpenView = Backbone.View.extend({
         el: $('.open-modal'),
         events: {
@@ -16,17 +19,12 @@ define(['backbone',
             this.$el.text('test modal');
         },
         open: function(){
-            modalview.open();
-            console.log('test open');
+            modalview.trigger('click:open')
         }
     });
 
     var ModalView = Backbone.View.extend({
-        model: new ModalModel({
-            title: 'This is a text title',
-            text: 'this is the content'
-        }),
-
+        collection : modalCollection,
         el: $('.modal-container'),
 
         events: {
@@ -37,15 +35,20 @@ define(['backbone',
 
         initialize: function(){
             var buttonview = new ModalOpenView();
-            this.listenTo(this.model, "change", this.render);
+            this.on('click:open',this.open,this);
+            this.listenTo(this.collection, "add", this.render);
+            this.collection.add(new ModalModel({
+                'title':'This is a text title',
+                'text':'this is the content'
+            }));
             this.render();
         },
 
         render: function(){
             var modalTitle = this.$el.find('.title span');
             var modalText = this.$el.find('.content');
-            modalTitle.html(this.model.get('title'));
-            modalText.html(this.model.get('text'));
+            modalTitle.html(this.collection.models[0].attributes.title);
+            modalText.html(this.collection.models[0].attributes.text);
             return this;
         },
 
@@ -81,7 +84,7 @@ define(['backbone',
         }
     });
 
-   // var modalview = new ModalView();
+    var modalview = new ModalView();
 
     return ModalView;
 });

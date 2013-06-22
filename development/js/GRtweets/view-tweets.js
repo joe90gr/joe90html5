@@ -1,7 +1,9 @@
 define(['backbone',
-    '../GRtweets/model-tweets',
-    '../GRtweets/collections-tweets'],
+    'text!GRtweets/template.template',
+    'GRtweets/model-tweets',
+    'GRtweets/collections-tweets'],
     function (Backbone,
+              template,
               Tweet,
               tweetsCollection) {
 
@@ -15,7 +17,7 @@ define(['backbone',
             'keypress .status': 'onEnterUpdate'
         },
         initialize: function(){
-            this.template = _.template($('#tweet-template').html());
+            this.template = _.template(template);
         },
         edit: function(e){
             e.preventDefault();

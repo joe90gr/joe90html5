@@ -7,6 +7,7 @@ var deps = [
     'GRmodal/model-modal',
     'GRmodal/collections-modal',
     'GRmodal/view-modal',
+    'GRform/model-form',
     'GRform/view-form'
 ];
 
@@ -18,10 +19,11 @@ define(deps, function (mod,
                        ModalModel,
                        ModalCollection,
                        ModalView,
+                       FormModel,
                        FormView
                        ) {
     var formview = new FormView();
-    modalview = new ModalView()
+    //modalview = new ModalView()
     var tweetii = new TweetsView();
 ;
 

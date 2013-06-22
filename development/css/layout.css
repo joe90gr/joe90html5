@@ -456,7 +456,7 @@ body > header .button-panel .error {
   display: inline-block;
   border-radius: 5px;
   background: #fff;
-  min-width: 20%;
+  min-width: 300px;
   max-width: 70%;
 }
 .modal-container .box .title {

@@ -1,0 +1,8 @@
+<form id="new-tweet" action="#" method="post">
+    <label>Author</label><input id="author-name" name="author-name" type="text" value=<%= authorFieldName %> />
+    <label>Status</label><input id="status-update" name="status-update" type="text" value=<%= statusFieldName %>/>
+    <button>post message</button>
+    <div class="error"></div>
+</form>
+
+

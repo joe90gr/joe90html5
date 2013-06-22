@@ -7,5 +7,5 @@ define(['backbone',
             model: ModalModel
         });
 
-        return ModalCollection;
+        return new ModalCollection();
     });

@@ -7,14 +7,7 @@
 	</head>
 	<body>
 		<header>
-			<div class="button-panel">
-                <form id="new-tweet" action="#" method="post">
-                    <label>Author</label><input id="author-name" name="author-name" type="text" />
-                    <label>Status</label><input id="status-update" name="status-update" type="text" />
-                    <button>post message</button>
-                    <div class="error"></div>
-                </form>
-			</div>
+			<div class="button-panel"></div>
 		</header>
 		<section>
 		    <h1>Backbone Twitter example</h1>
@@ -22,13 +15,6 @@
 		    <hr />
 		    <ul id="tweets-container"></ul>
 		    <br />
-		    <!-- Templates -->
-            <script type="text/template" id="tweet-template" >
-                <span class="author" >Author: <%= author%></span>
-                <span class="status" ><%= status%></span>
-                <a href="#" class="edit">[Edit]</a>
-                <a href="#" class="delete">[Delete]</a>
-            </script>
 		</section>
 		<footer>
 			Footer Container.
@@ -40,8 +26,7 @@
                     <span>Title</span>
                     <button class="close">X</button>
                 </div>
-                <div class="content">
-                </div>
+                <div class="content"></div>
             <div>
 		</div>
 	</body>
