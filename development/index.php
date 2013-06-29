@@ -18,6 +18,8 @@
 		</section>
 		<footer>
 			Footer Container.
+			<a href="/#about">Link to about</a>
+			<a href="/#myid/5">Link to about</a>
 		</footer>
 		<div class="modal-overlay"></div>
 		<div class="modal-container">

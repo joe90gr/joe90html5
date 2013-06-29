@@ -1,6 +1,6 @@
 define(['backbone',
-        'GRmodal/model-modal',
-        'GRmodal/collections-modal'
+        'components/modal/modal-model',
+        'components/modal/modal-collections'
 ], function (Backbone,
              ModalModel,
              modalCollection) {

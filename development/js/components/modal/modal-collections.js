@@ -1,5 +1,5 @@
 define(['backbone',
-    'GRmodal/model-modal'],
+    'components/modal/modal-model'],
     function (Backbone,
               ModalModel ) {
 

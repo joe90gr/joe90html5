@@ -1,5 +1,5 @@
 define(['backbone',
-    'GRtweets/model-tweets'],
+    'components/tweets/tweets-model'],
     function (Backbone,
               Tweet) {
 
