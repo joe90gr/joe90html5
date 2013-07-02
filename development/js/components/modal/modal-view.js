@@ -36,29 +36,29 @@ define(['backbone',
         initialize: function(){
             var buttonview = new ModalOpenView();
             this.on('click:open',this.open,this);
-            this.listenTo(this.collection, "add", this.render);
-            this.collection.add(new ModalModel({
+            //this.listenTo(this.collection, "add", this.render);
+            var modalTitle = {
                 'title':'This is a text title',
                 'text':'this is the content'
-            }));
-            this.render();
+            }
+            this.render(modalTitle);
         },
 
-        render: function(){
+        render: function(modalContent){
             var modalTitle = this.$el.find('.title span');
             var modalText = this.$el.find('.content');
-            modalTitle.html(this.collection.models[0].attributes.title);
-            modalText.html(this.collection.models[0].attributes.text);
+            modalTitle.html(modalContent.title);
+            modalText.html(modalContent.text);
             return this;
         },
 
-        open: function(){
+        open: function(title, content){
             var self = this;
-            var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50) ;
-            $(window).on('resize', refresh);
+            var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
 
-            $('.modal-overlay').show();
-            $('.modal-container').show();
+            $(window).on('resize', refresh);
+            this.render({title: title, text: content});
+            $('.modal-overlay, .modal-container').show();
             self.calcBoxPosition(window);
         },
 
@@ -84,7 +84,7 @@ define(['backbone',
         }
     });
 
-    var modalview = new ModalView();
+    modalview = new ModalView();
 
     return ModalView;
 });

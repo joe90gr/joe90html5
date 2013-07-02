@@ -12,11 +12,12 @@ define(['backbone',
     var FormView = Backbone.View.extend({
         model: new ModelForm(),
         el: $('.button-panel'),
+        template: template,
         events: {
             'submit #new-tweet': 'submit'
         },
         initialize: function(){
-            this.template = _.template(template);
+            this.template = _.template(this.template);
             this.render();
         },
         render: function(){
