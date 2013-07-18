@@ -1,12 +1,5 @@
-define(['backbone',
-        'components/modal/modal-model',
-        'components/modal/modal-collections'
-], function (Backbone,
-             ModalModel,
-             modalCollection) {
+define(['backbone'], function (Backbone) {
 
-
-     console.log(modalCollection);
     var ModalOpenView = Backbone.View.extend({
         el: $('.open-modal'),
         events: {
@@ -19,12 +12,15 @@ define(['backbone',
             this.$el.text('test modal');
         },
         open: function(){
-            modalview.trigger('click:open')
+            var modalTitle = {
+                title:'This is a text title',
+                html:'this is the content'
+            };
+            appConsole.modalview.trigger('click:open',modalTitle)
         }
     });
 
     var ModalView = Backbone.View.extend({
-        collection : modalCollection,
         el: $('.modal-container'),
 
         events: {
@@ -35,36 +31,37 @@ define(['backbone',
 
         initialize: function(){
             var buttonview = new ModalOpenView();
+            this.bindEventListeners();
+            //this.listenTo(this.collection, "add", this.render);;
+        },
+
+        bindEventListeners: function(){
             this.on('click:open',this.open,this);
-            //this.listenTo(this.collection, "add", this.render);
-            var modalTitle = {
-                'title':'This is a text title',
-                'text':'this is the content'
-            }
-            this.render(modalTitle);
+            this.on('click:close',this.close,this);
         },
 
         render: function(modalContent){
             var modalTitle = this.$el.find('.title span');
-            var modalText = this.$el.find('.content');
+            var modalHTML = this.$el.find('.content');
             modalTitle.html(modalContent.title);
-            modalText.html(modalContent.text);
+            modalHTML.html(modalContent.html);
             return this;
         },
 
-        open: function(title, content){
+        open: function(content){
+            console.log('test',content);
             var self = this;
             var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
 
             $(window).on('resize', refresh);
-            this.render({title: title, text: content});
-            $('.modal-overlay, .modal-container').show();
+            this.render(content);
+            $('.modal-overlay, .modal-container').fadeIn('fast');
             self.calcBoxPosition(window);
         },
 
         close: function(){
-            this.$el.hide();
-            this.$el.parent().children('.modal-overlay').hide();
+            this.$el.fadeOut('fast');
+            this.$el.parent().children('.modal-overlay').fadeOut('fast');
             $(window).unbind('resize');
         },
 
@@ -84,7 +81,6 @@ define(['backbone',
         }
     });
 
-    modalview = new ModalView();
-
+    appConsole.modalview = new ModalView();
     return ModalView;
 });

@@ -20,5 +20,7 @@ requirejs.config({
 });
 
 require(['myapp'],function(myapp){
-
+    console.log(myapp);
+    var Console = new myapp;
+    //Console.modalRepeatedRunTest();
 });

@@ -1,16 +1,13 @@
 define(['backbone',
         'text!components/form/form.template',
         'components/tweets/tweets-model' ,
-        'components/tweets/tweets-collections',
-        'components/form/form-model'],
+        'components/tweets/tweets-collections'],
     function (Backbone,
               template,
               Tweet,
-              tweetsCollection,
-              ModelForm) {
+              tweetsCollection) {
 
     var FormView = Backbone.View.extend({
-        model: new ModelForm(),
         el: $('.button-panel'),
         template: template,
         events: {
@@ -21,7 +18,7 @@ define(['backbone',
             this.render();
         },
         render: function(){
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template);
         },
         submit: function(){
             var authorName = this.$el.find('#author-name').val();
@@ -35,7 +32,13 @@ define(['backbone',
                 tweetsCollection.add(tweet);
             }
             else{
-                this.$el.find('.error').html(this.model.get('errorMsg')).show();
+                var content = {title:'error',html:
+                    '<p>You must enter something into the fields</p>' +
+                    '<button onclick="appConsole.modalview.trigger(\'click:close\')">Close</button>' +
+                    '' +
+                    ''};
+                this.$el.find('.error').html('at least enter something').show();
+                appConsole.modalview.trigger('click:open', content)
             }
 
             return false
