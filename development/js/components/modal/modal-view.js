@@ -1,5 +1,5 @@
 define(['backbone'], function (Backbone) {
-
+    //todo: we may not need this view as its a test button for modal
     var ModalOpenView = Backbone.View.extend({
         el: $('.open-modal'),
         events: {

@@ -9,16 +9,16 @@ define(['backbone',
 
     var FormView = Backbone.View.extend({
         el: $('.button-panel'),
-        template: template,
+        template: _.template(template),
         events: {
             'submit #new-tweet': 'submit'
         },
         initialize: function(){
-            this.template = _.template(this.template);
             this.render();
         },
         render: function(){
             this.$el.html(this.template);
+            return this;
         },
         submit: function(){
             var authorName = this.$el.find('#author-name').val();
@@ -30,6 +30,15 @@ define(['backbone',
                     status: statusUpdate
                 });
                 tweetsCollection.add(tweet);
+
+                tweet.save({},{
+                    success: function(){
+                        console.log('saved success');
+                    },
+                    error: function(){
+                        console.log('an error in our save');
+                    }
+                });
             }
             else{
                 var content = {title:'error',html:

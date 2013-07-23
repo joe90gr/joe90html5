@@ -10,6 +10,7 @@ define(['backbone',
     var TweetView = Backbone.View.extend({
         model: new Tweet(),
         tagName: 'li',
+        template: _.template(template),
         events:{
             'click .edit': 'edit',
             'click .delete': 'delete',
@@ -17,7 +18,7 @@ define(['backbone',
             'keypress .status': 'onEnterUpdate'
         },
         initialize: function(){
-            this.template = _.template(template);
+
         },
         edit: function(e){
             e.preventDefault();
