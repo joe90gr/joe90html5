@@ -1,19 +1,16 @@
 {
     "name":"HTML5-app",
-    "preferGlobal":"true",
     "title":"HTML5",
     "version":"1.0.0",
-    "description":"A list of dependencies to install",
-    "dependencies":{
+    "description":"Experimental HTML5 App",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-requirejs":"~0.4.0",
+        "grunt-csso":"~0.4.0",
         "grunt-contrib-copy":"*",
-        "grunt-contrib-compress":"*",
         "grunt-contrib-sass":"*",
         "grunt-contrib-watch":"*",
-		"grunt-contrib-uglify":"*"
-    },
-	"devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2"
-  }
+        "grunt-contrib-jshint": "~0.1.1",
+        "grunt-contrib-nodeunit": "~0.1.2"
+    }
 }

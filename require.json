@@ -1,0 +1,8 @@
+{
+    "appDir":"development",
+    "baseUrl":"./",
+    "dir":"production",
+    "optimize":"uglify2",
+    "optimizeCss":"none",
+    "preserveLicenseComments":false
+}

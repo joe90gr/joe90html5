@@ -1,22 +1,31 @@
 module.exports = function(grunt) {
-	grunt.initConfig({
+    grunt.initConfig({
+
         copy: {
             main: {
                 files: [{expand: true, cwd: 'development/',
                     src: ['**'], dest: 'production/'}]
             }
         },
-        compress:{
-            main:{
-                options:{
-                    mode: 'gzip'
-                },
-                expand: true,
-                cwd: 'production/',
-                src: ['**'],
-                dest: 'zipped'
+
+        requirejs: {
+            compile:{
+                options:require('./require.json')
             }
         },
+
+        csso:{
+            main:{
+                options:{
+                    restructure:true
+                },
+                baseUrl:"production/",
+                files:[
+                    {src:'production/css/layout.css', dest:'production/css/layout.css'}
+                ]
+            }
+        },
+
         sass: {
             options: {
                 style: '{{expanded}}'
@@ -24,27 +33,25 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     'development/css/layout.css': 'development/css/sass/layout.scss'
+                },
+                files: {
+                    'production/css/layout.css': 'production/css/sass/layout.scss'
                 }
             }
         },
+
         watch: {
             scripts: {
                 files: ['development/**/layout.scss'],
                 tasks: ['sass']
             }
         },
-		uglify: {
-			my_target: {
-				files: {
-					'js/output.min.js': ['development/js/myJs.js']
-				}
-			}
-		},
+
         'sasso': {
             dev : {},
             dist : {}
         }
-	});
+    });
 
 
     grunt.registerMultiTask('sasso','blah', function(){
@@ -53,11 +60,12 @@ module.exports = function(grunt) {
         grunt.task.run('sass');
     });
 
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-csso');
     grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask('default', ['copy']);
+
+    grunt.registerTask('default', ['requirejs', 'sass', 'csso']);
 };
 
