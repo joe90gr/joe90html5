@@ -4,13 +4,9 @@
 /*--------------------------------------------------------------------
 -- STOP : Reset CSS. */
 
-
 @import "sublayout";
-
-
 $header-height: 100px;
 $footer-height: 30px;
-
 
 /* START: Mixins.
 --------------------------------------------------------------------*/
@@ -25,8 +21,6 @@ $footer-height: 30px;
 
 /*-- START: Page common style structure.
 --------------------------------------------------------------------*/
-
-
 .top-level{
 	width: 100%;
 	position: absolute;

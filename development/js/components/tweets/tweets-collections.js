@@ -5,9 +5,16 @@ define(['backbone',
 
     var TweetList = Backbone.Collection.extend({
         model: Tweet,
-        url:'http://local-html5.com/api.php/rest'
+        url:'/api.php/rest'
     });
     var tweetsCollection = new TweetList();
-    tweetsCollection.fetch();
+        tweetsCollection.fetch({
+        success:function(){
+            console.log('fetch was a success');
+        },
+        fail: function(){
+            console.log('fetch has failed');
+        }
+    });
     return tweetsCollection;
 });

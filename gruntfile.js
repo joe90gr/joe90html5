@@ -33,9 +33,6 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     'development/css/layout.css': 'development/css/sass/layout.scss'
-                },
-                files: {
-                    'production/css/layout.css': 'production/css/sass/layout.scss'
                 }
             }
         },
@@ -66,6 +63,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['requirejs', 'sass', 'csso']);
+    grunt.registerTask('default', ['sass','requirejs', 'csso']);
 };
 

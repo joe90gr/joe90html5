@@ -34,6 +34,7 @@ define(['backbone',
                 tweet.save({},{
                     success: function(){
                         console.log('saved success');
+                        tweetsCollection.fetch();
                     },
                     error: function(){
                         console.log('an error in our save');

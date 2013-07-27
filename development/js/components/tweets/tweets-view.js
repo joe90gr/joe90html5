@@ -18,7 +18,6 @@ define(['backbone',
             'keypress .status': 'onEnterUpdate'
         },
         initialize: function(){
-
         },
         edit: function(e){
             e.preventDefault();
@@ -28,6 +27,8 @@ define(['backbone',
             var status = this.$('.status').text();
             this.model.set('status', status);
             this.$('.status').removeAttr('contenteditable');
+            console.log('is this new before',this.model.isNew());
+            this.model.save();
         },
         onEnterUpdate: function(e){
             var self = this;
@@ -39,6 +40,15 @@ define(['backbone',
         },
         delete: function(e){
             e.preventDefault();
+            console.log(this.model.isNew());
+            this.model.destroy({
+                success: function(){
+                    console.log('DESTROYED' );
+                },
+                error: function(){
+                    console.log('Destroy failed');
+                }
+            });
             tweetsCollection.remove(this.model);
         },
         render: function(){
