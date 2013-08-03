@@ -1,4 +1,7 @@
-define(['backbone'], function (Backbone) {
+define(['backbone',
+        'text!components/modal/modal.template'],
+        function (Backbone,
+            modaltemplate ) {
     //todo: we may not need this view as its a test button for modal
     var ModalOpenView = Backbone.View.extend({
         el: $('.open-modal'),
@@ -49,7 +52,6 @@ define(['backbone'], function (Backbone) {
         },
 
         open: function(content){
-            console.log('test',content);
             var self = this;
             var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
 

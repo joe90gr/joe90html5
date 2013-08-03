@@ -1,0 +1,2 @@
+<p>You must enter something into the fields</p>
+<button onclick="appConsole.modalview.trigger('click:close')">Close</button>

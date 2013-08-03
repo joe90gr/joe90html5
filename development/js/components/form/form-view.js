@@ -29,15 +29,12 @@ define(['backbone',
                     author: authorName,
                     status: statusUpdate
                 });
-                tweetsCollection.add(tweet);
-
-                tweet.save({},{
-                    success: function(){
-                        console.log('saved success');
-                        tweetsCollection.fetch();
+                tweetsCollection.create(tweet,{
+                    success: function(model,response){
+                        console.log('Create Was Successful',model.id, response);
                     },
                     error: function(){
-                        console.log('an error in our save');
+                        console.log('Create Was ERROR', response);
                     }
                 });
             }

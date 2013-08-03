@@ -8,12 +8,12 @@ define(['backbone',
         url:'/api.php/rest'
     });
     var tweetsCollection = new TweetList();
-        tweetsCollection.fetch({
-        success:function(){
-            console.log('fetch was a success');
+    tweetsCollection.fetch({
+        success:function(model, response){
+            console.log('fetch was a success', response);
         },
         fail: function(){
-            console.log('fetch has failed');
+            console.log('fetch has failed', response);
         }
     });
     return tweetsCollection;

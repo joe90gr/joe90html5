@@ -27,7 +27,6 @@ define(['backbone',
             var status = this.$('.status').text();
             this.model.set('status', status);
             this.$('.status').removeAttr('contenteditable');
-            console.log('is this new before',this.model.isNew());
             this.model.save();
         },
         onEnterUpdate: function(e){
@@ -40,16 +39,14 @@ define(['backbone',
         },
         delete: function(e){
             e.preventDefault();
-            console.log(this.model.isNew());
             this.model.destroy({
-                success: function(){
-                    console.log('DESTROYED' );
+                success: function(model, response){
+                    console.log('DESTROYED',model.id , response );
                 },
                 error: function(){
-                    console.log('Destroy failed');
+                    console.log('Destroy failed', response);
                 }
             });
-            tweetsCollection.remove(this.model);
         },
         render: function(){
             this.$el.html(this.template(this.model.toJSON()));
@@ -58,16 +55,16 @@ define(['backbone',
     });
 
     var TweetsView = Backbone.View.extend({
-        model: tweetsCollection,
+        collection: tweetsCollection,
         el: $('#tweets-container'),
         initialize: function(){
-            this.model.on('add', this.render, this);
-            this.model.on('remove', this.render, this);
+            this.listenTo(this.collection ,'add', this.render, this);
+            this.listenTo(this.collection,'remove', this.render, this);
         },
         render: function(){
             var self = this;
             self.$el.html('');
-            _.each(this.model.toArray(), function(tweet, i){
+            _.each(this.collection.toArray(), function(tweet, i){
                 self.$el.append((new TweetView({model: tweet})).render().$el );
             });
 

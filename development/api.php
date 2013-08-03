@@ -12,12 +12,15 @@
         function post($request_data = null){
             $response = '';
             $hd = $this->prepMySQLConnection();
-            if($request_data !== null){
+            if(isset($request_data)){
                 $author = $request_data['author'];
                 $status = $request_data['status'];
-                //$app_info = array($res->fetch_field_direct(1)->name => $val[1], $res->fetch_field_direct(2)->name  => $val[2]);
-                $res = $hd->query("INSERT INTO tweets (id,author,status) VALUES ('','$author','$status' ) ");
-                $response = array('success'=>"record created");
+                $resulst = $hd->query("INSERT INTO tweets (id,author,status) VALUES ('','$author','$status' ) ");
+                $result1 = $hd->query("SELECT * FROM tweets ORDER BY id DESC LIMIT 1");
+                 while($val = $result1->fetch_row()){
+                 $lastID = array( $result1->fetch_field_direct(0)->name  => $val[0] );
+                }
+                $response =  $lastID;
             }
             else{
                 $response = array('Failed'=>"record not created");
@@ -27,14 +30,12 @@
         }
 
         function put($id = null, $request_data = null){
-
             $hd = $this->prepMySQLConnection();
             if( isset($id) && isset( $request_data['author'] ) && isset( $request_data['status']) ){
                 $author = $request_data['author'];
                 $status = $request_data['status'];
-                $res = $hd->query("UPDATE tweets SET author = '$author', status = '$status' WHERE id = '$id'  ");
-                 //$res = $hd->query("UPDATE tweets SET author = $author, status = $status WHERE idd = 0  ");
-                $response = array('success'=>"record created put $id $author $status");
+                $res = $hd->query("UPDATE tweets SET author = '$author', status = '$status' WHERE id = '$id' ");
+                $response = array('id'=>"$id", "author" => "$author", "status" => "$status");
             }
             else{
                 $response = array('Failed'=>"record not created  $id $author $status");
@@ -45,9 +46,16 @@
 
         function delete($id = null){
             $hd = $this->prepMySQLConnection();
-            $res = $hd->query("DELETE FROM tweets WHERE id = '$id'");
+            if(isset($id)){
+                $result = $hd->query("DELETE FROM tweets WHERE id = '$id'");
+                $successResponse = array("id"=>"$id");
+                $failedResponse = array('error'=>"record with id:$id is not found.");
+                $response = $result ? $response = $successResponse : $failedResponse;
+            }
+            else{
+                $response = array('error'=>"record deleted");
+            }
 
-            $response = array('success'=>"record deleted");
             $hd->close();
             return $response;
         }
@@ -70,7 +78,7 @@
         function prepMySQLConnection(){
             $hd = new mysqli("local-html5.com:3306", "root", "", "rest");
             if($hd->connect_errno){
-                throw new RestException(404, "hey chum, what are you doing?");
+                throw new RestException(500, "hey chum, what are you doing?");
                 $hd = false;
             }
             return $hd;
