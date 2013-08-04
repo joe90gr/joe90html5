@@ -1,8 +1,10 @@
 define(['backbone',
+    'mustache',
     'text!components/tweets/tweets.template',
     'components/tweets/tweets-model',
     'components/tweets/tweets-collections'],
     function (Backbone,
+              mustache,
               template,
               Tweet,
               tweetsCollection) {
@@ -10,7 +12,7 @@ define(['backbone',
     var TweetView = Backbone.View.extend({
         model: new Tweet(),
         tagName: 'li',
-        template: _.template(template),
+        template: template,
         events:{
             'click .edit': 'edit',
             'click .delete': 'delete',
@@ -49,7 +51,7 @@ define(['backbone',
             });
         },
         render: function(){
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(mustache.render(this.template,this.model.toJSON()));
             return this;
         }
     });

@@ -6,6 +6,7 @@ requirejs.config({
 		"modernizr":"libs/modernizr",
         "chai":"libs/chai",
         "backbone":"libs/backbone",
+        "mustache": "libs/mustache",
         "text": "libs/text"
 	},
     shim: {

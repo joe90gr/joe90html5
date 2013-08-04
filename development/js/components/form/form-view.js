@@ -1,15 +1,17 @@
 define(['backbone',
+        'mustache',
         'text!components/form/form.template',
         'components/tweets/tweets-model' ,
         'components/tweets/tweets-collections'],
     function (Backbone,
+              mustache,
               template,
               Tweet,
               tweetsCollection) {
 
     var FormView = Backbone.View.extend({
         el: $('.button-panel'),
-        template: _.template(template),
+        template: template,
         events: {
             'submit #new-tweet': 'submit'
         },
@@ -17,7 +19,7 @@ define(['backbone',
             this.render();
         },
         render: function(){
-            this.$el.html(this.template);
+            this.$el.html(mustache.render(this.template));
             return this;
         },
         submit: function(){

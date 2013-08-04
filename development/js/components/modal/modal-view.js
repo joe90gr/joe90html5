@@ -55,6 +55,16 @@ define(['backbone',
             var self = this;
             var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
 
+            switch (typeof content){
+            case 'string':
+                break;
+            case 'object':
+                break;
+            default:
+                break;
+            }
+
+
             $(window).on('resize', refresh);
             this.render(content);
             $('.modal-overlay, .modal-container').fadeIn('fast');
