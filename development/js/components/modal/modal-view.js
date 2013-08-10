@@ -1,29 +1,11 @@
 define(['backbone',
+        'marionette',
         'text!components/modal/modal.template'],
         function (Backbone,
-            modaltemplate ) {
-    //todo: we may not need this view as its a test button for modal
-    var ModalOpenView = Backbone.View.extend({
-        el: $('.open-modal'),
-        events: {
-            'click': 'open'
-        },
-        initialize: function(){
-            this.render();
-        },
-        render: function(){
-            this.$el.text('test modal');
-        },
-        open: function(){
-            var modalTitle = {
-                title:'This is a text title',
-                html:'this is the content'
-            };
-            appConsole.modalview.trigger('click:open',modalTitle)
-        }
-    });
+                  Marionette,
+                  modaltemplate ) {
 
-    var ModalView = Backbone.View.extend({
+    var ModalView = Marionette.View.extend({
         el: $('.modal-container'),
 
         events: {
@@ -33,9 +15,7 @@ define(['backbone',
         },
 
         initialize: function(){
-            var buttonview = new ModalOpenView();
             this.bindEventListeners();
-            //this.listenTo(this.collection, "add", this.render);;
         },
 
         bindEventListeners: function(){
@@ -63,7 +43,6 @@ define(['backbone',
             default:
                 break;
             }
-
 
             $(window).on('resize', refresh);
             this.render(content);
@@ -93,6 +72,5 @@ define(['backbone',
         }
     });
 
-    appConsole.modalview = new ModalView();
     return ModalView;
 });

@@ -1,17 +1,18 @@
 define(['backbone',
+        'marionette',
         'mustache',
         'text!components/form/form.template',
-        'components/tweets/tweets-model' ,
-        'components/tweets/tweets-collections'],
+        'components/tweets/tweets-model'],
     function (Backbone,
+              Marionette,
               mustache,
               template,
-              Tweet,
-              tweetsCollection) {
+              Tweet) {
 
-    var FormView = Backbone.View.extend({
-        el: $('.button-panel'),
+    var FormView = Marionette.View.extend({
+        el: '.button-panel',
         template: template,
+        collection: '',
         events: {
             'submit #new-tweet': 'submit'
         },
@@ -19,7 +20,8 @@ define(['backbone',
             this.render();
         },
         render: function(){
-            this.$el.html(mustache.render(this.template));
+            this.$el.append(mustache.render(this.template));
+            this.$el.find('#new-tweet').addClass('button-panel');
             return this;
         },
         submit: function(){
@@ -31,7 +33,7 @@ define(['backbone',
                     author: authorName,
                     status: statusUpdate
                 });
-                tweetsCollection.create(tweet,{
+                this.collection.create(tweet,{
                     success: function(model,response){
                         console.log('Create Was Successful',model.id, response);
                     },

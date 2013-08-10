@@ -1,15 +1,17 @@
 define(['backbone',
+    'marionette',
     'mustache',
     'text!components/tweets/tweets.template',
     'components/tweets/tweets-model',
     'components/tweets/tweets-collections'],
     function (Backbone,
+              Marionette,
               mustache,
               template,
               Tweet,
-              tweetsCollection) {
+              TweetsCollection) {
 
-    var TweetView = Backbone.View.extend({
+    var TweetView = Marionette.View.extend({
         model: new Tweet(),
         tagName: 'li',
         template: template,
@@ -56,10 +58,24 @@ define(['backbone',
         }
     });
 
-    var TweetsView = Backbone.View.extend({
-        collection: tweetsCollection,
+    var TweetsView = Marionette.View.extend({
+        collection: new TweetsCollection(),
         el: $('#tweets-container'),
         initialize: function(){
+            this.attachEvents();
+
+            this.collection.fetch({
+                success:function(model, response){
+                    console.log('fetch was a success', response);
+                },
+                fail: function(){
+                    console.log('fetch has failed', response);
+                }
+            });
+
+
+        },
+        attachEvents: function(){
             this.listenTo(this.collection ,'add', this.render, this);
             this.listenTo(this.collection,'remove', this.render, this);
         },

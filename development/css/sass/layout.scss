@@ -47,8 +47,11 @@ html{
 			@extend .top-level;
 			height: 100%;
 			background: IndianRed;
-			top: $header-height;
+			top: 0;
 			z-index: 1;
+            >.main-inner{
+                margin-top: $header-height ;
+            }
 		}
 		>footer{
 			@extend .top-level;

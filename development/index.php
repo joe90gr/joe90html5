@@ -10,11 +10,10 @@
 			<div class="button-panel"></div>
 		</header>
 		<section>
-		    <h1>Backbone Twitter example</h1>
-            <button class="open-modal">Open modal</button>
-		    <hr />
-		    <ul id="tweets-container"></ul>
-		    <br />
+		    <div class="main-inner">
+                <h1>Backbone Twitter example</h1>
+                <ul id="tweets-container"></ul>
+		    </div>
 		</section>
 		<footer>
 			Footer Container.

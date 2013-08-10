@@ -1,27 +1,34 @@
-
 var appConsole = appConsole || {};
-var deps = [
-    'modernizr',
-    'backbone',
-    'components/tweets/tweets-model',
-    'components/tweets/tweets-collections',
-    'components/tweets/tweets-view',
-    'components/modal/modal-view',
-    'components/form/form-view'
-];
 
-define(deps, function (mod,
-                       Backbone,
-                       Tweet,
-                       TweetList,
-                       TweetsView,
-                       ModalView,
-                       FormView
-                       ) {
+define(['modernizr',
+        'backbone',
+        'marionette',
+        'components/tweets/tweets-model',
+        'components/tweets/tweets-collections',
+        'components/tweets/tweets-view',
+        'components/modal/modal-view',
+        'components/form/form-view',
+        'router'],
+    function (mod,
+               Backbone,
+               Marionette,
+               Tweet,
+               TweetList,
+               TweetsView,
+               ModalView,
+               FormView,
+               Router
+               ) {
     'use strict';
     var Console = function(){
+        this.initRouter();
         this.init();
-        this.router();
+        //this.modalRepeatedRunTest();
+    };
+
+    Console.prototype.initRouter = function(){
+        appConsole.router = new Router();
+        Backbone.history.start();
     };
 
     Console.prototype.init = function(){
@@ -29,30 +36,12 @@ define(deps, function (mod,
             console.log('fired general event',input);
         });
 
-        var formview = new FormView();
-
-        //modalview = new ModalView()
+        appConsole.modalview = new ModalView();
         var tweetii = new TweetsView();
+        var formview = new FormView({collection: tweetii.collection});
+
     };
 
-    Console.prototype.router = function(){
-        var appRouter = Backbone.Router.extend({
-            routes: {
-                'about': 'showAbout',
-                'myid/:id': 'getId'
-            },
-
-            showAbout: function(){
-                console.log('test route to about');
-            },
-            getId: function(id){
-                console.log('the id is',id);
-            }
-        });
-
-        var approuter = new appRouter();
-        Backbone.history.start();
-    };
 
     Console.prototype.modalRepeatedRunTest = function(){
         var self = this;
@@ -66,6 +55,6 @@ define(deps, function (mod,
             },300)
         },300);
     };
-    return Console;
 
+    return Console;
 });

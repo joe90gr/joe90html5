@@ -329,8 +329,10 @@ html body > header {
 html body > section {
   height: 100%;
   background: IndianRed;
-  top: 100px;
+  top: 0;
   z-index: 1; }
+html body > section > .main-inner {
+  margin-top: 100px; }
 html body > footer {
   height: 30px;
   background: SaddleBrown;
