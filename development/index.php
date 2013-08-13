@@ -3,7 +3,7 @@
 	<head>
 		<title>Test</title>
 		<link rel="stylesheet" text="text/css" href="css/layout.css" />
-		<script data-main="js/main" src="js/require.js"></script>
+		<script data-main="js/main" src="js/libs/require.js"></script>
 	</head>
 	<body>
 		<header>

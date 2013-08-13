@@ -1,16 +1,19 @@
 {
-    "name":"HTML5-app",
-    "title":"HTML5",
-    "version":"1.0.0",
-    "description":"Experimental HTML5 App",
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-contrib-requirejs":"~0.4.0",
-        "grunt-csso":"~0.4.0",
-        "grunt-contrib-copy":"*",
-        "grunt-contrib-sass":"*",
-        "grunt-contrib-watch":"*",
-        "grunt-contrib-jshint": "~0.1.1",
-        "grunt-contrib-nodeunit": "~0.1.2"
-    }
+  "name": "HTML5-app",
+  "title": "HTML5",
+  "version": "1.0.0",
+  "description": "Experimental HTML5 App",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-csso": "~0.4.0",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-nodeunit": "~0.1.2"
+  },
+  "dependencies": {
+    "bower": "~1.1.2"
+  }
 }

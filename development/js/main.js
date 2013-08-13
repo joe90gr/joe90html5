@@ -7,8 +7,8 @@ requirejs.config({
         chai:"libs/chai",
         underscore: "libs/underscore",
         jquery: "libs/jquery",
-        backbone:"backbone",
-        marionette: "marionette",
+        backbone:"libs/backbone",
+        marionette: "libs/marionette",
 
 
         mustache: "libs/mustache",
@@ -16,23 +16,23 @@ requirejs.config({
 	},
     shim: {
         jquery : {
-            exports : 'libs/jquery'
+            exports : '$'
         },
         underscore: {
             exports: '_'
         },
         backbone:{
-            deps: ['libs/underscore', 'libs/jquery'],
+            deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
         marionette : {
-            deps : ['libs/jquery', 'libs/underscore', 'backbone'],
+            deps : ['backbone'],
             exports : 'Marionette'
         }
     }
 });
 
-require(['myapp'],function(myapp){
+require(['index'],function(myapp){
     //console.log(myapp);
     var Console = new myapp;
     //Console.modalRepeatedRunTest();
