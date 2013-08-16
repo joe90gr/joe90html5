@@ -9,11 +9,20 @@ requirejs.config({
         jquery: "libs/jquery",
         backbone:"libs/backbone",
         marionette: "libs/marionette",
-
-
         mustache: "libs/mustache",
-        text: "libs/text"
-	},
+        text: "libs/text",
+
+        formView: 'components/form/form-view',
+        formTemplate: 'components/form/form.template',
+
+        modalView: 'components/modal/modal-view',
+        modalTemplate: 'components/modal/modal.template',
+
+        tweetsModel: 'components/tweets/tweets-model',
+        tweetsCollection: 'components/tweets/tweets-collection',
+        tweetsView: 'components/tweets/tweets-view',
+        tweetsTemplate: 'components/tweets/tweets.template'
+    },
     shim: {
         jquery : {
             exports : '$'
@@ -33,7 +42,6 @@ requirejs.config({
 });
 
 require(['index'],function(myapp){
-    //console.log(myapp);
     var Console = new myapp;
     //Console.modalRepeatedRunTest();
 });

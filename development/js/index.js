@@ -3,11 +3,11 @@ var appConsole = appConsole || {};
 define(['modernizr',
         'backbone',
         'marionette',
-        'components/tweets/tweets-model',
-        'components/tweets/tweets-collections',
-        'components/tweets/tweets-view',
-        'components/modal/modal-view',
-        'components/form/form-view',
+        'tweetsModel',
+        'tweetsCollection',
+        'tweetsView',
+        'modalView',
+        'formView',
         'router'],
     function (mod,
                Backbone,
@@ -37,9 +37,15 @@ define(['modernizr',
         });
 
         appConsole.modalview = new ModalView();
+
+        var myRegion = new Marionette.Region({
+            el: '.button-panel'
+        });
+
         var tweetii = new TweetsView();
         var formview = new FormView({collection: tweetii.collection});
 
+        myRegion.show(formview);
     };
 
 

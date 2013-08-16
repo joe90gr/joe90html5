@@ -1,6 +1,6 @@
 define(['backbone',
         'marionette',
-        'text!components/modal/modal.template'],
+        'text!modalTemplate'],
         function (Backbone,
                   Marionette,
                   modaltemplate ) {

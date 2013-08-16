@@ -11,9 +11,10 @@
     "grunt-contrib-sass": "*",
     "grunt-contrib-watch": "*",
     "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2"
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-jasmine": "*"
   },
   "dependencies": {
-    "bower": "~1.1.2"
+    "bower": "*"
   }
 }

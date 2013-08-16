@@ -1,8 +1,8 @@
 define(['backbone',
         'marionette',
         'mustache',
-        'text!components/form/form.template',
-        'components/tweets/tweets-model'],
+        'text!formTemplate',
+        'tweetsModel'],
     function (Backbone,
               Marionette,
               mustache,
@@ -10,14 +10,14 @@ define(['backbone',
               Tweet) {
 
     var FormView = Marionette.View.extend({
-        el: '.button-panel',
+
         template: template,
         collection: '',
         events: {
             'submit #new-tweet': 'submit'
         },
         initialize: function(){
-            this.render();
+
         },
         render: function(){
             this.$el.append(mustache.render(this.template));
