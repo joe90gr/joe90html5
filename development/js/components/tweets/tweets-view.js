@@ -11,10 +11,11 @@ define(['backbone',
               Tweet,
               TweetsCollection) {
 
-    var TweetView = Marionette.View.extend({
-        model: new Tweet(),
+    var TweetView = Marionette.ItemView.extend({
         tagName: 'li',
-        template: template,
+        template: function(data){
+            return mustache.render(template,data);
+        },
         events:{
             'click .edit': 'edit',
             'click .delete': 'delete',
@@ -51,10 +52,6 @@ define(['backbone',
                     console.log('Destroy failed', response);
                 }
             });
-        },
-        render: function(){
-            this.$el.html(mustache.render(this.template,this.model.toJSON()));
-            return this;
         }
     });
 
@@ -62,7 +59,7 @@ define(['backbone',
         collection: new TweetsCollection(),
         el: $('#tweets-container'),
         initialize: function(){
-            this.attachEvents();
+            this.listenToEvents();
 
             this.collection.fetch({
                 success:function(model, response){
@@ -72,10 +69,8 @@ define(['backbone',
                     console.log('fetch has failed', response);
                 }
             });
-
-
         },
-        attachEvents: function(){
+        listenToEvents: function(){
             this.listenTo(this.collection ,'add', this.render, this);
             this.listenTo(this.collection,'remove', this.render, this);
         },

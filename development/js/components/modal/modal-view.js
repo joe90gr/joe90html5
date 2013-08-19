@@ -1,13 +1,26 @@
 define(['backbone',
         'marionette',
+        'mustache',
         'text!modalTemplate'],
         function (Backbone,
                   Marionette,
+                  Mustache,
                   modaltemplate ) {
 
-    var ModalView = Marionette.View.extend({
-        el: $('.modal-container'),
+    var ModalModel = Backbone.Model.extend({
+        defaults: {
+            title: 'fsdfsd',
+            content: 'fddddddd'
+        }
+    });
 
+    var ModalView = Marionette.ItemView.extend({
+        model: new ModalModel,
+        el: '.modal-container',
+        template: function(data){
+
+            return Mustache.render(modaltemplate,data);
+        },
         events: {
             'click .close': 'close',
             'click': 'close', // the root element .modal-container set by el
@@ -23,13 +36,13 @@ define(['backbone',
             this.on('click:close',this.close,this);
         },
 
-        render: function(modalContent){
-            var modalTitle = this.$el.find('.title span');
-            var modalHTML = this.$el.find('.content');
-            modalTitle.html(modalContent.title);
-            modalHTML.html(modalContent.html);
-            return this;
-        },
+//        render: function(modalContent){
+//            var modalTitle = this.$el.find('.title span');
+//            var modalHTML = this.$el.find('.content');
+//            modalTitle.html(modalContent.title);
+//            modalHTML.html(modalContent.html);
+//            return this;
+//        },
 
         open: function(content){
             var self = this;
@@ -45,7 +58,7 @@ define(['backbone',
             }
 
             $(window).on('resize', refresh);
-            this.render(content);
+            this.render();
             $('.modal-overlay, .modal-container').fadeIn('fast');
             self.calcBoxPosition(window);
         },
