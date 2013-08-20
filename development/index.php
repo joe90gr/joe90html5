@@ -21,8 +21,6 @@
 			<a href="/#myid/5">Link to about</a>
 		</footer>
 		<div class="modal-overlay"></div>
-		<div class="modal-container">
-
-		</div>
+		<div class="modal-container"></div>
 	</body>
 </html>
