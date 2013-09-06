@@ -9,21 +9,14 @@ define(['backbone',
               template,
               Tweet) {
 
-    var FormView = Marionette.View.extend({
-
-        template: template,
-        collection: '',
+    var FormView = Marionette.ItemView.extend({
+        template: function(){
+            return mustache.render(template);
+        },
         events: {
-            'submit #new-tweet': 'submit'
+            'submit .button-panel': 'submit'
         },
-        initialize: function(){
-
-        },
-        render: function(){
-            this.$el.append(mustache.render(this.template));
-            this.$el.find('#new-tweet').addClass('button-panel');
-            return this;
-        },
+        initialize: function(){},
         submit: function(){
             var authorName = this.$el.find('#author-name').val();
             var statusUpdate = this.$el.find('#status-update').val();
@@ -33,14 +26,7 @@ define(['backbone',
                     author: authorName,
                     status: statusUpdate
                 });
-                this.collection.create(tweet,{
-                    success: function(model,response){
-                        console.log('Create Was Successful',model.id, response);
-                    },
-                    error: function(){
-                        console.log('Create Was ERROR', response);
-                    }
-                });
+                this.collection.addRecord(tweet);
             }
             else{
                 var content = {title:'error',html:

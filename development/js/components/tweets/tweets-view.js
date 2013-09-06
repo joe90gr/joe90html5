@@ -1,34 +1,35 @@
 define(['backbone',
     'marionette',
     'mustache',
+    'text!tweetTemplate',
     'text!tweetsTemplate',
     'tweetsModel',
     'tweetsCollection'],
     function (Backbone,
               Marionette,
               mustache,
-              template,
+              tweetTemplate,
+              tweetsTemplate,
               Tweet,
               TweetsCollection) {
 
     var TweetView = Marionette.ItemView.extend({
         tagName: 'li',
         template: function(data){
-            return mustache.render(template,data);
+            return mustache.render(tweetTemplate,data);
         },
         events:{
             'click .edit': 'edit',
             'click .delete': 'delete',
-            'blur .status': 'close',
+            'blur .status': 'closeEdit',
             'keypress .status': 'onEnterUpdate'
         },
-        initialize: function(){
-        },
+        initialize: function(){},
         edit: function(e){
             e.preventDefault();
             this.$('.status').attr('contenteditable', true).focus();
         },
-        close: function(){
+        closeEdit: function(){
             var status = this.$('.status').text();
             this.model.set('status', status);
             this.$('.status').removeAttr('contenteditable');
@@ -44,31 +45,15 @@ define(['backbone',
         },
         delete: function(e){
             e.preventDefault();
-            this.model.destroy({
-                success: function(model, response){
-                    console.log('DESTROYED',model.id , response );
-                },
-                error: function(){
-                    console.log('Destroy failed', response);
-                }
-            });
+            this.model.destroyRecord();
         }
     });
 
-    var TweetsView = Marionette.View.extend({
-        collection: new TweetsCollection(),
-        el: $('#tweets-container'),
+    var TweetsView = Marionette.ItemView.extend({
+        collection: new TweetsCollection,
         initialize: function(){
             this.listenToEvents();
-
-            this.collection.fetch({
-                success:function(model, response){
-                    console.log('fetch was a success', response);
-                },
-                fail: function(){
-                    console.log('fetch has failed', response);
-                }
-            });
+            this.collection.getRecords();
         },
         listenToEvents: function(){
             this.listenTo(this.collection ,'add', this.render, this);

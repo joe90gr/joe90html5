@@ -21,8 +21,8 @@ define(['modernizr',
                ) {
     'use strict';
     var Console = function(){
-        this.initRouter();
         this.init();
+        this.initRouter();
         //this.modalRepeatedRunTest();
     };
 
@@ -38,14 +38,41 @@ define(['modernizr',
 
         appConsole.modalview = new ModalView();
 
-        var myRegion = new Marionette.Region({
-            el: '.button-panel'
-        });
+        var TheApp = new Marionette.Application();
+        TheApp.addRegions({
+            header: '.header-panel',
+            content: '#tweets-container',
+            footer: '.footer-inner'
+        })
 
-        var tweetii = new TweetsView();
-        var formview = new FormView({collection: tweetii.collection});
+        //var header = new Marionette.Region({el: '.header-panel'});
+        //var content = new Marionette.Region({el: '#tweets-container'});
+        //var footer = new Marionette.Region({el: '.footer-inner'});
 
-        myRegion.show(formview);
+        var Test = Marionette.View.extend({
+            el: '',
+            template: '',
+            initialize: function(){
+                this.$el.html('render new content');
+            }
+        })
+
+
+        var tweetView = new TweetsView();
+        var formview = new FormView({collection: tweetView.collection});
+        var test = new Test();
+
+
+
+        TheApp.header.show(formview);
+        TheApp.content.show(tweetView);
+        TheApp.content.show(test);
+
+        setTimeout(function(){
+            tweetView.listenToEvents();
+            TheApp.content.show(tweetView);
+        },3000);
+        //TheApp.footer.show(formview);
     };
 
 

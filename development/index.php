@@ -7,18 +7,18 @@
 	</head>
 	<body>
 		<header>
-			<div class="button-panel"></div>
+			<div class="header-panel"></div>
 		</header>
 		<section>
 		    <div class="main-inner">
-                <h1>Backbone Twitter example</h1>
                 <ul id="tweets-container"></ul>
 		    </div>
 		</section>
 		<footer>
-			Footer Container.
-			<a href="/#about">Link to about</a>
-			<a href="/#myid/5">Link to about</a>
+		    <div class="footer-inner">
+					<a href="/#about">Link to about</a>
+        			<a href="/#myid/5">Link to about</a>
+		    </div>
 		</footer>
 		<div class="modal-overlay"></div>
 		<div class="modal-container"></div>

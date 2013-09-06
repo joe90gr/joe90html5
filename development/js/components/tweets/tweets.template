@@ -1,4 +1,1 @@
- <span class="author" >Author: {{author}}</span>
- <span class="status" >{{status}}</span>
- <a href="#" class="edit">[Edit]</a>
- <a href="#" class="delete">[Delete]</a>
+<ul id="tweets-container"></ul>

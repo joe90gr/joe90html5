@@ -1,4 +1,4 @@
-<form id="new-tweet" action="#" method="post">
+<form id="new-tweet" class="button-panel" action="#" method="post">
     <label>Author</label><input id="author-name" name="author-name" type="text" />
     <label>Status</label><input id="status-update" name="status-update" type="text" />
     <button>post message</button>

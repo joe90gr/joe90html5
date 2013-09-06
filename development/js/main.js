@@ -8,7 +8,9 @@ requirejs.config({
         underscore: "libs/underscore",
         jquery: "libs/jquery",
         backbone:"libs/backbone",
-        marionette: "libs/marionette",
+        marionette: "libs/backbone.marionette",
+        babysitter: "libs/backbone.babysitter",
+        wreqr: "libs/backbone.wreqr",
         mustache: "libs/mustache",
         text: "libs/text",
 
@@ -21,6 +23,7 @@ requirejs.config({
         tweetsModel: 'components/tweets/tweets-model',
         tweetsCollection: 'components/tweets/tweets-collection',
         tweetsView: 'components/tweets/tweets-view',
+        tweetTemplate: 'components/tweets/tweet.template',
         tweetsTemplate: 'components/tweets/tweets.template'
     },
     shim: {

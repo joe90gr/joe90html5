@@ -38,13 +38,13 @@ module.exports = function(grunt) {
                 tasks: ['sass']
             }
         },
-        jasmine : {
-            src : 'development/js/**/*.js',
-            options: {
-                specs: 'tests/spec/**/*Spec.js',
-                helpers: ''
+        jsdoc:{
+            dist:{
+                src:["development/js/**/*.js"],
+                options: {
+                    destination: 'docs'
+                }
             }
-
         },
         'sasso': {
             dev : {},
@@ -60,13 +60,14 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-csso');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
-    grunt.registerTask('test', ['jasmine']);
+    grunt.registerTask('test', ['']);
     grunt.registerTask('default', ['sass','requirejs', 'csso']);
 };
 
