@@ -17,6 +17,7 @@ requirejs.config({
         formView: 'components/form/form-view',
         formTemplate: 'components/form/form.template',
 
+        modalModel: 'components/modal/modal-model',
         modalView: 'components/modal/modal-view',
         modalTemplate: 'components/modal/modal.template',
 

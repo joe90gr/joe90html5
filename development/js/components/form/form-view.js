@@ -29,13 +29,8 @@ define(['backbone',
                 this.collection.addRecord(tweet);
             }
             else{
-                var content = {title:'error',html:
-                    '<p>You must enter something into the fields</p>' +
-                    '<button onclick="appConsole.modalview.trigger(\'click:close\')">Close</button>' +
-                    '' +
-                    ''};
                 this.$el.find('.error').html('at least enter something').show();
-                appConsole.modalview.trigger('click:open', content)
+                //appConsole.modalview.trigger('click:openModal', content)
             }
 
             return false

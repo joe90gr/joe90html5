@@ -6,6 +6,7 @@ define(['modernizr',
         'tweetsModel',
         'tweetsCollection',
         'tweetsView',
+        'modalModel',
         'modalView',
         'formView',
         'router'],
@@ -15,6 +16,7 @@ define(['modernizr',
                Tweet,
                TweetList,
                TweetsView,
+               ModalModel,
                ModalView,
                FormView,
                Router
@@ -36,8 +38,6 @@ define(['modernizr',
             console.log('fired general event',input);
         });
 
-        appConsole.modalview = new ModalView();
-
         var TheApp = new Marionette.Application();
         TheApp.addRegions({
             header: '.header-panel',
@@ -57,12 +57,15 @@ define(['modernizr',
             }
         })
 
+        var modal = new ModalModel();
+        var modalview = new ModalView({model: modal});
+        //modal.set({title: "March 20", content: "In his eyes she eclipses..."});
 
-        var tweetView = new TweetsView();
-        var formview = new FormView({collection: tweetView.collection});
+        var tweetList = new TweetList();
+        var tweetView = new TweetsView({collection: tweetList});
+        var formview = new FormView({collection: tweetList});
+
         var test = new Test();
-
-
 
         TheApp.header.show(formview);
         TheApp.content.show(tweetView);
@@ -71,7 +74,7 @@ define(['modernizr',
         setTimeout(function(){
             tweetView.listenToEvents();
             TheApp.content.show(tweetView);
-        },3000);
+        },1000);
         //TheApp.footer.show(formview);
     };
 

@@ -2,47 +2,41 @@ define(['backbone',
         'marionette',
         'mustache',
         'text!modalTemplate'],
-        function (Backbone,
-                  Marionette,
-                  Mustache,
-                  modaltemplate ) {
-
-    var ModalModel = Backbone.Model.extend({
-        defaults: {
-            title: 'Title bar',
-            content: "You must enter something into the fields"
-        }
-    });
+function (Backbone,
+          Marionette,
+          Mustache,
+          modaltemplate ) {
 
     var ModalView = Marionette.ItemView.extend({
-        model: new ModalModel,
         el: '.modal-container',
         template: function(data){
-
             return Mustache.render(modaltemplate,data);
         },
         events: {
-            'click .close': 'close',
-            'click': 'close', // the root element .modal-container set by el
+            'click .close': 'closeModal',
+            'click': 'closeModal', // the root element .modal-container set by el
             'click .box' : 'box'
         },
         initialize: function(){
             this.bindEventListeners();
+            this.listenToEvents();
         },
         bindEventListeners: function(){
-            this.on('click:open',this.open,this);
-            this.on('click:close',this.close,this);
+            this.on('click:open',this.openModal,this);
+            this.on('click:close',this.closeModal,this);
         },
-        open: function(content){
+        listenToEvents: function(){
+            this.listenTo(this.model ,'change', this.openModal, this);
+        },
+        openModal: function(){
             var self = this;
             var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
-
             this.render();
             $(window).on('resize', refresh);
             $('.modal-overlay, .modal-container').fadeIn('fast');
             self.calcBoxPosition(window);
         },
-        close: function(){
+        closeModal: function(){
             this.$el.fadeOut('fast');
             this.$el.parent().children('.modal-overlay').fadeOut('fast');
             $(window).unbind('resize');

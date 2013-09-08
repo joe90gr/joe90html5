@@ -50,7 +50,6 @@ define(['backbone',
     });
 
     var TweetsView = Marionette.ItemView.extend({
-        collection: new TweetsCollection,
         initialize: function(){
             this.listenToEvents();
             this.collection.getRecords();
