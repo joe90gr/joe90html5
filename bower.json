@@ -1,11 +1,11 @@
 {
   "name": "bower",
   "version": "0.0.0",
+  "main": "development",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
     "tests"
   ],
   "dependencies": {
@@ -16,6 +16,7 @@
     "mustache": "git://github.com/janl/mustache.js.git#~0.7.2",
     "jquery": "git://github.com/components/jquery.git#~2.0.3",
     "text": "git://github.com/requirejs/text.git#~2.0.10",
-    "modernizr": "~2.6.2"
+    "modernizr": "~2.6.2",
+    "wire": "~0.10.2"
   }
 }

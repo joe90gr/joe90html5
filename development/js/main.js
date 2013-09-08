@@ -21,6 +21,7 @@ requirejs.config({
         modalView: 'components/modal/modal-view',
         modalTemplate: 'components/modal/modal.template',
 
+        tweetsController: 'components/tweets/tweet-controller',
         tweetsModel: 'components/tweets/tweets-model',
         tweetsCollection: 'components/tweets/tweets-collection',
         tweetsView: 'components/tweets/tweets-view',
