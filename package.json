@@ -5,18 +5,12 @@
   "description": "Experimental HTML5 App",
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.1",
     "grunt-csso": "~0.4.0",
-    "grunt-contrib-copy": "*",
-    "grunt-contrib-sass": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-jasmine": "*"
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-sass": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "~0.1.1"
   },
-  "dependencies": {
-    "bower": "*",
-     "karma": "0.10.2",
-    "grunt-jsdoc": "*"
-  }
+  "dependencies": {}
 }

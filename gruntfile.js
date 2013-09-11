@@ -38,20 +38,11 @@ module.exports = function(grunt) {
                 tasks: ['sass']
             }
         },
-        jsdoc:{
-            dist:{
-                src:["development/js/**/*.js"],
-                options: {
-                    destination: 'docs'
-                }
-            }
-        },
         'sasso': {
             dev : {},
             dist : {}
         }
     });
-
 
     grunt.registerMultiTask('sasso','blah', function(){
         var sassjson = JSON.parse(JSON.stringify(grunt.config().sass).replace( /{{expanded}}/g, 'expanded' ));
@@ -60,12 +51,10 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-csso');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('test', ['']);
     grunt.registerTask('default', ['sass','requirejs', 'csso']);
