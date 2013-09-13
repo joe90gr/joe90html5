@@ -3,24 +3,21 @@ requirejs.config({
 	"waitSeconds": 7,
 	"useSourceUrl":false,
 	"paths":{
-	    modernizr:"libs/modernizr",
-        chai:"libs/chai",
+        modernizr: "libs/modernizr",
+        chai: "libs/chai",
         underscore: "libs/underscore",
         jquery: "libs/jquery",
-        backbone:"libs/backbone",
+        backbone: "libs/backbone",
         marionette: "libs/backbone.marionette",
         babysitter: "libs/backbone.babysitter",
         wreqr: "libs/backbone.wreqr",
         mustache: "libs/mustache",
         text: "libs/text",
-
         formView: 'components/form/form-view',
         formTemplate: 'components/form/form.template',
-
         modalModel: 'components/modal/modal-model',
         modalView: 'components/modal/modal-view',
         modalTemplate: 'components/modal/modal.template',
-
         tweetsController: 'components/tweets/tweet-controller',
         tweetsModel: 'components/tweets/tweets-model',
         tweetsCollection: 'components/tweets/tweets-collection',
@@ -47,6 +44,6 @@ requirejs.config({
 });
 
 require(['index'],function(myapp){
-    var Console = new myapp;
+    var Console = new myapp();
     //Console.modalRepeatedRunTest();
 });

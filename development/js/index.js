@@ -37,7 +37,7 @@ define(['modernizr',
 
     Console.prototype.init = function(){
         Backbone.on('all',function(input){
-            console.log('fired general event',input);
+            //console.log('fired general event',input);
         });
 
         var TheApp = new Marionette.Application();
@@ -59,7 +59,7 @@ define(['modernizr',
             initialize: function(){
                 this.$el.html('render new content');
             }
-        })
+        });
 
         var modal = new ModalModel();
         var modalview = new ModalView({model: modal});
@@ -98,9 +98,9 @@ define(['modernizr',
             clearTimeout(xtime);
             var ytime = setTimeout(function(){
                 appConsole.modalview.trigger('click:close');
-                clearTimeout(ytime)
+                clearTimeout(ytime);
                 self.modalRepeatedRunTest();
-            },300)
+            },300);
         },300);
     };
 

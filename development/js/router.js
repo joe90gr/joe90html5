@@ -12,7 +12,7 @@ define(['backbone'],function(Backbone){
             console.log('the id is',id);
         }
     });
-    return router
+    return router;
 });
 
 

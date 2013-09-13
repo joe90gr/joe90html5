@@ -33,10 +33,10 @@ define(['backbone',
                 //appConsole.modalview.trigger('click:openModal', content)
             }
 
-            return false
+            return false;
         },
         validate: function(var1, var2){
-            return var1 !='' && var2 !=''
+            return var1 !=='' && var2 !=='';
         }
     });
     return FormView;

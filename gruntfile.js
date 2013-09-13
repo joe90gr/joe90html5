@@ -1,14 +1,10 @@
 module.exports = function(grunt) {
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
         copy: {
             main: {
                 files: [{expand: true, cwd: 'development/',
                     src: ['**'], dest: 'production/'}]
-            }
-        },
-        requirejs: {
-            compile:{
-                options:require('./require.json')
             }
         },
         csso:{
@@ -28,14 +24,38 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'development/css/layout.css': 'development/css/sass/layout.scss'
+                    'development/css/layout.css': 'development/css/sass/*.scss'
                 }
             }
         },
+        jshint: {
+            all: [
+                'development/js/components/**/*.js',
+                'development/js/pages/**/*.js',
+                'development/js/*.js'
+            ],
+            options:{
+                strict: false
+            }
+        },
         watch: {
-            scripts: {
-                files: ['development/components/*/layout.scss'],
-                tasks: ['sass']
+            sass: {
+                files: ['development/css/sass/*.scss'],
+                tasks: ['sass'],
+                options: { debounceDelay: 250 }
+            },
+            js: {
+                files: [
+                    'development/**/*.js',
+                    'development/*.js'
+                ],
+                tasks: ['jshint'],
+                options: { debounceDelay: 250 }
+            }
+        },
+        requirejs: {
+            compile:{
+                options:require('./require.json')
             }
         },
         'sasso': {
@@ -54,6 +74,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-csso');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('test', ['']);

@@ -20,7 +20,7 @@ define(['backbone',
         },
         events:{
             'click .edit': 'edit',
-            'click .delete': 'delete',
+            'click .delete': 'deleteRecord',
             'blur .status': 'closeEdit',
             'keypress .status': 'onEnterUpdate'
         },
@@ -43,7 +43,7 @@ define(['backbone',
                 },100);
             }
         },
-        delete: function(e){
+        deleteRecord: function(e){
             e.preventDefault();
             this.model.destroyRecord();
         }
