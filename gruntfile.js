@@ -55,7 +55,15 @@ module.exports = function(grunt) {
         },
         requirejs: {
             compile:{
-                options:require('./require.json')
+                options:   {
+                    "appDir":"development",
+                    "baseUrl":"./",
+                    "dir":"production",
+                    "optimize":"uglify2",
+                    "optimizeCss":"none",
+                    "fileExclusionRegExp":"styles|vendor|node_modules|.*min\\.js|test$",
+                    "preserveLicenseComments":false
+                }
             }
         },
         'sasso': {
@@ -78,6 +86,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('test', ['']);
-    grunt.registerTask('default', ['sass','requirejs', 'csso']);
+    grunt.registerTask('default', ['sass', 'jshint', 'requirejs', 'csso']);
 };
 

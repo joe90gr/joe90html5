@@ -1,9 +1,0 @@
-{
-    "appDir":"development",
-    "baseUrl":"./",
-    "dir":"production",
-    "optimize":"uglify2",
-    "optimizeCss":"none",
-    "fileExclusionRegExp":"styles|vendor|node_modules|.*min\\.js|test$",
-    "preserveLicenseComments":false
-}

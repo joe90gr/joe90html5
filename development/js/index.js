@@ -1,5 +1,6 @@
-var appConsole = appConsole || {};
+/*global setTimeout clearTimeout console*/
 
+var appConsole = appConsole || {};
 define(['modernizr',
         'backbone',
         'marionette',
@@ -24,6 +25,7 @@ define(['modernizr',
                Router
                ) {
     'use strict';
+
     var Console = function(){
         this.init();
         this.initRouter();
@@ -37,7 +39,7 @@ define(['modernizr',
 
     Console.prototype.init = function(){
         Backbone.on('all',function(input){
-            //console.log('fired general event',input);
+            console.log('fired general event',input);
         });
 
         var TheApp = new Marionette.Application();
