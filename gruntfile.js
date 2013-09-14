@@ -53,6 +53,7 @@ module.exports = function(grunt) {
                 options: { debounceDelay: 250 }
             }
         },
+
         requirejs: {
             compile:{
                 options:   {
@@ -69,6 +70,14 @@ module.exports = function(grunt) {
         'sasso': {
             dev : {},
             dist : {}
+        },
+        // karmatask call from cmd line:
+        // 1. specific file:    grunt karmatask --file=<filepath>    (relative to components folder)
+        // 2. all files:        grunt karmatask
+        // 3: also called with grunt test with or without file parameters as above.
+        karmatask: {
+            unit : {},
+            cont : {}
         }
     });
 
@@ -78,14 +87,40 @@ module.exports = function(grunt) {
         grunt.task.run('sass');
     });
 
+    grunt.registerTask('karmatask','Run unit tests on specific files', function(){
+        var conf;
+        if(grunt.option('file') !== undefined){
+            conf = {
+                karma: {
+                    unit: {
+                        configFile: 'karma.conf.js',
+                        options: {
+                            files: [
+                                {pattern: 'development/js/**/*.js', included: false},
+                                {pattern: 'test/components/' + grunt.option('file') + '.js', included: false},
+                                'test/test-main.js'
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            conf = { karma: { cont: { configFile: 'karma.conf.js' } } }
+        }
+        grunt.config('karma',conf.karma);
+        grunt.task.run('karma');
+    });
+
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-csso');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('test', ['']);
+    grunt.registerTask('test', ['karmatask']);
     grunt.registerTask('default', ['sass', 'jshint', 'requirejs', 'csso']);
 };
 
