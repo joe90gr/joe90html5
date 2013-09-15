@@ -65,6 +65,9 @@ define(['modernizr',
 
         var modal = new ModalModel();
         var modalview = new ModalView({model: modal});
+
+        //TODO: since models trigger once since repeated change event with same data
+        appConsole.modal = modal;
         //modal.set({title: "March 20", content: "In his eyes she eclipses..."});
 
         var tweetModule = new TweetController();

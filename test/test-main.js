@@ -17,7 +17,11 @@ requirejs.config({
     "useSourceUrl":false,
     "paths":{
         underscore: "libs/underscore",
-        jquery: "libs/jquery"
+        jquery: "libs/jquery",
+        backbone: "libs/backbone",
+        marionette: "libs/backbone.marionette",
+        babysitter: "libs/backbone.babysitter",
+        wreqr: "libs/backbone.wreqr"
     },
     shim: {
         jquery : {
@@ -25,6 +29,14 @@ requirejs.config({
         },
         underscore: {
             exports: '_'
+        },
+        backbone:{
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        },
+        marionette : {
+            deps : ['backbone'],
+            exports : 'Marionette'
         }
     },
 

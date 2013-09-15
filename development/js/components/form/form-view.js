@@ -30,7 +30,7 @@ define(['backbone',
             }
             else{
                 this.$el.find('.error').html('at least enter something').show();
-                //appConsole.modalview.trigger('click:openModal', content)
+                appConsole.modal.set({title: "March 20", content: "In his eyes she eclipses..."});
             }
 
             return false;
