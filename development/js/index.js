@@ -10,6 +10,8 @@ define(['modernizr',
         'tweetsView',
         'modalModel',
         'modalView',
+        'formModel',
+        'formCollection',
         'formView',
         'router'],
     function (mod,
@@ -21,6 +23,8 @@ define(['modernizr',
                TweetsView,
                ModalModel,
                ModalView,
+               FormModel,
+               FormCollection,
                FormView,
                Router
                ) {
@@ -29,7 +33,6 @@ define(['modernizr',
     var Console = function(){
         this.init();
         this.initRouter();
-        //this.modalRepeatedRunTest();
     };
 
     Console.prototype.initRouter = function(){
@@ -46,7 +49,8 @@ define(['modernizr',
 
         TheApp.addRegions({
             header: '.header-panel',
-            content: '#tweets-container',
+            content: '.main-inner',
+            side: '.side',
             footer: '.footer-inner'
         });
 
@@ -77,7 +81,27 @@ define(['modernizr',
         var tweetView = new TweetsView({collection: tweetList});
         */
 
-        var formview = new FormView({collection: tweetModule.tweetList});
+        var formview = new FormView({
+            model: new FormModel({
+                'input': [
+                    {
+                        id: 'author-name',
+                        title: 'Author',
+                        name: 'author-name',
+                        value: 'the value',
+                        type: 'text'
+                    },
+                    {
+                        id: 'status-update',
+                        title: 'Status',
+                        name: 'status-update',
+                        value: 'the value1',
+                        type: 'text'
+                    }
+                ]
+            }),
+            tweetCollection: tweetModule.tweetList
+        });
 
 
         //Experimenting with view switching
@@ -85,28 +109,26 @@ define(['modernizr',
 
         TheApp.header.show(formview);
         TheApp.content.show(tweetModule.tweetView);
-        TheApp.content.show(test);
 
-        //TODO: Temporary test rig remove once finished.
-        setTimeout(function(){
-            tweetModule.tweetView.listenToEvents();
-            TheApp.content.show(tweetModule.tweetView);
-        },1000);
-        //TheApp.footer.show(formview);
+        TheApp.side.show(test);
+        //this.modalRepeatedRunTest(TheApp,tweetModule);
     };
 
     //TODO: Temporary test rig remove once finished.
-    Console.prototype.modalRepeatedRunTest = function(){
+    Console.prototype.modalRepeatedRunTest = function(TheApp,tweetModule){
         var self = this;
         var xtime = setTimeout(function(){
-            appConsole.modalview.trigger('click:open',{title:'test', html:'html'});
+            TheApp.content.close();
+            tweetModule.tweetView.listenToEvents();
+            TheApp.side.show(tweetModule.tweetView);
             clearTimeout(xtime);
             var ytime = setTimeout(function(){
-                appConsole.modalview.trigger('click:close');
+                tweetModule.tweetView.listenToEvents();
+                TheApp.content.show(tweetModule.tweetView);
                 clearTimeout(ytime);
-                self.modalRepeatedRunTest();
-            },300);
-        },300);
+                self.modalRepeatedRunTest(TheApp,tweetModule);
+            },1000);
+        },1000);
     };
 
     return Console;

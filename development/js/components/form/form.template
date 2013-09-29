@@ -1,6 +1,7 @@
 <form id="new-tweet" class="button-panel" action="#" method="post">
-    <label>Author</label><input id="author-name" name="author-name" type="text" />
-    <label>Status</label><input id="status-update" name="status-update" type="text" />
+    {{#input}}
+        <label>{{title}}</label><input id="{{id}}" name="{{name}}" type="{{type}}" />
+    {{/input}}
     <button>post message</button>
     <div class="error"></div>
 </form>

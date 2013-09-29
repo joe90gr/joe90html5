@@ -1,17 +1,11 @@
 define(['backbone',
     'marionette',
     'mustache',
-    'text!tweetTemplate',
-    'text!tweetsTemplate',
-    'tweetsModel',
-    'tweetsCollection'],
+    'text!tweetTemplate'],
     function (Backbone,
               Marionette,
               mustache,
-              tweetTemplate,
-              tweetsTemplate,
-              Tweet,
-              TweetsCollection) {
+              tweetTemplate) {
 
     var TweetView = Marionette.ItemView.extend({
         tagName: 'li',
@@ -24,7 +18,9 @@ define(['backbone',
             'blur .status': 'closeEdit',
             'keypress .status': 'onEnterUpdate'
         },
-        initialize: function(){},
+        initialize: function(){
+            this.el.className = this.model.cid;
+        },
         edit: function(e){
             e.preventDefault();
             this.$('.status').attr('contenteditable', true).focus();
@@ -50,6 +46,8 @@ define(['backbone',
     });
 
     var TweetsView = Marionette.ItemView.extend({
+        tagName: 'ul',
+        className: 'tweets-container',
         initialize: function(){
             this.listenToEvents();
             this.collection.getRecords();

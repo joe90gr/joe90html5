@@ -1,22 +1,28 @@
 define(['backbone',
         'marionette',
         'mustache',
+        'formModel',
+        'formCollection',
         'text!formTemplate',
         'tweetsModel'],
     function (Backbone,
               Marionette,
               mustache,
+              FormModel,
+              FormCollection,
               template,
               Tweet) {
 
     var FormView = Marionette.ItemView.extend({
-        template: function(){
-            return mustache.render(template);
+        template: function(data){
+            return mustache.render(template,data);
         },
         events: {
             'submit .button-panel': 'submit'
         },
-        initialize: function(){},
+        initialize: function(attr){
+            this.tweetCollection = attr.tweetCollection;
+        },
         submit: function(){
             var authorName = this.$el.find('#author-name').val();
             var statusUpdate = this.$el.find('#status-update').val();
@@ -26,7 +32,7 @@ define(['backbone',
                     author: authorName,
                     status: statusUpdate
                 });
-                this.collection.addRecord(tweet);
+                this.tweetCollection.addRecord(tweet);
             }
             else{
                 this.$el.find('.error').html('at least enter something').show();

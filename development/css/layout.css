@@ -315,7 +315,7 @@ table {
 --------------------------------------------------------------------*/
 .top-level, html body > header, html body > section, html body > footer {
   width: 100%;
-  position: absolute;
+  position: fixed;
   left: 0px; }
 
 html {
@@ -336,7 +336,18 @@ html body > section {
   top: 0;
   z-index: 1; }
 html body > section > .main-inner {
-  margin-top: 100px; }
+  float: left;
+  width: 60%;
+  padding-top: 100px; }
+html body > section > .main-inner > ul {
+  float: left;
+  width: 60%; }
+html body > section > div.side {
+  padding-top: 100px;
+  width: 40%;
+  height: 100%;
+  background-color: #228b22;
+  float: right; }
 html body > footer {
   height: 30px;
   background: SaddleBrown;

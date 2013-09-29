@@ -23,7 +23,7 @@ $footer-height: 30px;
 --------------------------------------------------------------------*/
 .top-level{
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	left:0px;
 }
 
@@ -50,8 +50,22 @@ html{
 			top: 0;
 			z-index: 1;
             >.main-inner{
-                margin-top: $header-height ;
+              float: left;
+              width: 60%;
+              padding-top:100px;
+              >ul{
+                float: left;
+                width: 60%;
+              }
             }
+
+          >div.side{
+            padding-top:100px;
+            width: 40%;
+            height: 100%;
+            background-color: #228b22;
+            float: right;
+          }
 		}
 		>footer{
 			@extend .top-level;

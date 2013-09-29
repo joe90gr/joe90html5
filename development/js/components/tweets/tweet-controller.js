@@ -1,13 +1,15 @@
-define(['backbone',
+define([
+    'backbone',
     'marionette',
     'tweetsModel',
     'tweetsCollection',
-    'tweetsView' ],
-    function (Backbone,
-              Marionette,
-              Tweet,
-              TweetList,
-              TweetsView ){
+    'tweetsView'
+],function (
+    Backbone,
+    Marionette,
+    Tweet,
+    TweetList,
+    TweetsView ){
 
     var TweetController = function(){
         this.initialize();

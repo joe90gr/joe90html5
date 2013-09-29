@@ -10,14 +10,13 @@
 			<div class="header-panel"></div>
 		</header>
 		<section>
-		    <div class="main-inner">
-                <ul id="tweets-container"></ul>
-		    </div>
+		    <div class="main-inner"></div>
+            <div class="side"></div>
 		</section>
 		<footer>
 		    <div class="footer-inner">
-					<a href="/#about">Link to about</a>
-        			<a href="/#myid/5">Link to about</a>
+			    <a href="/#about">Link to about</a>
+        	    <a href="/#myid/5">Link to about</a>
 		    </div>
 		</footer>
 		<div class="modal-overlay"></div>
