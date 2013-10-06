@@ -18,9 +18,7 @@ define(['backbone',
             'blur .status': 'closeEdit',
             'keypress .status': 'onEnterUpdate'
         },
-        initialize: function(){
-            this.el.className = this.model.cid;
-        },
+        initialize: function(){},
         edit: function(e){
             e.preventDefault();
             this.$('.status').attr('contenteditable', true).focus();
@@ -45,25 +43,19 @@ define(['backbone',
         }
     });
 
-    var TweetsView = Marionette.ItemView.extend({
+    var emptyView = Marionette.ItemView.extend({
+        template: function(data){
+            return mustache.render('bollocks',data);
+        }
+    });
+
+    var TweetsView = Marionette.CollectionView.extend({
         tagName: 'ul',
         className: 'tweets-container',
+        itemView: TweetView,
+        emptyView: emptyView,
         initialize: function(){
-            this.listenToEvents();
             this.collection.getRecords();
-        },
-        listenToEvents: function(){
-            this.listenTo(this.collection ,'add', this.render, this);
-            this.listenTo(this.collection,'remove', this.render, this);
-        },
-        render: function(){
-            var self = this;
-            self.$el.html('');
-            _.each(this.collection.toArray(), function(tweet, i){
-                self.$el.append((new TweetView({model: tweet})).render().$el );
-            });
-
-            return this;
         }
     });
     return TweetsView;

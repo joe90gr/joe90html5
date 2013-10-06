@@ -27,7 +27,12 @@ requirejs.config({
         tweetsModel: 'components/tweets/tweets-model',
         tweetsCollection: 'components/tweets/tweets-collection',
         tweetsView: 'components/tweets/tweets-view',
-        tweetTemplate: 'components/tweets/tweet.template'
+        tweetTemplate: 'components/tweets/tweet.template',
+
+        testModel: 'components/test/model',
+        testCollection: 'components/test/collection',
+        testView: 'components/test/view',
+        testTemplate: 'components/test/test.template'
     },
     shim: {
         jquery : {
@@ -49,5 +54,4 @@ requirejs.config({
 
 require(['index'],function(myapp){
     var Console = new myapp();
-    //Console.modalRepeatedRunTest();
 });

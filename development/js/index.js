@@ -13,6 +13,7 @@ define(['modernizr',
         'formModel',
         'formCollection',
         'formView',
+        'testView',
         'router'],
     function (mod,
                Backbone,
@@ -26,6 +27,7 @@ define(['modernizr',
                FormModel,
                FormCollection,
                FormView,
+               TestView,
                Router
                ) {
     'use strict';
@@ -59,13 +61,7 @@ define(['modernizr',
         var content = new Marionette.Region({el: '#tweets-container'});
         var footer = new Marionette.Region({el: '.footer-inner'});
         */
-        var Test = Marionette.View.extend({
-            el: '',
-            template: '',
-            initialize: function(){
-                this.$el.html('render new content');
-            }
-        });
+
 
         var modal = new ModalModel();
         var modalview = new ModalView({model: modal});
@@ -104,13 +100,12 @@ define(['modernizr',
         });
 
 
-        //Experimenting with view switching
-        var test = new Test();
-
         TheApp.header.show(formview);
         TheApp.content.show(tweetModule.tweetView);
 
-        TheApp.side.show(test);
+        var testView = new TestView();
+        TheApp.side.show(testView);
+
         //this.modalRepeatedRunTest(TheApp,tweetModule);
     };
 
@@ -119,11 +114,11 @@ define(['modernizr',
         var self = this;
         var xtime = setTimeout(function(){
             TheApp.content.close();
-            tweetModule.tweetView.listenToEvents();
+
             TheApp.side.show(tweetModule.tweetView);
             clearTimeout(xtime);
             var ytime = setTimeout(function(){
-                tweetModule.tweetView.listenToEvents();
+
                 TheApp.content.show(tweetModule.tweetView);
                 clearTimeout(ytime);
                 self.modalRepeatedRunTest(TheApp,tweetModule);
