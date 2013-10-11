@@ -3,8 +3,18 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         copy: {
             main: {
-                files: [{expand: true, cwd: 'development/',
-                    src: ['**'], dest: 'production/'}]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'development/',
+                        src: [
+                            'css/*.css',
+                            'js/libs/require.js',
+                            '*.php'
+                        ],
+                        dest: 'production/'
+                    }
+                ]
             }
         },
         csso:{
@@ -55,14 +65,20 @@ module.exports = function(grunt) {
         },
         requirejs: {
             compile:{
-                options:   {
-                    "appDir":"development",
-                    "baseUrl":"./",
-                    "dir":"production",
+                options: {
+                    "mainConfigFile": "development/js/main.js",
+                    //"appDir":"development",
+                    "baseUrl":"./development/js",
+                    //"dir":"production",
+                    "name": "main",
+                    "out": 'production/js/main.js',
                     "optimize":"uglify2",
                     "optimizeCss":"none",
                     "fileExclusionRegExp":"styles|vendor|node_modules|.*min\\.js|test$",
-                    "preserveLicenseComments":false
+                    "preserveLicenseComments":false,
+                    "exclude": [
+                        "libs/require.js"
+                    ]
                 }
             }
         },
@@ -104,6 +120,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['sass', 'jshint', 'requirejs', 'csso']);
+    grunt.registerTask('default', ['sass', 'jshint', 'requirejs', 'copy', 'csso']);
 };
 

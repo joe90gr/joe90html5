@@ -29,6 +29,7 @@ requirejs.config({
         tweetsView: 'components/tweets/tweets-view',
         tweetTemplate: 'components/tweets/tweet.template',
 
+        testController: 'components/test/controller',
         testModel: 'components/test/model',
         testCollection: 'components/test/collection',
         testView: 'components/test/view',

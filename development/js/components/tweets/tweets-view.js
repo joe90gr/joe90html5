@@ -30,11 +30,10 @@ define(['backbone',
             this.model.save();
         },
         onEnterUpdate: function(e){
-            var self = this;
             if(e.keyCode === 13){
                 _.delay(function(){
-                    self.$('.status').blur();
-                },100);
+                    this.$('.status').blur();
+                },100).bind(this);
             }
         },
         deleteRecord: function(e){

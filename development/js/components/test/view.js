@@ -14,41 +14,78 @@ define([
         initialize: function(){}
     });
 
-    var emptyView = Marionette.ItemView.extend({
+    var factoryItemView = Marionette.ItemView.extend({
         template: function(data){
-            return Mustache.render('bollocks',data);
-        }
+            return Mustache.render('bollohcks',data);
+        },
+        initialize: function(){}
     });
 
     var testView = Marionette.CollectionView.extend({
         model: TestModel,
-        itemView: testItem,
-        emptyView: emptyView,
         collection: new TestCollection(),
+        tagName: 'section',
+        itemView: testItem,
+        emptyView: factoryItemView,
+
         initialize: function(){
-            this.listenTo(this.collection,'remove', this.trig, this);
+            //this.listenTo(this.collection,'remove', this.trig, this);
+            this.addToCollectionTest();
+            appConsole.vent.setHandlers({
+                "foo": function(){
+                    console.log('hey foo');
+                },
+                "bar": function(){
+                    console.log('hey bar');
+                }
+            });
+        },
+
+        onRender: function(){
+            console.log(writeFormat[0],writeFormat[1], 'onRender');
+        },
+        onBeforeClose: function(){
+            console.log(writeFormat[0],writeFormat[1], 'onBeforeClose');
+
+        },
+        onBeforeItemAdded: function(itemView){
+            console.log(writeFormat[0],writeFormat[1], 'onBeforeItemAdded');
+        },
+        onAfterItemAdded: function(itemView){
+            console.log(writeFormat[0],writeFormat[1], 'onAfterItemAdded');
+        },
+        onItemRemoved: function(itemView){
+            console.log(writeFormat[0],writeFormat[1], 'onItemRemoved');
+        },
+
+        trig: function(e){
+            console.log(writeFormat[0],writeFormat[1], e.attributes.details[0].name);
+        },
+
+        addToCollectionTest: function(){
             this.collection.add(new this.model({
                 details:[
                     {name:'jim', age: 33}]
-            }))
+            }));
             this.collection.add(new this.model({
                 details:[
                     {name:'ted', age: 55}]
-            }))
+            }));
+            this.collection.add(new this.model({
+                details:[
+                    {name:'teddy', age: 60}]
+            }));
 
-            var mod;
             for(var key in this.collection.models){
                 for(var key1 in this.collection.models[key].attributes.details){
                     if(this.collection.models[key].attributes.details[key1].name == 'ted'){
-                        mod = this.collection.models[key];
+                        this.mod = this.collection.models[key];
                     }
                 }
             }
-            console.log('%c JOE! ', 'background: #222; color: #bada55');
-            this.collection.remove(mod);
-        },
-        trig: function(e){
-            console.log('Removed triggered: ', e.attributes.details[0].name)
+            setTimeout(function(){
+                this.collection.remove(this.mod);
+            }.bind(this),1000);
         }
     });
     return testView;

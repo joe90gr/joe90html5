@@ -3,7 +3,6 @@ define([''], function(){
         initialize: function(){
 
         }
-
     };
 
     return FormController;

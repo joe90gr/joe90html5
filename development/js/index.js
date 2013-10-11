@@ -1,5 +1,5 @@
 /*global setTimeout clearTimeout console*/
-
+var writeFormat = ['%c JOE! ' , 'background: #222; color: #bada55'];
 var appConsole = appConsole || {};
 define(['modernizr',
         'backbone',
@@ -13,6 +13,7 @@ define(['modernizr',
         'formModel',
         'formCollection',
         'formView',
+        'testController',
         'testView',
         'router'],
     function (mod,
@@ -27,14 +28,18 @@ define(['modernizr',
                FormModel,
                FormCollection,
                FormView,
+               TestController,
                TestView,
                Router
                ) {
     'use strict';
 
     var Console = function(){
+        appConsole.vent = new Backbone.Wreqr.RequestResponse();
         this.init();
         this.initRouter();
+        appConsole.vent.request("bar");
+        appConsole.vent.request("foo");
     };
 
     Console.prototype.initRouter = function(){
@@ -103,8 +108,9 @@ define(['modernizr',
         TheApp.header.show(formview);
         TheApp.content.show(tweetModule.tweetView);
 
-        var testView = new TestView();
-        TheApp.side.show(testView);
+        var testController = new TestController();
+        TheApp.side.show(testController.testView);
+        //TheApp.side.close(testView);
 
         //this.modalRepeatedRunTest(TheApp,tweetModule);
     };
