@@ -10,6 +10,7 @@ module.exports = function(grunt) {
                         src: [
                             'css/*.css',
                             'js/libs/require.js',
+                            'Restler/**',
                             '*.php'
                         ],
                         dest: 'production/'

@@ -12,7 +12,7 @@ define(['backbone',
                 success: function(model,response){
                     console.log('Create Was Successful',model.id, response);
                 },
-                error: function(){
+                error: function(model, response){
                     console.log('Create Was ERROR', response);
                 }
             });
@@ -22,7 +22,7 @@ define(['backbone',
                 success:function(model, response){
                     console.log('fetch was a success', response);
                 },
-                fail: function(){
+                error: function(model, response){
                     console.log('fetch has failed', response);
                 }
             });

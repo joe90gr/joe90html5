@@ -12,7 +12,7 @@ define(['backbone'], function (Backbone) {
                 success: function(model, response){
                     console.log('DESTROYED',model.id , response );
                 },
-                error: function(){
+                error: function(model, response){
                     console.log('Destroy failed', response);
                 }
             });
