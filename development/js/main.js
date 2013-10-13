@@ -14,11 +14,18 @@ requirejs.config({
         mustache: "libs/mustache",
         text: "libs/text",
 
+        homePage: 'pages/home-page',
+
+        twoColumnLayout: 'pages/two-column/two-column-layout',
+        twoColumnTemplate: 'pages/two-column/two-column.template',
+
+        formController: 'components/form/form-controller',
         formModel: 'components/form/form-model',
         formCollection: 'components/form/form-collection',
         formView: 'components/form/form-view',
         formTemplate: 'components/form/form.template',
 
+        modalController: 'components/modal/modal-controller',
         modalModel: 'components/modal/modal-model',
         modalView: 'components/modal/modal-view',
         modalTemplate: 'components/modal/modal.template',

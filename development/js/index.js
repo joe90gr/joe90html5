@@ -4,12 +4,10 @@ var appConsole = appConsole || {};
 define(['modernizr',
         'backbone',
         'marionette',
+        'twoColumnLayout',
         'tweetsController',
-        'tweetsModel',
-        'tweetsCollection',
-        'tweetsView',
-        'modalModel',
-        'modalView',
+        'modalController',
+        'formController',
         'formModel',
         'formCollection',
         'formView',
@@ -19,12 +17,10 @@ define(['modernizr',
     function (mod,
                Backbone,
                Marionette,
+               TwoColumnLayout,
                TweetController,
-               Tweet,
-               TweetList,
-               TweetsView,
-               ModalModel,
-               ModalView,
+               ModalController,
+               FormController,
                FormModel,
                FormCollection,
                FormView,
@@ -48,88 +44,47 @@ define(['modernizr',
     };
 
     Console.prototype.init = function(){
-        Backbone.on('all',function(input){
-            console.log('fired general event',input);
-        });
-
         var TheApp = new Marionette.Application();
-
         TheApp.addRegions({
             header: '.header-panel',
-            content: '.main-inner',
-            side: '.side',
+            content: '.content-main',
             footer: '.footer-inner'
         });
 
-        /*  The Alternative way to add regions (withought Marionette.Application)
-        var header = new Marionette.Region({el: '.header-panel'});
-        var content = new Marionette.Region({el: '#tweets-container'});
-        var footer = new Marionette.Region({el: '.footer-inner'});
-        */
-
-
-        var modal = new ModalModel();
-        var modalview = new ModalView({model: modal});
-
-        //TODO: since models trigger once since repeated change event with same data
-        appConsole.modal = modal;
-        //modal.set({title: "March 20", content: "In his eyes she eclipses..."});
-
-        var tweetModule = new TweetController();
-
-        /* previous way of intantiating views (Alternative to XXXController.initialize)
-        var tweetList = new TweetList();
-        var tweetView = new TweetsView({collection: tweetList});
-        */
-
-        var formview = new FormView({
-            model: new FormModel({
-                'input': [
-                    {
-                        id: 'author-name',
-                        title: 'Author',
-                        name: 'author-name',
-                        value: 'the value',
-                        type: 'text'
-                    },
-                    {
-                        id: 'status-update',
-                        title: 'Status',
-                        name: 'status-update',
-                        value: 'the value1',
-                        type: 'text'
-                    }
-                ]
-            }),
-            tweetCollection: tweetModule.tweetList
+        var layout = new TwoColumnLayout();
+        layout.addRegions({
+            content: '.main-inner',
+            side: '.side'
         });
 
-
-        TheApp.header.show(formview);
-        TheApp.content.show(tweetModule.tweetView);
-
+        var formController = new FormController();
         var testController = new TestController();
-        TheApp.side.show(testController.testView);
-        //TheApp.side.close(testView);
+        var tweetModule = new TweetController();
 
-        //this.modalRepeatedRunTest(TheApp,tweetModule);
+
+        TheApp.header.show(formController.formview);
+        TheApp.content.show(layout);
+        layout.content.show(formController.tweetModule.tweetView);
+        layout.side.show(testController.testView);
+
+        //this.modalRepeatedRunTest(layout,tweetModule);
     };
 
     //TODO: Temporary test rig remove once finished.
-    Console.prototype.modalRepeatedRunTest = function(TheApp,tweetModule){
+    Console.prototype.modalRepeatedRunTest = function(layout,tweetModule){
         var self = this;
         var xtime = setTimeout(function(){
-            TheApp.content.close();
+            layout.content.close();
 
-            TheApp.side.show(tweetModule.tweetView);
+            layout.side.show(tweetModule.tweetView);
             clearTimeout(xtime);
             var ytime = setTimeout(function(){
 
-                TheApp.content.show(tweetModule.tweetView);
+                layout.content.show(tweetModule.tweetView);
                 clearTimeout(ytime);
-                self.modalRepeatedRunTest(TheApp,tweetModule);
-            },1000);
-        },1000);
+                self.modalRepeatedRunTest(layout,tweetModule);
+            },300);
+        },300);
     };
 
     return Console;

@@ -36,7 +36,7 @@ define(['backbone',
             }
             else{
                 this.$el.find('.error').html('at least enter something').show();
-                appConsole.modal.set({title: "March 20", content: "In his eyes she eclipses..."});
+                appConsole.modalOpen("Notice","Please enter something");
             }
 
             return false;

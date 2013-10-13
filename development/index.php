@@ -9,10 +9,7 @@
 		<header>
 			<div class="header-panel"></div>
 		</header>
-		<section>
-		    <div class="main-inner"></div>
-            <div class="side"></div>
-		</section>
+		<section class="content-main"></section>
 		<footer>
 		    <div class="footer-inner">
 			    <a href="/#about">Link to about</a>
