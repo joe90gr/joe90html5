@@ -8,24 +8,16 @@ define(['modernizr',
         'tweetsController',
         'modalController',
         'formController',
-        'formModel',
-        'formCollection',
-        'formView',
         'testController',
-        'testView',
         'router'],
-    function (mod,
+    function ( mod,
                Backbone,
                Marionette,
                TwoColumnLayout,
                TweetController,
                ModalController,
                FormController,
-               FormModel,
-               FormCollection,
-               FormView,
                TestController,
-               TestView,
                Router
                ) {
     'use strict';
@@ -51,40 +43,34 @@ define(['modernizr',
             footer: '.footer-inner'
         });
 
-        var layout = new TwoColumnLayout();
-        layout.addRegions({
-            content: '.main-inner',
-            side: '.side'
-        });
+        var twoColumnlayout = new TwoColumnLayout();
 
         var formController = new FormController();
         var testController = new TestController();
-        var tweetModule = new TweetController();
+        var tweetController = new TweetController();
 
 
         TheApp.header.show(formController.formview);
-        TheApp.content.show(layout);
-        layout.content.show(formController.tweetModule.tweetView);
-        layout.side.show(testController.testView);
+        TheApp.content.show(twoColumnlayout);
+        twoColumnlayout.content.show(formController.tweetView);
+        twoColumnlayout.side.show(testController.testView);
 
-        //this.modalRepeatedRunTest(layout,tweetModule);
+        //this.modalRepeatedRunTest(layout,tweetController.tweetView);
     };
 
     //TODO: Temporary test rig remove once finished.
-    Console.prototype.modalRepeatedRunTest = function(layout,tweetModule){
+    Console.prototype.modalRepeatedRunTest = function(layout,mod){
         var self = this;
         var xtime = setTimeout(function(){
             layout.content.close();
-
-            layout.side.show(tweetModule.tweetView);
+            layout.side.show(mod);
             clearTimeout(xtime);
             var ytime = setTimeout(function(){
-
-                layout.content.show(tweetModule.tweetView);
+                layout.content.show(mod);
                 clearTimeout(ytime);
-                self.modalRepeatedRunTest(layout,tweetModule);
-            },300);
-        },300);
+                self.modalRepeatedRunTest(layout,mod);
+            },1000);
+        },1000);
     };
 
     return Console;

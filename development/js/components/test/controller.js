@@ -1,19 +1,15 @@
 define(['backbone',
     'marionette',
-    'mustache',
-    'testModel',
     'testCollection',
-    'testView',
-    'text!testTemplate'], function(Backbone, Marionette, Mustache, TestModel, TestCollection, TestView, TestTemplate){
+    'testView'], function(Backbone, Marionette, TestCollection, TestView){
 
     var Controller = function(){
+        this.testCollection = new TestCollection();
+        this.testView = new TestView({collection: this.testCollection});
         this.initialize();
     };
-    Controller.prototype = {
-        initialize: function(){
-            this.testCollection = new TestCollection();
-            this.testView = new TestView({collection: this.testCollection});
-        }
+    Controller.prototype.initialize = function(){
+
     };
 
     return Controller;

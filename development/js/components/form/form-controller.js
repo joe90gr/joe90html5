@@ -1,6 +1,17 @@
-define(['formModel', 'tweetsController', 'formView'], function(FormModel, TweetController, FormView){
+define(['formModel',
+    'tweetsController',
+    'formView'],
+function(FormModel, TweetController, FormView){
+
     var FormController = function(){
-        this.tweetModule = new TweetController();
+        this.tweetController = new TweetController();
+        this.tweetView = this.tweetController.tweetView;
+        this.tweetCollection = this.tweetController.tweetList;
+        this.initialize();
+    };
+
+    FormController.prototype.initialize = function(){
+        var self = this;
         this.formview = new FormView({
             model: new FormModel({
                 'input': [
@@ -20,7 +31,7 @@ define(['formModel', 'tweetsController', 'formView'], function(FormModel, TweetC
                     }
                 ]
             }),
-            tweetCollection: this.tweetModule.tweetList
+            tweetCollection: self.tweetCollection
         });
     };
 

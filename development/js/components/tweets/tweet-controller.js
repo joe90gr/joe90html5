@@ -1,24 +1,20 @@
 define([
     'backbone',
     'marionette',
-    'tweetsModel',
     'tweetsCollection',
     'tweetsView'
 ],function (
     Backbone,
     Marionette,
-    Tweet,
     TweetList,
     TweetsView ){
 
     var TweetController = function(){
+        this.tweetList = new TweetList();
+        this.tweetView = new TweetsView({collection: this.tweetList});
         this.initialize();
     };
-    TweetController.prototype = {
-        initialize: function(){
-            this.tweetList = new TweetList();
-            this.tweetView = new TweetsView({collection: this.tweetList});
-        }
+    TweetController.prototype.initialize = function(){
     };
 
     return TweetController;
