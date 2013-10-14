@@ -6,8 +6,8 @@ define(['modalModel', 'modalView'], function(ModalModel, ModalView){
 
     appConsole.modalOpen = function(title, content){
         modal.set({trigger: !modal.get('trigger'),title: title, content: content});
-    }
+    };
     appConsole.modalClose = function(){
-        modalview.closeModal()
-    }
+        modalview.closeModal();
+    };
 });
