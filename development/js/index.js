@@ -45,6 +45,7 @@ define(['modernizr',
         appConsole.twoColumnLayout = new TwoColumnLayout();
         appConsole.main.content.show(appConsole.twoColumnLayout);
 
+        var modalController = new ModalController();
         var tweetController = new TweetController();
         var formController = new FormController();
         var testController = new TestController();
