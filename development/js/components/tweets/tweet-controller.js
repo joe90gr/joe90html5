@@ -15,6 +15,7 @@ define([
         this.initialize();
     };
     TweetController.prototype.initialize = function(){
+        appConsole.twoColumnLayout.content.show(this.tweetView);
     };
 
     return TweetController;

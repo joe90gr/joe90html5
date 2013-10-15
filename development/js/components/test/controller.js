@@ -9,7 +9,7 @@ define(['backbone',
         this.initialize();
     };
     Controller.prototype.initialize = function(){
-
+        appConsole.twoColumnLayout.side.show(this.testView);
     };
 
     return Controller;

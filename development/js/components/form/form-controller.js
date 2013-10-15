@@ -33,6 +33,8 @@ function(FormModel, TweetController, FormView){
             }),
             tweetCollection: self.tweetCollection
         });
+
+        appConsole.main.header.show(this.formview);
     };
 
     return FormController;

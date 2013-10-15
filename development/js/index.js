@@ -23,11 +23,11 @@ define(['modernizr',
     'use strict';
 
     var Console = function(){
+        appConsole.main = new Marionette.Application();
         appConsole.vent = new Backbone.Wreqr.RequestResponse();
-        this.init();
+
         this.initRouter();
-        appConsole.vent.request("bar");
-        appConsole.vent.request("foo");
+        this.init();
     };
 
     Console.prototype.initRouter = function(){
@@ -36,41 +36,21 @@ define(['modernizr',
     };
 
     Console.prototype.init = function(){
-        var TheApp = new Marionette.Application();
-        TheApp.addRegions({
+        appConsole.main.addRegions({
             header: '.header-panel',
             content: '.content-main',
             footer: '.footer-inner'
         });
 
-        var twoColumnlayout = new TwoColumnLayout();
+        appConsole.twoColumnLayout = new TwoColumnLayout();
+        appConsole.main.content.show(appConsole.twoColumnLayout);
 
+        var tweetController = new TweetController();
         var formController = new FormController();
         var testController = new TestController();
-        var tweetController = new TweetController();
 
-
-        TheApp.header.show(formController.formview);
-        TheApp.content.show(twoColumnlayout);
-        twoColumnlayout.content.show(formController.tweetView);
-        twoColumnlayout.side.show(testController.testView);
-
-        //this.modalRepeatedRunTest(layout,tweetController.tweetView);
-    };
-
-    //TODO: Temporary test rig remove once finished.
-    Console.prototype.modalRepeatedRunTest = function(layout,mod){
-        var self = this;
-        var xtime = setTimeout(function(){
-            layout.content.close();
-            layout.side.show(mod);
-            clearTimeout(xtime);
-            var ytime = setTimeout(function(){
-                layout.content.show(mod);
-                clearTimeout(ytime);
-                self.modalRepeatedRunTest(layout,mod);
-            },1000);
-        },1000);
+        appConsole.vent.request("bar");
+        appConsole.vent.request("foo");
     };
 
     return Console;
