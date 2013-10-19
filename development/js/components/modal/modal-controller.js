@@ -1,19 +1,18 @@
-define(['modalModel', 'modalView'], function(ModalModel, ModalView){
+define(['marionette', 'modalModel', 'modalView'], function(Marionette, ModalModel, ModalView){
 
-    var ModalController = function(){
-        var modal = new ModalModel();
-        var modalview = new ModalView({model: modal});
+    var ModalController = Marionette.Controller.extend({
+        initialize: function(){
+            var modal = new ModalModel();
+            var modalview = new ModalView({model: modal});
 
-        appConsole.modalOpen = function(title, content){
-            modal.set({trigger: !modal.get('trigger'),title: title, content: content});
-        };
-        appConsole.modalClose = function(){
-            modalview.closeModal();
-        };
-    };
+            appConsole.modalOpen = function(title, content){
+                modal.set({trigger: !modal.get('trigger'),title: title, content: content});
+            };
+            appConsole.modalClose = function(){
+                modalview.closeModal();
+            };
+        }
+    });
 
-    ModalController.prototype.initialize = function(){
-
-    };
     return ModalController;
 });

@@ -21,30 +21,42 @@ define(['modernizr',
                TestController
                ) {
     'use strict';
+    var Console = Marionette.Controller.extend({
+        initialize:function(){
+            AppConsole.main.addRegions({
+                header: '.header-panel',
+                content: '.content-main',
+                footer: '.footer-inner'
+            });
 
-    var Console = function(){
+            AppConsole.main.content.show(AppConsole.twoColumnLayout);
 
-        this.init();
-    };
+            this.modalController = new ModalController();
+            this.tweetController = new TweetController();
+            this.formController = new FormController();
+            this.testController = new TestController();
 
-    Console.prototype.init = function(){
-        AppConsole.main.addRegions({
-            header: '.header-panel',
-            content: '.content-main',
-            footer: '.footer-inner'
-        });
+            AppConsole.requestResponse.request("bar");
+            AppConsole.requestResponse.request("foo");
 
+            //this.modalRepeatedRunTest();
+        },
+        //TODO: Temporary test rig remove once finished.
+        modalRepeatedRunTest: function(){
+            var self = this;
+            var xtime = setTimeout(function(){
 
-        AppConsole.main.content.show(AppConsole.twoColumnLayout);
+                self.tweetController.close();
+                clearTimeout(xtime);
+                var ytime = setTimeout(function(){
 
-        var modalController = new ModalController();
-        var tweetController = new TweetController();
-        var formController = new FormController();
-        var testController = new TestController();
-
-        AppConsole.requestResponse.request("bar");
-        AppConsole.requestResponse.request("foo");
-    };
+                    self.tweetController.openView();
+                    clearTimeout(ytime);
+                    self.modalRepeatedRunTest();
+                },100);
+            },100);
+        }
+    });
 
     return Console;
 });

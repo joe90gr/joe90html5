@@ -1,17 +1,15 @@
 define(['app-console',
-    'backbone',
     'marionette',
     'testCollection',
-    'testView'], function(AppConsole, Backbone, Marionette, TestCollection, TestView){
+    'testView'], function(AppConsole, Marionette, TestCollection, TestView){
 
-    var Controller = function(){
-        this.testCollection = new TestCollection();
-        this.testView = new TestView({collection: this.testCollection});
-        this.initialize();
-    };
-    Controller.prototype.initialize = function(){
-        AppConsole.twoColumnLayout.side.show(this.testView);
-    };
+    var Controller = Marionette.Controller.extend({
+        initialize: function(){
+            this.testCollection = new TestCollection();
+            this.testView = new TestView({collection: this.testCollection});
+            AppConsole.twoColumnLayout.side.show(this.testView);
+        }
 
+    });
     return Controller;
 });

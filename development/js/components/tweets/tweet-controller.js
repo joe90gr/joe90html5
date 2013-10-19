@@ -11,14 +11,23 @@ define([
     TweetList,
     TweetsView ){
 
-    var TweetController = function(){
-        this.tweetList = new TweetList();
-        this.tweetView = new TweetsView({collection: this.tweetList});
-        this.initialize();
-    };
-    TweetController.prototype.initialize = function(){
-        appConsole.twoColumnLayout.content.show(this.tweetView);
-    };
+    var TweetController = Marionette.Controller.extend({
 
+        initialize: function(){
+            this.tweetList = new TweetList();
+            this.tweetView = new TweetsView({collection: this.tweetList});
+            appConsole.twoColumnLayout.content.show(this.tweetView);
+        },
+
+        onClose: function(){
+            this.tweetView.close();
+            appConsole.twoColumnLayout.content.close();
+        },
+
+        openView: function(){
+            appConsole.twoColumnLayout.content.show(this.tweetView);
+        }
+
+    });
     return TweetController;
 });
