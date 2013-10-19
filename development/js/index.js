@@ -4,54 +4,46 @@ var appConsole = appConsole || {};
 define(['modernizr',
         'backbone',
         'marionette',
+        'app-console',
         'twoColumnLayout',
         'tweetsController',
         'modalController',
         'formController',
-        'testController',
-        'router'],
+        'testController'],
     function ( mod,
                Backbone,
                Marionette,
+               AppConsole,
                TwoColumnLayout,
                TweetController,
                ModalController,
                FormController,
-               TestController,
-               Router
+               TestController
                ) {
     'use strict';
 
     var Console = function(){
-        appConsole.main = new Marionette.Application();
-        appConsole.vent = new Backbone.Wreqr.RequestResponse();
 
-        this.initRouter();
         this.init();
     };
 
-    Console.prototype.initRouter = function(){
-        appConsole.router = new Router();
-        Backbone.history.start();
-    };
-
     Console.prototype.init = function(){
-        appConsole.main.addRegions({
+        AppConsole.main.addRegions({
             header: '.header-panel',
             content: '.content-main',
             footer: '.footer-inner'
         });
 
-        appConsole.twoColumnLayout = new TwoColumnLayout();
-        appConsole.main.content.show(appConsole.twoColumnLayout);
+
+        AppConsole.main.content.show(AppConsole.twoColumnLayout);
 
         var modalController = new ModalController();
         var tweetController = new TweetController();
         var formController = new FormController();
         var testController = new TestController();
 
-        appConsole.vent.request("bar");
-        appConsole.vent.request("foo");
+        AppConsole.requestResponse.request("bar");
+        AppConsole.requestResponse.request("foo");
     };
 
     return Console;

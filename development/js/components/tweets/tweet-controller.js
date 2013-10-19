@@ -1,9 +1,11 @@
 define([
+    'app-console',
     'backbone',
     'marionette',
     'tweetsCollection',
     'tweetsView'
 ],function (
+    appConsole,
     Backbone,
     Marionette,
     TweetList,

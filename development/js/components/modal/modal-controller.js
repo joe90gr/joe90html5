@@ -1,5 +1,4 @@
 define(['modalModel', 'modalView'], function(ModalModel, ModalView){
-    appConsole = appConsole || {};
 
     var ModalController = function(){
         var modal = new ModalModel();

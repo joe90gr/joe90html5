@@ -1,11 +1,12 @@
 define([
+    'app-console',
     'backbone',
     'marionette',
     'mustache',
     'testModel',
     'testCollection',
     'text!testTemplate'
-], function(Backbone, Marionette, Mustache, TestModel, TestCollection, TestTemplate){
+], function(AppConsole, Backbone, Marionette, Mustache, TestModel, TestCollection, TestTemplate){
 
     var testItem = Marionette.ItemView.extend({
         template: function(data){
@@ -31,13 +32,13 @@ define([
         initialize: function(){
             //this.listenTo(this.collection,'remove', this.trig, this);
             this.addToCollectionTest();
-            appConsole.vent.setHandlers({
+            AppConsole.requestResponse.setHandlers({
                 "foo": function(){
-                    console.log('hey foo');
-                },
+                    console.log('hey foo',this);
+                }.bind(this),
                 "bar": function(){
-                    console.log('hey bar');
-                }
+                    console.log('hey bar',this);
+                }.bind(this)
             });
         },
 
@@ -46,7 +47,6 @@ define([
         },
         onBeforeClose: function(){
             console.log(writeFormat[0],writeFormat[1], 'onBeforeClose');
-
         },
         onBeforeItemAdded: function(itemView){
             console.log(writeFormat[0],writeFormat[1], 'onBeforeItemAdded');
@@ -57,7 +57,6 @@ define([
         onItemRemoved: function(itemView){
             console.log(writeFormat[0],writeFormat[1], 'onItemRemoved');
         },
-
         trig: function(e){
             console.log(writeFormat[0],writeFormat[1], e.attributes.details[0].name);
         },

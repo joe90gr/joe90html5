@@ -1,7 +1,8 @@
-define(['formModel',
+define(['app-console',
+    'formModel',
     'tweetsController',
     'formView'],
-function(FormModel, TweetController, FormView){
+function(AppConsole, FormModel, TweetController, FormView){
 
     var FormController = function(){
         this.tweetController = new TweetController();
@@ -34,7 +35,7 @@ function(FormModel, TweetController, FormView){
             tweetCollection: self.tweetCollection
         });
 
-        appConsole.main.header.show(this.formview);
+        AppConsole.main.header.show(this.formview);
     };
 
     return FormController;

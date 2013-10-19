@@ -1,7 +1,8 @@
-define(['backbone',
+define(['app-console',
+    'backbone',
     'marionette',
     'testCollection',
-    'testView'], function(Backbone, Marionette, TestCollection, TestView){
+    'testView'], function(AppConsole, Backbone, Marionette, TestCollection, TestView){
 
     var Controller = function(){
         this.testCollection = new TestCollection();
@@ -9,7 +10,7 @@ define(['backbone',
         this.initialize();
     };
     Controller.prototype.initialize = function(){
-        appConsole.twoColumnLayout.side.show(this.testView);
+        AppConsole.twoColumnLayout.side.show(this.testView);
     };
 
     return Controller;
