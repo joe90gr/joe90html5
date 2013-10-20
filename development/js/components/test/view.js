@@ -32,14 +32,6 @@ define([
         initialize: function(){
             //this.listenTo(this.collection,'remove', this.trig, this);
             this.addToCollectionTest();
-            AppConsole.requestResponse.setHandlers({
-                "foo": function(){
-                    console.log('hey foo',this);
-                }.bind(this),
-                "bar": function(){
-                    console.log('hey bar',this);
-                }.bind(this)
-            });
         },
 
         onRender: function(){

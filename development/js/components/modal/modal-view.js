@@ -17,6 +17,13 @@ function (Backbone,
             'click': 'closeModal', // the root element .modal-container set by el
             'click .box' : 'box'
         },
+        isModalOpen: false,
+        refresh: _(function(){
+            if(this.isModalOpen){
+                this.calcBoxPosition();
+            }
+        }).debounce(50),
+
         initialize: function(){
             this.modalOverlay = this.$el.parent().children('.modal-overlay');
             this.bindEventListeners();
@@ -30,28 +37,26 @@ function (Backbone,
             this.listenTo(this.model ,'change', this.openModal, this);
         },
         openModal: function(){
-            var self = this;
-            var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
+            this.isModalOpen = true ;
             this.render();
-            $(window).on('resize', refresh);
             this.modalOverlay.fadeIn('fast');
             this.$el.fadeIn('fast');
-            self.calcBoxPosition(window);
+            this.calcBoxPosition();
         },
         closeModal: function(){
+            this.isModalOpen = false ;
             this.$el.fadeOut('fast');
             this.modalOverlay.fadeOut('fast');
-            $(window).unbind('resize');
         },
         box: function(e){
             e.stopPropagation();
         },
-        calcBoxPosition: function(thisWindow){
+        calcBoxPosition: function(){
             var box = this.$el.children('.box'),
                 boxWidth = box.width(),
                 boxHeight = box.height(),
-                windowWidth = $(thisWindow).width(),
-                windowHeight = $(thisWindow).height(),
+                windowWidth = $(window).width(),
+                windowHeight = $(window).height(),
                 actualXposition = (windowWidth - boxWidth) / 2 ,
                 actualYposition = (windowHeight - boxHeight) / 2 - 100 ,
                 xPosition = actualXposition > 0 ? actualXposition : 0 ,

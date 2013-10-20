@@ -35,6 +35,21 @@ define(['modernizr',
             this.formController = new FormController();
             this.testController = new TestController();
 
+            AppConsole.requestResponse.setHandlers({
+                "foo": function(){
+                    console.log('hey foo');
+                },
+                "bar": function(){
+                    console.log('hey bar');
+                },
+                "on-window-resize": function(){
+                    AppConsole.modal.modalview.refresh();
+                }
+            });
+
+            AppConsole.windowResize(function(){
+                AppConsole.requestResponse.request("on-window-resize");
+            });
             AppConsole.requestResponse.request("bar");
             AppConsole.requestResponse.request("foo");
 

@@ -11,6 +11,14 @@ define(['backbone',
     AppConsole.prototype.router = new Router();
     AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
     AppConsole.prototype.modal = new ModalController();
+    AppConsole.prototype.windowResize = function(){
+        var args = arguments;
+        var resize = $(window).on('resize', function(){
+            _(args).each(function(i,val){
+                args[val]()
+            })
+        });
+    }
 
     return new AppConsole();
 });
