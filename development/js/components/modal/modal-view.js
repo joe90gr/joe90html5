@@ -18,6 +18,7 @@ function (Backbone,
             'click .box' : 'box'
         },
         initialize: function(){
+            this.modalOverlay = this.$el.parent().children('.modal-overlay');
             this.bindEventListeners();
             this.listenToEvents();
         },
@@ -33,12 +34,13 @@ function (Backbone,
             var refresh = _(function(){self.calcBoxPosition(this); }).debounce(50);
             this.render();
             $(window).on('resize', refresh);
-            $('.modal-overlay, .modal-container').fadeIn('fast');
+            this.modalOverlay.fadeIn('fast');
+            this.$el.fadeIn('fast');
             self.calcBoxPosition(window);
         },
         closeModal: function(){
             this.$el.fadeOut('fast');
-            this.$el.parent().children('.modal-overlay').fadeOut('fast');
+            this.modalOverlay.fadeOut('fast');
             $(window).unbind('resize');
         },
         box: function(e){
