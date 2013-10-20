@@ -1,15 +1,11 @@
-define(['backbone',
-        'marionette',
+define(['marionette',
+        'app-console',
         'mustache',
-        'formModel',
-        'formCollection',
         'text!formTemplate',
         'tweetsModel'],
-    function (Backbone,
-              Marionette,
+    function (Marionette,
+              AppConsole,
               mustache,
-              FormModel,
-              FormCollection,
               template,
               Tweet) {
 
@@ -36,7 +32,7 @@ define(['backbone',
             }
             else{
                 this.$el.find('.error').html('at least enter something').show();
-                appConsole.modalOpen("Notice","Please enter something");
+                AppConsole.modal.modalOpen("Notice","Please enter something");
             }
 
             return false;

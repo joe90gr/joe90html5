@@ -13,7 +13,7 @@ function (Backbone,
             return Mustache.render(modaltemplate,data);
         },
         events: {
-            'click .close': 'closeModal',
+            'click .modal-close': 'closeModal',
             'click': 'closeModal', // the root element .modal-container set by el
             'click .box' : 'box'
         },
@@ -49,10 +49,13 @@ function (Backbone,
                 boxWidth = box.width(),
                 boxHeight = box.height(),
                 windowWidth = $(thisWindow).width(),
-                windowHeight = $(thisWindow).height();
-
-            box.css({left : (windowWidth - boxWidth) / 2 });
-            box.css({top : (windowHeight - boxHeight) / 2 -100});
+                windowHeight = $(thisWindow).height(),
+                actualXposition = (windowWidth - boxWidth) / 2 ,
+                actualYposition = (windowHeight - boxHeight) / 2 - 100 ,
+                xPosition = actualXposition > 0 ? actualXposition : 0 ,
+                yPosition = actualYposition > 0 ? actualYposition : 0 ;
+            box.css({left : xPosition });
+            box.css({top :  yPosition});
         }
     });
 

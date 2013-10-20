@@ -1,17 +1,17 @@
 define(['backbone',
     'marionette',
     'router',
-    'twoColumnLayout'], function(Backbone, Marionette, Router, TwoColumnLayout){
-    var Console = function(){
-        this.main = new Marionette.Application();
+    'twoColumnLayout',
+    'modalController'], function(Backbone, Marionette, Router, TwoColumnLayout, ModalController){
+    var AppConsole = function(){
+        this.application = new Marionette.Application();
         Backbone.history.start();
     };
 
-    Console.prototype = {
-        requestResponse : new Backbone.Wreqr.RequestResponse(),
-        router : new Router(),
-        twoColumnLayout : new TwoColumnLayout()
-    };
+    AppConsole.prototype.requestResponse = new Backbone.Wreqr.RequestResponse();
+    AppConsole.prototype.router = new Router();
+    AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
+    AppConsole.prototype.modal = new ModalController();
 
-    return new Console();
+    return new AppConsole();
 });

@@ -23,15 +23,14 @@ define(['modernizr',
     'use strict';
     var Console = Marionette.Controller.extend({
         initialize:function(){
-            AppConsole.main.addRegions({
+            AppConsole.application.addRegions({
                 header: '.header-panel',
                 content: '.content-main',
                 footer: '.footer-inner'
             });
 
-            AppConsole.main.content.show(AppConsole.twoColumnLayout);
+            AppConsole.application.content.show(AppConsole.twoColumnLayout);
 
-            this.modalController = new ModalController();
             this.tweetController = new TweetController();
             this.formController = new FormController();
             this.testController = new TestController();

@@ -31,7 +31,7 @@ function(AppConsole, Marionette, FormModel, TweetController, FormView){
                 }),
                 tweetCollection: this.tweetCollection
             });
-           AppConsole.main.header.show(this.formview);
+           AppConsole.application.header.show(this.formview);
         }
 
     });
