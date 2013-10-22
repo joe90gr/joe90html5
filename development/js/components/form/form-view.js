@@ -32,7 +32,7 @@ define(['marionette',
             }
             else{
                 this.$el.find('.error').html('at least enter something').show();
-                AppConsole.modal.modalOpen("Notice","Please enter something");
+                AppConsole.modal.show("Notice","Please enter something");
             }
 
             return false;

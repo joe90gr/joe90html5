@@ -1,16 +1,15 @@
 define(['marionette', 'modalModel', 'modalView'], function(Marionette, ModalModel, ModalView){
     var ModalController = Marionette.Controller.extend({
         initialize: function(){
-            _.bindAll(this,'modalOpen','modalClose');
+            _.bindAll(this,'show','dismiss');
             this.modalmodel = new ModalModel();
             this.modalview = new ModalView({model: this.modalmodel});
         },
 
-        modalOpen: function(title, content){
-            var trigger = this.modalmodel.get('trigger');
-            this.modalmodel.set({trigger: !trigger, title: title, content: content});
+        show: function(title, content){
+            this.modalmodel.openModal(title, content);
         },
-        modalClose: function(){
+        dismiss: function(){
             this.modalview.closeModal();
         }
     });

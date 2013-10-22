@@ -4,6 +4,10 @@ define(['backbone'], function(Backbone){
             trigger: false,
             title: 'Title bar',
             content: "You must enter something into the fields"
+        },
+        openModal: function(title, content){
+            var trigger = this.get('trigger');
+            this.set({trigger: !trigger, title: title, content: content});
         }
     });
 

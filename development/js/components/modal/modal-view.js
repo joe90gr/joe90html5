@@ -26,12 +26,7 @@ function (Backbone,
 
         initialize: function(){
             this.modalOverlay = this.$el.parent().children('.modal-overlay');
-            this.bindEventListeners();
             this.listenToEvents();
-        },
-        bindEventListeners: function(){
-            this.on('click:open',this.openModal,this);
-            this.on('click:close',this.closeModal,this);
         },
         listenToEvents: function(){
             this.listenTo(this.model ,'change', this.openModal, this);
