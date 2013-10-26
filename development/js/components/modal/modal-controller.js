@@ -1,16 +1,35 @@
-define(['marionette', 'modalModel', 'modalView'], function(Marionette, ModalModel, ModalView){
+define(['marionette',
+    'app-console',
+    'modalModel',
+    'modalView'], function(
+    Marionette,
+    AppConsole,
+    ModalModel,
+    ModalView){
     var ModalController = Marionette.Controller.extend({
         initialize: function(){
-            _.bindAll(this,'show','dismiss');
+            _.bindAll(this,'setRequestResponseHandlers');
             this.modalmodel = new ModalModel();
             this.modalview = new ModalView({model: this.modalmodel});
+            this.setRequestResponseHandlers();
         },
 
-        show: function(title, content){
-            this.modalmodel.openModal(title, content);
-        },
-        dismiss: function(){
-            this.modalview.closeModal();
+        setRequestResponseHandlers: function(){
+            AppConsole.requestResponse.setHandlers({
+                "show-modal": function(title, content){
+                    this.modalmodel.openModal(title, content);
+                }.bind(this),
+
+                "dismiss-modal": function(){
+                    this.modalview.closeModal();
+                    return 'closed mofo'
+                }.bind(this),
+
+                "on-window-resize": function(){
+                    this.modalview.refresh();
+                }.bind(this)
+
+            });
         }
     });
 

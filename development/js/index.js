@@ -23,17 +23,29 @@ define(['modernizr',
     'use strict';
     var Console = Marionette.Controller.extend({
         initialize:function(){
+            this.setApplicationRegions();
+            this.setRequestResponseHandlers();
+
+            AppConsole.application.content.show(AppConsole.twoColumnLayout);
+
+            this.modal = new ModalController();
+            this.tweetController = new TweetController();
+            this.formController = new FormController();
+            this.testController = new TestController();
+
+            //this.modalRepeatedRunTest();
+        },
+        setApplicationRegions: function(){
             AppConsole.application.addRegions({
                 header: '.header-panel',
                 content: '.content-main',
                 footer: '.footer-inner'
             });
-
-            AppConsole.application.content.show(AppConsole.twoColumnLayout);
-
-            this.tweetController = new TweetController();
-            this.formController = new FormController();
-            this.testController = new TestController();
+        },
+        setRequestResponseHandlers: function(){
+            AppConsole.windowResize(function(){
+                AppConsole.requestResponse.request("on-window-resize");
+            });
 
             AppConsole.requestResponse.setHandlers({
                 "foo": function(){
@@ -41,25 +53,11 @@ define(['modernizr',
                 },
                 "bar": function(){
                     console.log('hey bar');
-                },
-                "on-window-resize": function(){
-                    AppConsole.modal.modalview.refresh();
-                },
-                "show-modal": function(title, content){
-                    AppConsole.modal.show(title, content);
-                },
-                "dismiss-modal": function(title, content){
-                    AppConsole.modal.dismiss(title, content);
                 }
             });
 
-            AppConsole.windowResize(function(){
-                AppConsole.requestResponse.request("on-window-resize");
-            });
             AppConsole.requestResponse.request("bar");
             AppConsole.requestResponse.request("foo");
-
-            //this.modalRepeatedRunTest();
         },
         //TODO: Temporary test rig remove once finished.
         modalRepeatedRunTest: function(){

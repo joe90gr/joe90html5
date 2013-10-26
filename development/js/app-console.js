@@ -1,8 +1,11 @@
 define(['backbone',
     'marionette',
     'router',
-    'twoColumnLayout',
-    'modalController'], function(Backbone, Marionette, Router, TwoColumnLayout, ModalController){
+    'twoColumnLayout'],
+    function(Backbone,
+             Marionette,
+             Router,
+             TwoColumnLayout){
     var AppConsole = function(){
         Backbone.history.start();
     };
@@ -10,7 +13,7 @@ define(['backbone',
     AppConsole.prototype.requestResponse = new Backbone.Wreqr.RequestResponse();
     AppConsole.prototype.router = new Router();
     AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
-    AppConsole.prototype.modal = new ModalController();
+
     AppConsole.prototype.windowResize = function(){
         var args = arguments;
         var resize = $(window).on('resize', function(){
