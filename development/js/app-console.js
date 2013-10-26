@@ -15,10 +15,10 @@ define(['backbone',
         var args = arguments;
         var resize = $(window).on('resize', function(){
             _(args).each(function(i,val){
-                args[val]()
-            })
+                args[val]();
+            });
         });
-    }
+    };
 
     return new AppConsole();
 });

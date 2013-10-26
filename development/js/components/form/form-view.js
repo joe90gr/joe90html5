@@ -19,23 +19,21 @@ define(['marionette',
         initialize: function(attr){
             this.tweetCollection = attr.tweetCollection;
         },
-        submit: function(){
+        submit: function(e){
             var authorName = this.$el.find('#author-name').val();
             var statusUpdate = this.$el.find('#status-update').val();
             if(this.validate(authorName, statusUpdate)){
                 this.$el.find('.error').hide();
-                var tweet = new Tweet({
+                this.tweetCollection.addRecord(new Tweet({
                     author: authorName,
                     status: statusUpdate
-                });
-                this.tweetCollection.addRecord(tweet);
+                }));
             }
             else{
                 this.$el.find('.error').html('at least enter something').show();
-                AppConsole.modal.show("Notice","Please enter something");
+                AppConsole.requestResponse.request("show-modal", 'Notice','Please enter something');
             }
-
-            return false;
+            e.preventDefault();
         },
         validate: function(var1, var2){
             return var1 !=='' && var2 !=='';

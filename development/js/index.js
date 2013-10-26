@@ -44,6 +44,12 @@ define(['modernizr',
                 },
                 "on-window-resize": function(){
                     AppConsole.modal.modalview.refresh();
+                },
+                "show-modal": function(title, content){
+                    AppConsole.modal.show(title, content);
+                },
+                "dismiss-modal": function(title, content){
+                    AppConsole.modal.dismiss(title, content);
                 }
             });
 

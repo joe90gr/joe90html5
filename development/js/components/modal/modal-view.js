@@ -32,11 +32,13 @@ function (Backbone,
             this.listenTo(this.model ,'change', this.openModal, this);
         },
         openModal: function(){
-            this.isModalOpen = true ;
-            this.render();
-            this.modalOverlay.fadeIn('fast');
-            this.$el.fadeIn('fast');
-            this.calcBoxPosition();
+            if(!this.isModalOpen){
+                this.isModalOpen = true ;
+                this.render();
+                this.modalOverlay.fadeIn('fast');
+                this.$el.fadeIn('fast');
+                this.calcBoxPosition();
+            }
         },
         closeModal: function(){
             this.isModalOpen = false ;
