@@ -1,10 +1,14 @@
-define(['backbone'],function(Backbone){
+define(['backbone','app-console'],function(Backbone, AppConsole){
     var router = Backbone.Router.extend({
+        initialize: function(){},
         routes: {
+            '': 'home',
             'about': 'showAbout',
             'myid/:id': 'getId'
         },
-
+        home: function(){
+            console.log('im home');
+        },
         showAbout: function(){
             console.log('test route to about');
         },
@@ -14,5 +18,3 @@ define(['backbone'],function(Backbone){
     });
     return router;
 });
-
-

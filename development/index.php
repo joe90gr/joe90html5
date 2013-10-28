@@ -12,6 +12,7 @@
 		<section class="content-main"></section>
 		<footer>
 		    <div class="footer-inner">
+		        <a href="/#">Link to about</a>
 			    <a href="/#about">Link to about</a>
         	    <a href="/#myid/5">Link to about</a>
 		    </div>

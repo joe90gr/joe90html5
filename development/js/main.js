@@ -42,7 +42,11 @@ requirejs.config({
         testModel: 'components/test/model',
         testCollection: 'components/test/collection',
         testView: 'components/test/view',
-        testTemplate: 'components/test/test.template'
+        testTemplate: 'components/test/test.template',
+
+        tweeterController: 'modules/tweeter/tweeter-controller',
+        tweeterLayout: 'modules/tweeter/tweeter-layout',
+        tweeterTemplate: 'modules/tweeter/tweeter.template'
     },
     shim: {
         jquery : {

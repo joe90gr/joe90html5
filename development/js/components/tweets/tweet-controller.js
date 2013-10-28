@@ -16,7 +16,7 @@ define([
         initialize: function(){
             this.tweetList = new TweetList();
             this.tweetView = new TweetsView({collection: this.tweetList});
-            appConsole.twoColumnLayout.content.show(this.tweetView);
+            //appConsole.twoColumnLayout.content.show(this.tweetView);
         },
 
         onClose: function(){

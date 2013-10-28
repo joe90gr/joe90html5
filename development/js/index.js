@@ -6,60 +6,56 @@ define(['modernizr',
         'marionette',
         'jqueryCookie',
         'app-console',
+        'router',
         'twoColumnLayout',
         'tweetsController',
         'modalController',
         'formController',
-        'testController'],
+        'testController',
+        'tweeterController'],
     function ( mod,
                Backbone,
                Marionette,
                JqueryCookie,
                AppConsole,
+               Router,
                TwoColumnLayout,
                TweetController,
                ModalController,
                FormController,
-               TestController
-               ) {
+               TestController,
+               TweeterController) {
     'use strict';
     var Console = Marionette.Controller.extend({
         initialize:function(){
-            this.setApplicationRegions();
+            this.router = new Router();
+            Backbone.history.start();
+
             this.setRequestResponseHandlers();
 
             AppConsole.application.content.show(AppConsole.twoColumnLayout);
 
             this.modal = new ModalController();
-            this.tweetController = new TweetController();
-            this.formController = new FormController();
-            this.testController = new TestController();
+
+            this.testController = new TestController(function(thisView){
+                AppConsole.twoColumnLayout.side.show(thisView);
+            });
+
+            this.tweeterController = new TweeterController(function(thisLayout){
+                AppConsole.twoColumnLayout.content.show(thisLayout);
+            });
+
 
             //set login state
             //AppConsole.requestResponse.request("set-login");
 
             AppConsole.requestResponse.request("bar");
             AppConsole.requestResponse.request("foo");
-//            $.ajax({
-//                type: "post",
-//                url: 'api.php/rest',
-//                data:{
-//                }
-//            });
+
             //this.modalRepeatedRunTest();
         },
 
-        setApplicationRegions: function(){
-            AppConsole.application.addRegions({
-                header: '.header-panel',
-                content: '.content-main',
-                footer: '.footer-inner'
-            });
-        },
-
-        setRequestResponseHandlers: function(){
-
-        },
+        setRequestResponseHandlers: function(){},
 
         //TODO: Temporary test rig remove once finished.
         modalRepeatedRunTest: function(){

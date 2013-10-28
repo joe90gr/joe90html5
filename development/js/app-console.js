@@ -1,18 +1,15 @@
 define(['backbone',
     'marionette',
-    'router',
     'twoColumnLayout'],
     function(Backbone,
              Marionette,
-             Router,
              TwoColumnLayout){
     var AppConsole = function(){
-        Backbone.history.start();
+        this.setApplicationRegions();
         this.setConsoleEventHandlers();
     };
     AppConsole.prototype.application = new Marionette.Application();
     AppConsole.prototype.requestResponse = new Backbone.Wreqr.RequestResponse();
-    AppConsole.prototype.router = new Router();
     AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
 
     AppConsole.prototype.windowResize = function(){
@@ -21,6 +18,14 @@ define(['backbone',
             _(args).each(function(i,val){
                 args[val]();
             });
+        });
+    };
+
+    AppConsole.prototype.setApplicationRegions = function(){
+        this.application.addRegions({
+            header: '.header-panel',
+            content: '.content-main',
+            footer: '.footer-inner'
         });
     };
 

@@ -4,10 +4,10 @@ define(['app-console',
     'testView'], function(AppConsole, Marionette, TestCollection, TestView){
 
     var Controller = Marionette.Controller.extend({
-        initialize: function(){
+        initialize: function(fn){
             this.testCollection = new TestCollection();
             this.testView = new TestView({collection: this.testCollection});
-            AppConsole.twoColumnLayout.side.show(this.testView);
+            fn(this.testView)
         }
 
     });

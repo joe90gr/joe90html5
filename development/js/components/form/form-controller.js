@@ -6,10 +6,7 @@ define(['app-console',
 function(AppConsole, Marionette, FormModel, TweetController, FormView){
 
     var FormController = Marionette.Controller.extend({
-        initialize: function(){
-            this.tweetController = new TweetController();
-            this.tweetView = this.tweetController.tweetView;
-            this.tweetCollection = this.tweetController.tweetList;
+        initialize: function(callback){
             this.formview = new FormView({
                 model: new FormModel({
                     'input': [
@@ -29,11 +26,9 @@ function(AppConsole, Marionette, FormModel, TweetController, FormView){
                         }
                     ]
                 }),
-                tweetCollection: this.tweetCollection
+                callback: callback
             });
-           AppConsole.application.header.show(this.formview);
         }
-
     });
 
     return FormController;
