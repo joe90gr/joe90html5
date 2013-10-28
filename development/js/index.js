@@ -1,9 +1,10 @@
 /*global setTimeout clearTimeout console*/
 var writeFormat = ['%c JOE! ' , 'background: #222; color: #bada55'];
-var appConsole = appConsole || {};
+
 define(['modernizr',
         'backbone',
         'marionette',
+        'jqueryCookie',
         'app-console',
         'twoColumnLayout',
         'tweetsController',
@@ -13,6 +14,7 @@ define(['modernizr',
     function ( mod,
                Backbone,
                Marionette,
+               JqueryCookie,
                AppConsole,
                TwoColumnLayout,
                TweetController,
@@ -33,8 +35,20 @@ define(['modernizr',
             this.formController = new FormController();
             this.testController = new TestController();
 
+            //set login state
+            //AppConsole.requestResponse.request("set-login");
+
+            AppConsole.requestResponse.request("bar");
+            AppConsole.requestResponse.request("foo");
+//            $.ajax({
+//                type: "post",
+//                url: 'api.php/rest',
+//                data:{
+//                }
+//            });
             //this.modalRepeatedRunTest();
         },
+
         setApplicationRegions: function(){
             AppConsole.application.addRegions({
                 header: '.header-panel',
@@ -42,23 +56,11 @@ define(['modernizr',
                 footer: '.footer-inner'
             });
         },
+
         setRequestResponseHandlers: function(){
-            AppConsole.windowResize(function(){
-                AppConsole.requestResponse.request("on-window-resize");
-            });
 
-            AppConsole.requestResponse.setHandlers({
-                "foo": function(){
-                    console.log('hey foo');
-                },
-                "bar": function(){
-                    console.log('hey bar');
-                }
-            });
-
-            AppConsole.requestResponse.request("bar");
-            AppConsole.requestResponse.request("foo");
         },
+
         //TODO: Temporary test rig remove once finished.
         modalRepeatedRunTest: function(){
             var self = this;

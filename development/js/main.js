@@ -7,6 +7,7 @@ requirejs.config({
         chai: "libs/chai",
         underscore: "libs/underscore",
         jquery: "libs/jquery",
+        jqueryCookie: 'libs/jquery-cookie',
         backbone: "libs/backbone",
         marionette: "libs/backbone.marionette",
         babysitter: "libs/backbone.babysitter",

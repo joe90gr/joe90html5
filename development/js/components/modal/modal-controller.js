@@ -22,7 +22,6 @@ define(['marionette',
 
                 "dismiss-modal": function(){
                     this.modalview.closeModal();
-                    return 'closed mofo'
                 }.bind(this),
 
                 "on-window-resize": function(){

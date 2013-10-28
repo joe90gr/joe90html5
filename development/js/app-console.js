@@ -8,6 +8,7 @@ define(['backbone',
              TwoColumnLayout){
     var AppConsole = function(){
         Backbone.history.start();
+        this.setConsoleEventHandlers();
     };
     AppConsole.prototype.application = new Marionette.Application();
     AppConsole.prototype.requestResponse = new Backbone.Wreqr.RequestResponse();
@@ -21,6 +22,26 @@ define(['backbone',
                 args[val]();
             });
         });
+    };
+
+    AppConsole.prototype.setConsoleEventHandlers = function(){
+        this.requestResponse.setHandlers({
+            'set-login': function(){
+                //clearThisSession()
+            },
+
+            'foo': function(){
+                console.log('hey foo');
+            },
+            'bar': function(){
+                console.log('hey bar');
+            }
+        });
+
+        this.windowResize(function(){
+            this.requestResponse.request("on-window-resize");
+        }.bind(this));
+
     };
 
     return new AppConsole();
