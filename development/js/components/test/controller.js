@@ -7,7 +7,7 @@ define(['app-console',
         initialize: function(fn){
             this.testCollection = new TestCollection();
             this.testView = new TestView({collection: this.testCollection});
-            fn(this.testView)
+            fn(this.testView);
         }
 
     });
