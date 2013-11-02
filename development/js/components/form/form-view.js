@@ -15,7 +15,7 @@ define(['marionette',
             'submit .button-panel': 'submit'
         },
         initialize: function(fn){
-            this.callback = fn.callback;
+            this.callback = fn.onSubmitCallback;
         },
         submit: function(e){
             this.callback(this.$el);

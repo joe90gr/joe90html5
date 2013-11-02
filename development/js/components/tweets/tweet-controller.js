@@ -26,7 +26,15 @@ define([
 
         openView: function(){
             appConsole.twoColumnLayout.content.show(this.tweetView);
+        },
+
+        getTweetCollection: function(){
+            return this.tweetList;
+        },
+        getTweetView: function(){
+            return this.tweetView;
         }
+
 
     });
     return TweetController;
