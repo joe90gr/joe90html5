@@ -10,6 +10,7 @@ define(['modernizr',
         'twoColumnLayout',
         'tweetsController',
         'modalController',
+        'formModel',
         'formController',
         'testController',
         'tweeterController'],
@@ -22,6 +23,7 @@ define(['modernizr',
                TwoColumnLayout,
                TweetController,
                ModalController,
+               FormModel,
                FormController,
                TestController,
                TweeterController) {
@@ -51,6 +53,36 @@ define(['modernizr',
 
             AppConsole.requestResponse.request("bar");
             AppConsole.requestResponse.request("foo");
+
+            this.formControllera = new FormController({
+                model: new FormModel({
+                    input: [
+                        {
+                            id: 'test-one',
+                            title: 'Test 1',
+                            name: 'test-name',
+                            value: 'test value',
+                            type: 'text'
+                        },
+                        {
+                            id: 'test-two',
+                            title: 'test 2',
+                            name: 'test2 name',
+                            value: 'test value2',
+                            type: 'text'
+                        }
+                    ],
+                    'button-title': 'Show'
+                }),
+
+                onSubmitCallback: function(el){
+                    var test1 = el.find('#test-one').val();
+                    var test2 = el.find('#test-two').val();
+                    AppConsole.requestResponse.request("show-modal", 'Notice','you have entered '+test1+' and '+test2+'');
+                }
+            });
+
+            AppConsole.application.header.show(this.formControllera.formview);
 
             //this.modalRepeatedRunTest();
         },

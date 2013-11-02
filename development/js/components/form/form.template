@@ -2,7 +2,7 @@
     {{#input}}
         <label>{{title}}</label><input id="{{id}}" name="{{name}}" type="{{type}}" />
     {{/input}}
-    <button>post message</button>
+    <button>{{button-title}}</button>
     <div class="error"></div>
 </form>
 

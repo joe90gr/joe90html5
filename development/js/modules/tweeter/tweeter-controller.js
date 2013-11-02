@@ -32,7 +32,7 @@ define(['marionette',
         setUpForm: function(){
             this.formController = new FormController({
                 model: new FormModel({
-                    'input': [
+                    input: [
                         {
                             id: 'author-name',
                             title: 'Author',
@@ -47,7 +47,8 @@ define(['marionette',
                             value: 'the value1',
                             type: 'text'
                         }
-                    ]
+                    ],
+                    'button-title': 'Post Message'
                 }),
 
                 onSubmitCallback: function(el){
