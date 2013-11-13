@@ -93,7 +93,7 @@
       <div class="popup"> \
         <div class="content"> \
         </div> \
-        <a href="#" class="close"><img src="../resources/closelabel.png" title="close" class="close_image" /></a> \
+        <a href="#" class="close"><img src="closelabel.png" title="close" class="close_image" /></a> \
       </div> \
     </div>'
     },

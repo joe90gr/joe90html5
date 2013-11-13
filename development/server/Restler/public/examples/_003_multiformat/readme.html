@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Vendor MIME</title>
+<title>Luracast Restler 3 Live Examples:- Multi-format</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,84 +204,90 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>12</small></div>
-<p><a id="vendor-mime-x-744xphp----5-3x-745x" class="anchor"></a><h2>Vendor MIME <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>3</small></div>
+<p><a id="multi-format-x-315xphp----5-3x-316x" class="anchor"></a><h2>Multi-format <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>versioning</tag> <tag>mime</tag> <tag>mediatype</tag> <tag>vendor</tag> <tag>custom</tag></p>
+<p><tag>json</tag> <tag>xml</tag></p>
 
-<p>This example shows how to use vendor specific media types for versioning</p>
+<p>This BMI calculator service shows how you can serve data in different
+ formats using Restler. This example uses JsonFormat (default) and XmlFormat.</p>
 
-<p><a id="vendor-specific-media-types" class="anchor"></a><h3>Vendor-Specific Media Types</h3></p>
+<p>First  format specified in <code>Restler::setSupportedFormats</code> is used as the
+ default format when client does not specify the format.</p>
 
-<blockquote>
-  <p>Media types use the subtype prefix <code>vnd</code> to indicate that they are owned and
-  controlled by a <code>vendor</code>. Vendor-specific media types convey a clear description
-  of a message's content to the programs that understand their meaning.
-  - <a href="http://books.google.com.sg/books?id=eABpzyTcJNIC&amp;lpg=PA40&amp;ots=vxTC21e8JB&amp;dq=vendor%20specific%20media%20types&amp;pg=PA40#v=onepage&amp;q=vendor%20specific%20media%20types&amp;f=false" target="_blank">REST API Design Rulebook</a></p>
-</blockquote>
+<p>Client can specify the format either using  extension like .json or specify
+ the MIME type in HTTP Accept Header.</p>
 
-<p>Important steps are</p>
-
-<pre><code class="php">Defaults::$apiVendor = "SomeVendor";
-Defaults::$useVendorMIMEVersioning = true;
-
-$r = new Restler();
-$r-&gt;setAPIVersion(2);
-//...
-</code></pre>
+<p>When we make the request from the browser we will get xml when we
+ skip the extension because XML is one of the requested formats specified in
+ the HTTP Accept Header where as a AJAX request or CURL will return JSON.</p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_012_vendor_mime/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="../../vendor/Luracast/Restler/Resources.php">Resources.php</abbr>      (api)</li>
-  <li><abbr title="_012_vendor_mime/SomeVendor/v1/BMI.php">v1\BMI.php</abbr>      (api)</li>
-  <li><abbr title="_012_vendor_mime/SomeVendor/v2/BMI.php">v2\BMI.php</abbr>      (api)</li>
+  <li><abbr title="_003_multiformat/index.php">index.php</abbr>      (gateway)</li>
+  <li><abbr title="_003_multiformat/BMI.php">BMI.php</abbr>      (api)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
+  <li><abbr title="../../vendor/Luracast/Restler/Format/XmlFormat.php">XmlFormat.php</abbr>      (format)</li>
   </ul>
 </blockquote>
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET bmi                          ⇠ SomeVendor\v1\BMI::index()
-GET resources                    ⇠ Resources::index()
-GET resources/v{version}         ⇠ Resources::get()
-GET resources/{id}-v{version}    ⇠ Resources::get()
-GET v1/bmi                       ⇠ SomeVendor\v1\BMI::index()
-GET v1/resources                 ⇠ Resources::index()
-GET v1/resources/v{version}      ⇠ Resources::get()
-GET v1/resources/{id}-v{version} ⇠ Resources::get()
-GET v2/bmi                       ⇠ SomeVendor\v2\BMI::index()
-GET v2/resources                 ⇠ Resources::index()
-GET v2/resources/v{version}      ⇠ Resources::get()
-GET v2/resources/{id}-v{version} ⇠ Resources::get()
+<pre><code>GET bmi ⇠ BMI::index()
 </code></pre>
 
-<p>Here is how you will consume different versions of the api using cURL.</p>
+<p>Try the following links in your browser</p>
 
-<p><strong>Version 1</strong></p>
+<dl>
+<dt>GET <a href="index.php/bmi" target="_blank">bmi</a></dt>
+<dd>
+<p></p>
 
-<pre><code class="bash">curl 'http://restler3.luracast.com/examples/_012_vendor_mime/index.php/bmi?height=162.6&amp;weight=84' -H 'Accept: application/vnd.somevendor-v1+json' -i
+<pre><code>&lt;?xml version="1.0"?&gt;
+&lt;response&gt;
+  &lt;bmi&gt;31.77&lt;/bmi&gt;
+  &lt;message&gt;Obesity&lt;/message&gt;
+  &lt;metric&gt;
+    &lt;height&gt;162.6 centimeter&lt;/height&gt;
+    &lt;weight&gt;84 kilograms&lt;/weight&gt;
+  &lt;/metric&gt;
+  &lt;imperial&gt;
+    &lt;height&gt;5 feet 4 inches&lt;/height&gt;
+    &lt;weight&gt;185.19 pounds&lt;/weight&gt;
+  &lt;/imperial&gt;
+&lt;/response&gt;
+</code></pre>
+</dd>
 
-HTTP/1.1 200 OK
-Date: Sun, 06 Jan 2013 10:46:40 GMT
-Server: Apache/2.2.22 (Unix) DAV/2 PHP/5.3.14 mod_ssl/2.2.22 OpenSSL/0.9.8o
-X-Powered-By: Luracast Restler v3.0.0rc3
-Set-Cookie: ZDEDebuggerPresent=php,phtml,php3; path=/
-Vary: Accept
-Cache-Control: no-cache, must-revalidate
-Expires: 0
-Content-Language: en
-Content-Length: 209
-Content-Type: application/vnd.SomeVendor-v1+json; charset=utf-8
+<dt>GET <a href="index.php/bmi.xml" target="_blank">bmi.xml</a></dt>
+<dd><pre><code>&lt;?xml version="1.0"?&gt;
+&lt;response&gt;
+  &lt;bmi&gt;31.77&lt;/bmi&gt;
+  &lt;message&gt;Obesity&lt;/message&gt;
+  &lt;metric&gt;
+    &lt;height&gt;162.6 centimeter&lt;/height&gt;
+    &lt;weight&gt;84 kilograms&lt;/weight&gt;
+  &lt;/metric&gt;
+  &lt;imperial&gt;
+    &lt;height&gt;5 feet 4 inches&lt;/height&gt;
+    &lt;weight&gt;185.19 pounds&lt;/weight&gt;
+  &lt;/imperial&gt;
+&lt;/response&gt;
+</code></pre></dd>
 
-{
+<dl>
+<dt>GET <a href="index.php/bmi.json" target="_blank">bmi.json</a></dt>
+<dd>
+<p></p>
+
+<pre><code>{
   "bmi": 31.77,
   "message": "Obesity",
   "metric": {
-    "height": "162.6 centimeters",
+    "height": "162.6 centimeter",
     "weight": "84 kilograms"
   },
   "imperial": {
@@ -289,64 +295,44 @@ Content-Type: application/vnd.SomeVendor-v1+json; charset=utf-8
     "weight": "185.19 pounds"
   }
 }
+</code></pre>
+</dd>
+</dl>
 
+<p>We expect the following behaviour from this example.</p>
+
+<pre><code class="gherkin"><br />@example3 @multiformat
+Feature: Testing Multi-format Example
+
+  Scenario: Default format, when not specified
+    When I request "/examples/_003_multiformat/bmi"
+    Then the response status code should be 200
+    And the response is JSON
+    And the type is "array"
+    And the response has a "bmi" property
+    And the "message" property equals "Obesity"
+
+  Scenario: Use XML format when specified as extension
+    When I request "/examples/_003_multiformat/bmi.xml"
+    Then the response status code should be 200
+    And the response is XML
+    And the type is "array"
+    And the response has a "bmi" property
+    And the "message" property equals "Obesity"
+
+  Scenario: Correct weight and height should yeild 'Normal weight' as result
+    Given that "height" is set to 180
+    And "weight" is set to 80
+    When I request "/examples/_003_multiformat/bmi.xml{?height,weight}"
+    Then the response status code should be 200
+    And the "message" property equals "Normal weight"
 </code></pre>
 
-<p><strong>Version 2 without unit</strong></p>
+<p>It can be tested by running the following command on terminal/command line
+from the project root (where the vendor folder resides). Make sure <code>base_url</code>
+in <code>behat.yml</code> is updated according to your web server.</p>
 
-<pre><code class="bash">curl 'http://restler3.luracast.com/examples/_012_vendor_mime/index.php/bmi?height=162.6&amp;weight=84' -H 'Accept: application/vnd.somevendor-v2+json' -i
-
-HTTP/1.1 400 Bad Request
-Date: Sun, 06 Jan 2013 10:48:19 GMT
-Server: Apache/2.2.22 (Unix) DAV/2 PHP/5.3.14 mod_ssl/2.2.22 OpenSSL/0.9.8o
-X-Powered-By: Luracast Restler v3.0.0rc3
-Set-Cookie: ZDEDebuggerPresent=php,phtml,php3; path=/
-Vary: Accept
-Cache-Control: no-cache, must-revalidate
-Expires: 0
-Content-Language: en
-Content-Length: 87
-Connection: close
-Content-Type: application/vnd.SomeVendor-v2+json; charset=utf-8
-
-{
-  "error": {
-    "code": 400,
-    "message": "Bad Request: invalid height unit"
-  }
-}
-
-</code></pre>
-
-<p><strong>Version 2 with unit</strong></p>
-
-<pre><code class="bash">curl 'http://restler3.luracast.com/examples/_012_vendor_mime/index.php/bmi??height=1.626meters&amp;weight=84kilograms' -H 'Accept: application/vnd.somevendor-v2+json' -i
-
-HTTP/1.1 200 OK
-Date: Sun, 06 Jan 2013 11:05:26 GMT
-Server: Apache/2.2.22 (Unix) DAV/2 PHP/5.3.14 mod_ssl/2.2.22 OpenSSL/0.9.8o
-X-Powered-By: Luracast Restler v3.0.0rc3
-Set-Cookie: ZDEDebuggerPresent=php,phtml,php3; path=/
-Vary: Accept
-Cache-Control: no-cache, must-revalidate
-Expires: 0
-Content-Language: en
-Content-Length: 209
-Content-Type: application/vnd.SomeVendor-v2+json; charset=utf-8
-
-{
-  "bmi": 31.77,
-  "message": "Obesity",
-  "metric": {
-    "height": "162.6 centimeters",
-    "weight": "84 kilograms"
-  },
-  "imperial": {
-    "height": "5 feet 4 inches",
-    "weight": "185.19 pounds"
-  }
-}
-
+<pre><code class="bash">bin/behat  features/examples/_003_multiformat.feature
 </code></pre>
 
 </article>

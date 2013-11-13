@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Protected API</title>
+<title>Luracast Restler 3 Live Examples:- Rate Limiting</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,36 +204,51 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>5</small></div>
-<p><a id="protected-api-x-383xphp----5-3x-384x" class="anchor"></a><h2>Protected API <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>9</small></div>
+<p><a id="rate-limiting-x-624xphp----5-3x-625x" class="anchor"></a><h2>Rate Limiting <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>authentication</tag> <tag>authorization</tag></p>
+<p><tag>create</tag> <tag>retrieve</tag> <tag>read</tag> <tag>update</tag> <tag>delete</tag> <tag>post</tag> <tag>get</tag> <tag>put</tag> <tag>filter</tag> <tag>throttle</tag> <tag>rate-limiting</tag></p>
 
-<p>Not all the API exposed needs to be public, we need to protect
- some of our API.
- Here are three ways to protect a method</p>
+<p>How to Rate Limit API access using a Filter class that implements
+<code>iFilter</code> interface.</p>
 
-<ol>
-<li>Change it to a <code>protected function</code></li>
-<li>Add a PHPDoc comment <code>@access protected</code> to the method</li>
-<li>Add <code>@access protected</code> comment to the class to protect all methods of that
-class</li>
-</ol>
+<p>This example also shows how to use Defaults class to customize defaults, how to create your own
+iCache implementation, and how to make a hybrid filter class that behaves differently
+when the user is Authenticated</p>
 
-<p>In order to provide access to those protected methods we use a class that
-implements <code>iAuthenticate</code>. Also note that An Authentication class is also an
-API class so all public methods that does not begin with <code>_</code> will be exposed as
-API for example <a href="simpleauth/key" target="_blank">SimpleAuth::key</a>. It can be used to create
-login/logout methods.</p>
+<p><a href="explorer/index.html#!/authors-v1" target="_blank"><img src="../resources/explorer1.png" alt="Restler API Explorer" /></a></p>
+
+<p>Key in <code>r3rocks</code> as the API key in the Explorer to see how rate limit changes</p>
+
+<p>We are progressively improving the Authors class from CRUD example 
+to show Best Practices and Restler 3 Features.</p>
+
+<p>Make sure you compare them to understand.</p>
+
+<blockquote>
+  <p><strong>Note:-</strong></p>
+  
+  <ol>
+  <li><p>Using session variables as DB and Cache is useless for real life and wrong. We are using it
+  Only for demo purpose. Since API Explorer is browser based it works well with that.</p></li>
+  <li><p>We are using <abbr title="_009_rate_limiting/Author.php">Author.php</abbr> to document return type of <code>GET authors/{id}</code> using <code>@return</code> comment</p></li>
+  </ol>
+</blockquote>
+
+<p>If you have hit the API Rate Limit or screwed up the Authors DB, you can easily reset by deleting
+PHP_SESSION cookie using the Developer Tools in your browser.</p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_005_protected_api/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="_005_protected_api/Simple.php">Simple.php</abbr>      (api)</li>
-  <li><abbr title="_005_protected_api/Secured.php">Secured.php</abbr>      (api)</li>
-  <li><abbr title="_005_protected_api/SimpleAuth.php">SimpleAuth.php</abbr>      (auth)</li>
+  <li><abbr title="_009_rate_limiting/index.php">index.php</abbr>      (gateway)</li>
+  <li><abbr title="../../vendor/Luracast/Restler/Resources.php">Resources.php</abbr>      (api)</li>
+  <li><abbr title="../../vendor/Luracast/Restler/Filter/RateLimit.php">RateLimit.php</abbr>      (filter)</li>
+  <li><abbr title="_009_rate_limiting/SessionCache.php">SessionCache.php</abbr>      (helper)</li>
+  <li><abbr title="_009_rate_limiting/ratelimited/Authors.php">Authors.php</abbr>      (api)</li>
+  <li><abbr title="_009_rate_limiting/KeyAuth.php">KeyAuth.php</abbr>      (auth)</li>
+  <li><abbr title="_009_rate_limiting/Author.php">Author.php</abbr>      (helper)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
   </ul>
@@ -241,42 +256,16 @@ login/logout methods.</p>
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET normal         ⇠ Simple::normal()
-GET restricted     ⇠ Simple::restricted()
-GET restricted2    ⇠ Simple::restricted2()
-GET secured        ⇠ Secured::index()
-GET simpleauth/key ⇠ SimpleAuth::key()
+<pre><code>GET    authors                   ⇠ ratelimited\Authors::index()
+POST   authors                   ⇠ ratelimited\Authors::post()
+PATCH  authors/{id}              ⇠ ratelimited\Authors::patch()
+DELETE authors/{id}              ⇠ ratelimited\Authors::delete()
+GET    authors/{id}              ⇠ ratelimited\Authors::get()
+PUT    authors/{id}              ⇠ ratelimited\Authors::put()
+GET    resources                 ⇠ Resources::index()
+GET    resources/v{version}      ⇠ Resources::get()
+GET    resources/{id}-v{version} ⇠ Resources::get()
 </code></pre>
-
-<p>Try the following links in your browser</p>
-
-<dl>
-<dt>GET <a href="index.php/restricted" target="_blank">restricted</a></dt>
-<dd>
-<p></p>
-
-<pre><code>{
-  "error": {
-    "code": 401,
-    "message": "Unauthorized"
-  }
-}
-</code></pre>
-</dd>
-
-<dt>GET <a href="index.php/restricted?key=rEsTlEr2" target="_blank">restricted?key=rEsTlEr2</a></dt>
-<dd><pre><code>"protected method"
-</code></pre></dd>
-
-<dl>
-<dt>GET <a href="index.php/secured?key=rEsTlEr2" target="_blank">secured?key=rEsTlEr2</a></dt>
-<dd>
-<p></p>
-
-<pre><code>"protected class"
-</code></pre>
-</dd>
-</dl>
 
 </article>
 <footer>

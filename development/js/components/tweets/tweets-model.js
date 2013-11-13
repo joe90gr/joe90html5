@@ -1,6 +1,6 @@
 define(['backbone'], function (Backbone) {
     var Tweet = Backbone.Model.extend({
-        urlRoot: '/api.php/rest',
+        urlRoot: '/server/api.php/rest',
 
         defaults: {
             author: '',

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Error Response</title>
+<title>Luracast Restler 3 Live Examples:- Versioning</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,26 +204,52 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>4</small></div>
-<p><a id="error-response-x-350xphp----5-3x-351x" class="anchor"></a><h2>Error Response <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>11</small></div>
+<p><a id="versioning-x-709xphp----5-3x-710x" class="anchor"></a><h2>Versioning <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>exception</tag> <tag>http status</tag> <tag>validation</tag></p>
+<p><tag>versioning</tag></p>
 
-<p>API methods can make use of RestException class to provide
- error information to the user.</p>
+<p>This example shows how to version your API using namespace. Restler supports
+both url based versioning (this example) and vendor specific media type
+versioning (next example).</p>
 
-<p>use <code>throw new RestException($httpStatusCode)</code> to send the error response
- to the client.</p>
+<p>Important steps are</p>
 
-<p>For the list of HTTP Status codes and their meaning take a look at
- <a href="http://en.wikipedia.org/wiki/Http_status_codes" target="_blank">Wikipedia</a></p>
+<pre><code class="php">Defaults::$useUrlBasedVersioning = true;
+
+$r = new Restler();
+$r-&gt;setAPIVersion(2);
+//...
+</code></pre>
+
+<p>Only integers are supported for versioning. When not specified explicitly the
+version is assumed to be one.</p>
+
+<p>That means when the namespace does not contain
+version number as the last part is assumed to be version 1.</p>
+
+<p>Similarly when the API consumer calls the api without the version number he
+will receive version 1.</p>
+
+<p>Version number should only be increased when the api signature and or the return
+data changes. Use your version control system such as git for all other
+versioning needs.</p>
+
+<p>For simplicity we only used the version number as the namespace, but practically
+You need to namespace it as <code>{vendor}\{product}\v{version}</code></p>
+
+<p>Which will be <code>Luracast\WeightManagement\v2</code> for this example</p>
+
+<p>Try this example and the version differences in the explorer <a href="explorer/index.html#!/v2" target="_blank">here</a></p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_004_error_response/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="_004_error_response/Currency.php">Currency.php</abbr>      (api)</li>
+  <li><abbr title="_011_versioning/index.php">index.php</abbr>      (gateway)</li>
+  <li><abbr title="../../vendor/Luracast/Restler/Resources.php">Resources.php</abbr>      (api)</li>
+  <li><abbr title="_011_versioning/v1/BMI.php">v1\BMI.php</abbr>      (api)</li>
+  <li><abbr title="_011_versioning/v2/BMI.php">v2\BMI.php</abbr>      (api)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
   </ul>
@@ -231,43 +257,85 @@
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET currency/format ⇠ Currency::format()
+<pre><code>GET bmi                          ⇠ BMI::index()
+GET resources                    ⇠ Resources::index()
+GET resources/v{version}         ⇠ Resources::get()
+GET resources/{id}-v{version}    ⇠ Resources::get()
+GET v1/bmi                       ⇠ BMI::index()
+GET v1/resources                 ⇠ Resources::index()
+GET v1/resources/v{version}      ⇠ Resources::get()
+GET v1/resources/{id}-v{version} ⇠ Resources::get()
+GET v2/bmi                       ⇠ v2\BMI::index()
+GET v2/resources                 ⇠ Resources::index()
+GET v2/resources/v{version}      ⇠ Resources::get()
+GET v2/resources/{id}-v{version} ⇠ Resources::get()
 </code></pre>
 
 <p>Try the following links in your browser</p>
 
 <dl>
-<dt>GET <a href="index.php/currency/format" target="_blank">currency/format</a></dt>
+<dt>GET <a href="index.php/bmi?height=190" target="_blank">bmi?height=190</a></dt>
+<dd>
+<p></p>
+
+<pre><code>{
+  "bmi": 23.27,
+  "message": "Normal weight",
+  "metric": {
+    "height": "190 centimeters",
+    "weight": "84 kilograms"
+  },
+  "imperial": {
+    "height": "6 feet 2 inches",
+    "weight": "185.19 pounds"
+  }
+}
+</code></pre>
+</dd>
+
+<dt>GET <a href="index.php/v1/bmi?height=190" target="_blank">v1/bmi?height=190</a></dt>
+<dd><pre><code>{
+  "bmi": 23.27,
+  "message": "Normal weight",
+  "metric": {
+    "height": "190 centimeters",
+    "weight": "84 kilograms"
+  },
+  "imperial": {
+    "height": "6 feet 2 inches",
+    "weight": "185.19 pounds"
+  }
+}
+</code></pre></dd>
+
+<dl>
+<dt>GET <a href="index.php/v2/bmi?height=190" target="_blank">v2/bmi?height=190</a></dt>
 <dd>
 <p></p>
 
 <pre><code>{
   "error": {
     "code": 400,
-    "message": "Bad Request"
+    "message": "Bad Request: invalid height unit"
   }
 }
 </code></pre>
 </dd>
 
-<dt>GET <a href="index.php/currency/format?number=not_a_number" target="_blank">currency/format?number=not_a_number</a></dt>
+<dt>GET <a href="index.php/v2/bmi?height=162cm" target="_blank">v2/bmi?height=162cm</a></dt>
 <dd><pre><code>{
-  "error": {
-    "code": 400,
-    "message": "Bad Request: not a valid number"
+  "bmi": 23.27,
+  "message": "Normal weight",
+  "metric": {
+    "height": "190 centimeters",
+    "weight": "84 kilograms"
+  },
+  "imperial": {
+    "height": "6 feet 2 inches",
+    "weight": "185.19 pounds"
   }
 }
 </code></pre></dd>
-
-<dl>
-<dt>GET <a href="index.php/currency/format?number=55" target="_blank">currency/format?number=55</a></dt>
-<dd>
-<p></p>
-
-<pre><code>"USD55.00"
-</code></pre>
-</dd>
-</dl>
 
 </article>
 <footer>

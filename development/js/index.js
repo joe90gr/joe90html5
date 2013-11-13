@@ -78,11 +78,21 @@ define(['modernizr',
                 onSubmitCallback: function(el){
                     var test1 = el.find('#test-one').val();
                     var test2 = el.find('#test-two').val();
-                    AppConsole.requestResponse.request("show-modal", 'Notice','you have entered '+test1+' and '+test2+'');
+                    $.ajax({
+                        type: "post",
+                        url: "/server/session.php/ConsoleSession",
+                        data: { username: test1, password: test2 }
+                    }).done(function(msg){
+
+                    });
+                    //AppConsole.requestResponse.request("show-modal", 'Notice','you have entered '+test1+' and '+test2+'');
                 }
             });
 
             AppConsole.application.header.show(this.formControllera.formview);
+            setInterval(function(){
+                console.log('cookie test',$.cookie('PHPSESSID'))
+            },1000);
 
             //this.modalRepeatedRunTest();
         },

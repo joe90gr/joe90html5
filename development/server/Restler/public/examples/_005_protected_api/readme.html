@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Access Control</title>
+<title>Luracast Restler 3 Live Examples:- Protected API</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,33 +204,36 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>10</small></div>
-<p><a id="access-control-x-670xphp----5-3x-671x" class="anchor"></a><h2>Access Control <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>5</small></div>
+<p><a id="protected-api-x-383xphp----5-3x-384x" class="anchor"></a><h2>Protected API <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>access-control</tag> <tag>acl</tag> <tag>secure</tag> <tag>authentication</tag> <tag>authorization</tag></p>
+<p><tag>authentication</tag> <tag>authorization</tag></p>
 
-<p>This example shows how you can extend the authentication system to create
-a robust access control system. As a added bonus we also restrict api
-documentation based on the same.</p>
+<p>Not all the API exposed needs to be public, we need to protect
+ some of our API.
+ Here are three ways to protect a method</p>
 
-<p>When the <code>api_key</code> is</p>
+<ol>
+<li>Change it to a <code>protected function</code></li>
+<li>Add a PHPDoc comment <code>@access protected</code> to the method</li>
+<li>Add <code>@access protected</code> comment to the class to protect all methods of that
+class</li>
+</ol>
 
-<ul>
-<li>blank you will see the public api</li>
-<li><code>12345</code> you will see the api that is accessible by an user</li>
-<li><code>67890</code> you will see all api as you have the admin rights</li>
-</ul>
-
-<p>Try it out yourself <a href="explorer/index.html#!/v1" target="_blank">here</a></p>
+<p>In order to provide access to those protected methods we use a class that
+implements <code>iAuthenticate</code>. Also note that An Authentication class is also an
+API class so all public methods that does not begin with <code>_</code> will be exposed as
+API for example <a href="simpleauth/key" target="_blank">SimpleAuth::key</a>. It can be used to create
+login/logout methods.</p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_010_access_control/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="../../vendor/Luracast/Restler/Resources.php">Resources.php</abbr>      (api)</li>
-  <li><abbr title="_010_access_control/Access.php">Access.php</abbr>      (api)</li>
-  <li><abbr title="_010_access_control/AccessControl.php">AccessControl.php</abbr>      (auth)</li>
+  <li><abbr title="_005_protected_api/index.php">index.php</abbr>      (gateway)</li>
+  <li><abbr title="_005_protected_api/Simple.php">Simple.php</abbr>      (api)</li>
+  <li><abbr title="_005_protected_api/Secured.php">Secured.php</abbr>      (api)</li>
+  <li><abbr title="_005_protected_api/SimpleAuth.php">SimpleAuth.php</abbr>      (auth)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
   </ul>
@@ -238,13 +241,42 @@ documentation based on the same.</p>
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET admin                     ⇠ Access::admin()
-GET all                       ⇠ Access::all()
-GET resources                 ⇠ Resources::index()
-GET resources/v{version}      ⇠ Resources::get()
-GET resources/{id}-v{version} ⇠ Resources::get()
-GET user                      ⇠ Access::user()
+<pre><code>GET normal         ⇠ Simple::normal()
+GET restricted     ⇠ Simple::restricted()
+GET restricted2    ⇠ Simple::restricted2()
+GET secured        ⇠ Secured::index()
+GET simpleauth/key ⇠ SimpleAuth::key()
 </code></pre>
+
+<p>Try the following links in your browser</p>
+
+<dl>
+<dt>GET <a href="index.php/restricted" target="_blank">restricted</a></dt>
+<dd>
+<p></p>
+
+<pre><code>{
+  "error": {
+    "code": 401,
+    "message": "Unauthorized"
+  }
+}
+</code></pre>
+</dd>
+
+<dt>GET <a href="index.php/restricted?key=rEsTlEr2" target="_blank">restricted?key=rEsTlEr2</a></dt>
+<dd><pre><code>"protected method"
+</code></pre></dd>
+
+<dl>
+<dt>GET <a href="index.php/secured?key=rEsTlEr2" target="_blank">secured?key=rEsTlEr2</a></dt>
+<dd>
+<p></p>
+
+<pre><code>"protected class"
+</code></pre>
+</dd>
+</dl>
 
 </article>
 <footer>

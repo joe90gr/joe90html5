@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Rate Limiting</title>
+<title>Luracast Restler 3 Live Examples:- Hello World Example</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,51 +204,19 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>9</small></div>
-<p><a id="rate-limiting-x-624xphp----5-3x-625x" class="anchor"></a><h2>Rate Limiting <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>1</small></div>
+<p><a id="hello-world-example-x-216xphp----5-3x-217x" class="anchor"></a><h2>Hello World Example <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>create</tag> <tag>retrieve</tag> <tag>read</tag> <tag>update</tag> <tag>delete</tag> <tag>post</tag> <tag>get</tag> <tag>put</tag> <tag>filter</tag> <tag>throttle</tag> <tag>rate-limiting</tag></p>
+<p><tag>basic</tag></p>
 
-<p>How to Rate Limit API access using a Filter class that implements
-<code>iFilter</code> interface.</p>
-
-<p>This example also shows how to use Defaults class to customize defaults, how to create your own
-iCache implementation, and how to make a hybrid filter class that behaves differently
-when the user is Authenticated</p>
-
-<p><a href="explorer/index.html#!/authors-v1" target="_blank"><img src="../resources/explorer1.png" alt="Restler API Explorer" /></a></p>
-
-<p>Key in <code>r3rocks</code> as the API key in the Explorer to see how rate limit changes</p>
-
-<p>We are progressively improving the Authors class from CRUD example 
-to show Best Practices and Restler 3 Features.</p>
-
-<p>Make sure you compare them to understand.</p>
-
-<blockquote>
-  <p><strong>Note:-</strong></p>
-  
-  <ol>
-  <li><p>Using session variables as DB and Cache is useless for real life and wrong. We are using it
-  Only for demo purpose. Since API Explorer is browser based it works well with that.</p></li>
-  <li><p>We are using <abbr title="_009_rate_limiting/Author.php">Author.php</abbr> to document return type of <code>GET authors/{id}</code> using <code>@return</code> comment</p></li>
-  </ol>
-</blockquote>
-
-<p>If you have hit the API Rate Limit or screwed up the Authors DB, you can easily reset by deleting
-PHP_SESSION cookie using the Developer Tools in your browser.</p>
+<p>Basic hello world example to get started with Restler 3.</p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_009_rate_limiting/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="../../vendor/Luracast/Restler/Resources.php">Resources.php</abbr>      (api)</li>
-  <li><abbr title="../../vendor/Luracast/Restler/Filter/RateLimit.php">RateLimit.php</abbr>      (filter)</li>
-  <li><abbr title="_009_rate_limiting/SessionCache.php">SessionCache.php</abbr>      (helper)</li>
-  <li><abbr title="_009_rate_limiting/ratelimited/Authors.php">Authors.php</abbr>      (api)</li>
-  <li><abbr title="_009_rate_limiting/KeyAuth.php">KeyAuth.php</abbr>      (auth)</li>
-  <li><abbr title="_009_rate_limiting/Author.php">Author.php</abbr>      (helper)</li>
+  <li><abbr title="_001_helloworld/index.php">index.php</abbr>      (gateway)</li>
+  <li><abbr title="_001_helloworld/Say.php">Say.php</abbr>      (api)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
   </ul>
@@ -256,15 +224,116 @@ PHP_SESSION cookie using the Developer Tools in your browser.</p>
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET    authors                   ⇠ ratelimited\Authors::index()
-POST   authors                   ⇠ ratelimited\Authors::post()
-PATCH  authors/{id}              ⇠ ratelimited\Authors::patch()
-DELETE authors/{id}              ⇠ ratelimited\Authors::delete()
-GET    authors/{id}              ⇠ ratelimited\Authors::get()
-PUT    authors/{id}              ⇠ ratelimited\Authors::put()
-GET    resources                 ⇠ Resources::index()
-GET    resources/v{version}      ⇠ Resources::get()
-GET    resources/{id}-v{version} ⇠ Resources::get()
+<pre><code>GET say/hello   ⇠ Say::hello()
+GET say/hi/{to} ⇠ Say::hi()
+</code></pre>
+
+<blockquote>
+  <p><strong>Note:-</strong> If you have used Restler 2 before, you will wonder why
+   the generated routes are lesser with Restler 3.
+   Read the <a href="../_006_routing/readme.html" target="_blank">Routes</a> example to understand.</p>
+</blockquote>
+
+<p>Try the following links in your browser</p>
+
+<dl>
+<dt>GET <a href="say/hello" target="_blank">say/hello</a></dt>
+<dd>
+<p></p>
+
+<pre><code>"Hello world!"
+</code></pre>
+</dd>
+
+<dt>GET <a href="say/hello?to=R.Arul%20Kumaran" target="_blank">say/hello?to=R.Arul%20Kumaran</a></dt>
+<dd><pre><code>"Hello R.Arul Kumaran!"
+</code></pre></dd>
+
+<dl>
+<dt>GET <a href="say/hi/restler3.0" target="_blank">say/hi/restler3.0</a></dt>
+<dd>
+<p></p>
+
+<pre><code>"Hi restler3.0!"
+</code></pre>
+</dd>
+</dl>
+
+<p>If the above links fail, it could be due to missing <code>.htaccess</code> file or URL
+Rewriting is not supported in your server. If you are on Apache Server, make sure
+<code>AllowOverride</code> is set to <code>All</code> instead of <code>None</code> in the <code>httpd.conf</code> file.</p>
+
+<p>In case you could not get URL Rewriting to work, try the following links instead</p>
+
+<dl>
+<dt>GET <a href="index.php/say/hello" target="_blank"><abbr title="_001_helloworld/index.php">index.php</abbr>/say/hello</a></dt>
+<dd>
+<p></p>
+
+<pre><code>"Hello world!"
+</code></pre>
+</dd>
+
+<dt>GET <a href="index.php/say/hello?to=R.Arul%20Kumaran" target="_blank"><abbr title="_001_helloworld/index.php">index.php</abbr>/say/hello?to=R.Arul%20Kumaran</a></dt>
+<dd><pre><code>"Hello R.Arul Kumaran!"
+</code></pre></dd>
+
+<dl>
+<dt>GET <a href="index.php/say/hi/restler3.0" target="_blank"><abbr title="_001_helloworld/index.php">index.php</abbr>/say/hi/restler3.0</a></dt>
+<dd>
+<p></p>
+
+<pre><code>"Hi restler3.0!"
+</code></pre>
+</dd>
+</dl>
+
+<p>We expect the following behaviour from this example.</p>
+
+<pre><code class="gherkin"><br />@example1 @helloworld
+Feature: Testing Helloworld Example
+
+  Scenario: Saying Hello world
+    When I request "/examples/_001_helloworld/say/hello"
+    Then the response status code should be 200
+    And the response is JSON
+    And the type is "string"
+    And the value equals "Hello world!"
+
+  Scenario: Saying Hello Restler
+    Given that "to" is set to "Restler"
+    When I request "/examples/_001_helloworld/say/hello{?to}"
+    Then the response status code should be 200
+    And the response is JSON
+    And the type is "string"
+    And the value equals "Hello Restler!"
+
+  Scenario: Saying
+    When I request "/examples/_001_helloworld/say"
+    Then the response status code should be 404
+    And the response is JSON
+    And the type is "array"
+
+  Scenario: Saying Hi
+    When I request "/examples/_001_helloworld/say/hi"
+    Then the response status code should be 404
+    And the response is JSON
+    And the type is "array"
+
+  Scenario: Saying Hi Arul
+    Given that "to" is set to "Arul"
+    When I request "/examples/_001_helloworld/say/hi/{to}"
+    Then the response status code should be 200
+    And the response is JSON
+    And the type is "string"
+    And the value equals "Hi Arul!"
+</code></pre>
+
+<p>It can be tested by running the following command on terminal/command line
+from the project root (where the vendor folder resides). Make sure <code>base_url</code>
+in <code>behat.yml</code> is updated according to your web server.</p>
+
+<pre><code class="bash">bin/behat  features/examples/_001_helloworld.feature
 </code></pre>
 
 </article>

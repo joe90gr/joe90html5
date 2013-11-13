@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Multi-format</title>
+<title>Luracast Restler 3 Live Examples:- Routing</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,136 +204,163 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>3</small></div>
-<p><a id="multi-format-x-315xphp----5-3x-316x" class="anchor"></a><h2>Multi-format <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>6</small></div>
+<p><a id="routing-x-427xphp----5-3x-428x" class="anchor"></a><h2>Routing <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>json</tag> <tag>xml</tag></p>
+<p><tag>routing</tag> <tag>get</tag> <tag>post</tag> <tag>put</tag> <tag>delete</tag> <tag>patch</tag></p>
 
-<p>This BMI calculator service shows how you can serve data in different
- formats using Restler. This example uses JsonFormat (default) and XmlFormat.</p>
+<p><a id="two-ways-of-routing" class="anchor"></a><h3>Two ways of Routing</h3></p>
 
-<p>First  format specified in <code>Restler::setSupportedFormats</code> is used as the
- default format when client does not specify the format.</p>
+<p>API Methods can be mapped to URI in two ways</p>
 
-<p>Client can specify the format either using  extension like .json or specify
- the MIME type in HTTP Accept Header.</p>
+<ol>
+<li>Automatic Routing</li>
+<li>Manual Routing</li>
+</ol>
 
-<p>When we make the request from the browser we will get xml when we
- skip the extension because XML is one of the requested formats specified in
- the HTTP Accept Header where as a AJAX request or CURL will return JSON.</p>
+<p><a id="how-automatic-routing-is-done-" class="anchor"></a><h3>How automatic routing is done?</h3></p>
+
+<p><strong>Role of Class Name</strong></p>
+
+<p>When the api class is added without specifying the path prefix, name of the
+class will be used as path prefix</p>
+
+<p><strong>Mapping to HTTP Verbs (GET, POST, PUT, DELETE, PATCH)</strong></p>
+
+<p>Restler uses <em>get, put, post, delete, and patch</em> as prefix to map PHP methods to
+respective HTTP methods. When they are used method names with out any suffix
+they map at the class level similar to <em>index</em></p>
+
+<pre><code>{HTTP_METHOD} class_name
+</code></pre>
+
+<p>GET is the default HTTP method so all public functions without any of
+these prefixes will be mapped to GET request. This means functions
+<em>getResult</em> and <em>result</em> will both be mapped to</p>
+
+<pre><code>GET class_name/result
+</code></pre>
+
+<p>Similarly method <em>postSomething</em> will be mapped to</p>
+
+<pre><code>POST class_name/something
+</code></pre>
+
+<p><strong>Smart Parameter Routing</strong></p>
+
+<p>Starting from Restler 3, smart auto routes are created where optional
+parameters will be mapped to query string, required primitive types will be
+mapped to url path, objects ana array will be mapped to request body.</p>
+
+<p>This helps build as few URIs as possible for the given API method,
+reducing the ambiguity.</p>
+
+<p>If the restler 2 ways of routing is preferred, where all parameters can be sent
+using url path or query string or body, you can use the following code in the
+<abbr title="_006_routing/index.php">index.php</abbr> (gateway)</p>
+
+<pre><code>Defaults::$smartAutoRouting = false;
+</code></pre>
+
+<p>It can also be set at the class level or method level with the following php doc
+comment.</p>
+
+<pre><code>@smart-auto-routing false
+</code></pre>
+
+<p><a id="manual-routing" class="anchor"></a><h3>Manual Routing</h3></p>
+
+<p><strong>Role of Class Name</strong></p>
+
+<p>When you add the api class, use the second, optional parameter to specify the
+url segment to map it to, you may choose to keep it blank to map it to the root</p>
+
+<pre><code>$r-&gt;addAPIClass('MyClass','');
+</code></pre>
+
+<p><a id="rest-of-the-uri" class="anchor"></a><h3>Rest of the URI</h3></p>
+
+<p>rest of the uri can be created manually using php doc comment as shown below or
+else automatically routed for public and protected methods unless they are
+marked with <code>@access private</code>. We can specify as many routes as we want for a
+single method. Comment structure is as shown below</p>
+
+<pre><code>@url {HTTP_METHOD} path_segment_including_url_parameters
+</code></pre>
+
+<p>For example</p>
+
+<pre><code>@url POST custom/path/{var1}/{var2}
+</code></pre>
+
+<p>Take a look at the api class used here and compare it with the routes below to
+understand.</p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_003_multiformat/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="_003_multiformat/BMI.php">BMI.php</abbr>      (api)</li>
+  <li><abbr title="_006_routing/index.php">index.php</abbr>      (gateway)</li>
+  <li><abbr title="_006_routing/Api.php">Api.php</abbr>      (api)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
-  <li><abbr title="../../vendor/Luracast/Restler/Format/XmlFormat.php">XmlFormat.php</abbr>      (format)</li>
   </ul>
 </blockquote>
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET bmi ⇠ BMI::index()
+<pre><code>POST api/method/{param1}           ⇠ Api::postMethod()
+POST api/method2                   ⇠ Api::whatEver()
+POST api/method2/{anything}        ⇠ Api::whatEver()
+GET  api/somanyways                ⇠ Api::soManyWays()
+GET  api/somanyways/{p1}           ⇠ Api::soManyWays()
+GET  api/somanyways/{p1}/{p2}      ⇠ Api::soManyWays()
+GET  api/somanyways/{p1}/{p2}/{p3} ⇠ Api::soManyWays()
+GET  api/what/ever/you/want        ⇠ Api::whatEver()
 </code></pre>
 
 <p>Try the following links in your browser</p>
 
 <dl>
-<dt>GET <a href="index.php/bmi" target="_blank">bmi</a></dt>
+<dt>GET <a href="index.php/api/somanyways/1?p2=something" target="_blank">api/somanyways/1?p2=something</a></dt>
 <dd>
 <p></p>
 
-<pre><code>&lt;?xml version="1.0"?&gt;
-&lt;response&gt;
-  &lt;bmi&gt;31.77&lt;/bmi&gt;
-  &lt;message&gt;Obesity&lt;/message&gt;
-  &lt;metric&gt;
-    &lt;height&gt;162.6 centimeter&lt;/height&gt;
-    &lt;weight&gt;84 kilograms&lt;/weight&gt;
-  &lt;/metric&gt;
-  &lt;imperial&gt;
-    &lt;height&gt;5 feet 4 inches&lt;/height&gt;
-    &lt;weight&gt;185.19 pounds&lt;/weight&gt;
-  &lt;/imperial&gt;
-&lt;/response&gt;
+<pre><code>"you have called Api::soManyWays()"
 </code></pre>
 </dd>
 
-<dt>GET <a href="index.php/bmi.xml" target="_blank">bmi.xml</a></dt>
-<dd><pre><code>&lt;?xml version="1.0"?&gt;
-&lt;response&gt;
-  &lt;bmi&gt;31.77&lt;/bmi&gt;
-  &lt;message&gt;Obesity&lt;/message&gt;
-  &lt;metric&gt;
-    &lt;height&gt;162.6 centimeter&lt;/height&gt;
-    &lt;weight&gt;84 kilograms&lt;/weight&gt;
-  &lt;/metric&gt;
-  &lt;imperial&gt;
-    &lt;height&gt;5 feet 4 inches&lt;/height&gt;
-    &lt;weight&gt;185.19 pounds&lt;/weight&gt;
-  &lt;/imperial&gt;
-&lt;/response&gt;
+<dt>GET <a href="index.php/api/somanyways/1/2" target="_blank">api/somanyways/1/2</a></dt>
+<dd><pre><code>"you have called Api::soManyWays()"
 </code></pre></dd>
 
 <dl>
-<dt>GET <a href="index.php/bmi.json" target="_blank">bmi.json</a></dt>
+<dt>GET <a href="index.php/api/somanyways/1/2/3" target="_blank">api/somanyways/1/2/3</a></dt>
 <dd>
 <p></p>
 
-<pre><code>{
-  "bmi": 31.77,
-  "message": "Obesity",
-  "metric": {
-    "height": "162.6 centimeter",
-    "weight": "84 kilograms"
-  },
-  "imperial": {
-    "height": "5 feet 4 inches",
-    "weight": "185.19 pounds"
+<pre><code>"you have called Api::soManyWays()"
+</code></pre>
+</dd>
+
+<dt>GET <a href="index.php/api/what/ever/you/want" target="_blank">api/what/ever/you/want</a></dt>
+<dd><pre><code>{
+  "error": {
+    "code": 400,
+    "message": "Bad Request: anything is missing."
   }
 }
+</code></pre></dd>
+
+<dl>
+<dt>GET <a href="index.php/api/what/ever/you/want?anything=something" target="_blank">api/what/ever/you/want?anything=something</a></dt>
+<dd>
+<p></p>
+
+<pre><code>"you have called Api::whatEver()"
 </code></pre>
 </dd>
 </dl>
-
-<p>We expect the following behaviour from this example.</p>
-
-<pre><code class="gherkin"><br />@example3 @multiformat
-Feature: Testing Multi-format Example
-
-  Scenario: Default format, when not specified
-    When I request "/examples/_003_multiformat/bmi"
-    Then the response status code should be 200
-    And the response is JSON
-    And the type is "array"
-    And the response has a "bmi" property
-    And the "message" property equals "Obesity"
-
-  Scenario: Use XML format when specified as extension
-    When I request "/examples/_003_multiformat/bmi.xml"
-    Then the response status code should be 200
-    And the response is XML
-    And the type is "array"
-    And the response has a "bmi" property
-    And the "message" property equals "Obesity"
-
-  Scenario: Correct weight and height should yeild 'Normal weight' as result
-    Given that "height" is set to 180
-    And "weight" is set to 80
-    When I request "/examples/_003_multiformat/bmi.xml{?height,weight}"
-    Then the response status code should be 200
-    And the "message" property equals "Normal weight"
-</code></pre>
-
-<p>It can be tested by running the following command on terminal/command line
-from the project root (where the vendor folder resides). Make sure <code>base_url</code>
-in <code>behat.yml</code> is updated according to your web server.</p>
-
-<pre><code class="bash">bin/behat  features/examples/_003_multiformat.feature
-</code></pre>
 
 </article>
 <footer>

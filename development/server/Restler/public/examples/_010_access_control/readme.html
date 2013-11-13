@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Luracast Restler 3 Live Examples:- Documentation</title>
+<title>Luracast Restler 3 Live Examples:- Access Control</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css" />
@@ -103,7 +103,7 @@
     <nav class="floating-menu">
 <ul>
 <li><a title="Restler Home" target="_blank" href="http://luracast.com/products/restler/"><img src="../resources/home.png" width="16" height="16"/> Home</a></li>
-<li><a title="Getting Started with Restler" href="../.."><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
+<li><a title="Getting Started with Restler" href="../../"><img src="../resources/quickstart.png" width="16" height="16"/> Start</a></li>
 <!--<li><a title="Using Restler" href="#">Guide</a></li><li><a title="Restler API Reference" href="#">API</a></li>-->
 <li><a class="active" href="../index.html"><img src="../resources/examples.png" width="16" height="16"/> Examples</a></li>
 <li><a title="Share your knowledge by answering user questions in Stack Overflow." target="_blank" href="http://bit.ly/Restler-QA"><img src="../resources/stackoverflow.png" width="16" height="16"/> Support</a></li>
@@ -204,43 +204,33 @@
 </ul>
     </nav>
     <article id="page">
-<div class="right"><small>8</small></div>
-<p><a id="documentation-x-573xphp----5-3x-574x" class="anchor"></a><h2>Documentation <requires>PHP >= 5.3</requires></h2></p>
+<div class="right"><small>10</small></div>
+<p><a id="access-control-x-670xphp----5-3x-671x" class="anchor"></a><h2>Access Control <requires>PHP >= 5.3</requires></h2></p>
 
-<p><tag>create</tag> <tag>retrieve</tag> <tag>read</tag> <tag>update</tag> <tag>delete</tag> <tag>post</tag> <tag>get</tag> <tag>put</tag> <tag>routing</tag> <tag>doc</tag> <tag>production</tag> <tag>debug</tag></p>
+<p><tag>access-control</tag> <tag>acl</tag> <tag>secure</tag> <tag>authentication</tag> <tag>authorization</tag></p>
 
-<p>How to document and let your users explore your API.
-We have modified SwaggerUI to create 
-<a href="https://github.com/Luracast/Restler-API-Explorer" target="_blank">Restler API Explorer</a>
-which is used <a href="explorer/index.html#!/authors-v1" target="_blank">here</a>.</p>
+<p>This example shows how you can extend the authentication system to create
+a robust access control system. As a added bonus we also restrict api
+documentation based on the same.</p>
 
-<p><a href="explorer/index.html#!/authors-v1" target="_blank"><img src="../resources/explorer1.png" alt="Restler API Explorer" /></a></p>
+<p>When the <code>api_key</code> is</p>
 
-<p>We are progressively improving the Authors class from CRUD example 
-to Rate Limiting Example to show Best Practices and Restler 3 Features.</p>
+<ul>
+<li>blank you will see the public api</li>
+<li><code>12345</code> you will see the api that is accessible by an user</li>
+<li><code>67890</code> you will see all api as you have the admin rights</li>
+</ul>
 
-<p>Make sure you compare them to understand.</p>
-
-<p>Even though API Explorer is created with API consumers in mind, it will help the
-API developer with routing information and commenting assistance when  our API
-class is not fully commented as in this example. This works only on the debug
-mode. Try changing rester to run in production mode (<code>$r = new Restler(true)</code>)</p>
-
-<blockquote>
-  <p><strong>Note:-</strong> production mode writes human readable cache file for the routes in
-  the cache directory by default. So make sure cache folder has necessary
-  write permission.</p>
-</blockquote>
-
-<p>Happy Exploring! :)</p>
+<p>Try it out yourself <a href="explorer/index.html#!/v1" target="_blank">here</a></p>
 
 <blockquote>
   <p>This API Server is made using the following php files/folders</p>
   
   <ul>
-  <li><abbr title="_008_documentation/index.php">index.php</abbr>      (gateway)</li>
-  <li><abbr title="_008_documentation/improved/Authors.php">Authors.php</abbr>      (api)</li>
+  <li><abbr title="_010_access_control/index.php">index.php</abbr>      (gateway)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Resources.php">Resources.php</abbr>      (api)</li>
+  <li><abbr title="_010_access_control/Access.php">Access.php</abbr>      (api)</li>
+  <li><abbr title="_010_access_control/AccessControl.php">AccessControl.php</abbr>      (auth)</li>
   <li><abbr title="../../vendor/restler.php">restler.php</abbr>      (framework)</li>
   <li><abbr title="../../vendor/Luracast/Restler/Format/JsonFormat.php">JsonFormat.php</abbr>      (format)</li>
   </ul>
@@ -248,15 +238,12 @@ mode. Try changing rester to run in production mode (<code>$r = new Restler(true
 
 <p>This API Server exposes the following URIs</p>
 
-<pre><code>GET    authors                   ⇠ improved\Authors::index()
-POST   authors                   ⇠ improved\Authors::post()
-PATCH  authors/{id}              ⇠ improved\Authors::patch()
-DELETE authors/{id}              ⇠ improved\Authors::delete()
-GET    authors/{id}              ⇠ improved\Authors::get()
-PUT    authors/{id}              ⇠ improved\Authors::put()
-GET    resources                 ⇠ Resources::index()
-GET    resources/v{version}      ⇠ Resources::get()
-GET    resources/{id}-v{version} ⇠ Resources::get()
+<pre><code>GET admin                     ⇠ Access::admin()
+GET all                       ⇠ Access::all()
+GET resources                 ⇠ Resources::index()
+GET resources/v{version}      ⇠ Resources::get()
+GET resources/{id}-v{version} ⇠ Resources::get()
+GET user                      ⇠ Access::user()
 </code></pre>
 
 </article>

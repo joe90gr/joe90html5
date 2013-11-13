@@ -5,7 +5,7 @@ define(['backbone',
 
     var TweetList = Backbone.Collection.extend({
         model: Tweet,
-        url:'/api.php/rest',
+        url:'/server/api.php/rest',
 
         addRecord: function(tweet){
             this.create(tweet,{
