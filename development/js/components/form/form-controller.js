@@ -1,8 +1,7 @@
 define(['app-console',
     'marionette',
-    'tweetsController',
     'formView'],
-function(AppConsole, Marionette, TweetController, FormView){
+function(AppConsole, Marionette, FormView){
 
     var FormController = Marionette.Controller.extend({
         initialize: function(obj){
