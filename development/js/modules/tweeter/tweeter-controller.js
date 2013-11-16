@@ -48,6 +48,7 @@ define(['marionette',
                             type: 'text'
                         }
                     ],
+                    'form-class': 'button-panel',
                     'button-title': 'Post Message'
                 }),
 

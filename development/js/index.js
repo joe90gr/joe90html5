@@ -72,7 +72,8 @@ define(['modernizr',
                             type: 'text'
                         }
                     ],
-                    'button-title': 'Show'
+                    'form-class': 'login-form',
+                    'button-title': 'Login'
                 }),
 
                 onSubmitCallback: function(el){

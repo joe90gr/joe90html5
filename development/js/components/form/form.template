@@ -1,4 +1,4 @@
-<form id="new-tweet" class="button-panel" action="#" method="post">
+<form id="new-tweet" class="{{form-class}}" action="#" method="post">
     {{#input}}
         <label>{{title}}</label><input id="{{id}}" name="{{name}}" type="{{type}}" />
     {{/input}}
