@@ -12,7 +12,7 @@ define(['marionette',
             return mustache.render(template,data);
         },
         events: {
-            'submit .button-panel': 'submit'
+            'submit': 'submit'
         },
         initialize: function(fn){
             this.callback = fn.onSubmitCallback;
