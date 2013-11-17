@@ -11,9 +11,7 @@ define(['marionette',
         template: function(data){
             return mustache.render(template,data);
         },
-        events: {
-            'submit': 'submit'
-        },
+        events: { 'submit': 'submit' },
         initialize: function(fn){
             this.callback = fn.onSubmitCallback;
         },

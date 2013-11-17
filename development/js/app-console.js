@@ -13,7 +13,7 @@ define(['backbone',
     AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
 
     AppConsole.prototype.windowResize = function(){
-        var args = arguments;
+       var args = _.toArray(arguments);
         var resize = $(window).on('resize', function(){
             _(args).each(function(i,val){
                 args[val]();
@@ -31,10 +31,9 @@ define(['backbone',
 
     AppConsole.prototype.setConsoleEventHandlers = function(){
         this.requestResponse.setHandlers({
-            'set-login': function(){
-                //clearThisSession()
+            'isloggedIn': function(){
+                return $.cookie('PHPSESSID')? true: false;
             },
-
             'foo': function(){
                 console.log('hey foo');
             },

@@ -13,7 +13,8 @@ define(['modernizr',
         'formModel',
         'formController',
         'testController',
-        'tweeterController'],
+        'tweeterController',
+        'loginController'],
     function ( mod,
                Backbone,
                Marionette,
@@ -26,7 +27,8 @@ define(['modernizr',
                FormModel,
                FormController,
                TestController,
-               TweeterController) {
+               TweeterController,
+               LoginController) {
     'use strict';
     var Console = Marionette.Controller.extend({
         initialize:function(){
@@ -47,53 +49,13 @@ define(['modernizr',
                 AppConsole.twoColumnLayout.content.show(thisLayout);
             });
 
-
-            //set login state
-            //AppConsole.requestResponse.request("set-login");
-
             AppConsole.requestResponse.request("bar");
             AppConsole.requestResponse.request("foo");
 
-            this.formControllera = new FormController({
-                model: new FormModel({
-                    input: [
-                        {
-                            id: 'test-one',
-                            title: 'Test 1',
-                            name: 'test-name',
-                            value: 'test value',
-                            type: 'text'
-                        },
-                        {
-                            id: 'test-two',
-                            title: 'test 2',
-                            name: 'test2 name',
-                            value: 'test value2',
-                            type: 'text'
-                        }
-                    ],
-                    'form-class': 'login-form',
-                    'button-title': 'Login'
-                }),
+            //$.cookie('PHPSESSIDa','trtert')  test
+            console.log(AppConsole.requestResponse.request("isloggedIn"));
 
-                onSubmitCallback: function(el){
-                    var test1 = el.find('#test-one').val();
-                    var test2 = el.find('#test-two').val();
-                    $.ajax({
-                        type: "post",
-                        url: "/server/session.php/ConsoleSession",
-                        data: { username: test1, password: test2 }
-                    }).done(function(msg){
-
-                    });
-                    //AppConsole.requestResponse.request("show-modal", 'Notice','you have entered '+test1+' and '+test2+'');
-                }
-            });
-
-            AppConsole.application.header.show(this.formControllera.formview);
-            setInterval(function(){
-                console.log('cookie test',$.cookie('PHPSESSID'))
-            },1000);
+            var loginController = new LoginController()
 
             //this.modalRepeatedRunTest();
         },
