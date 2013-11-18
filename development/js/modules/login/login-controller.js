@@ -44,11 +44,11 @@ define(['marionette',
                 tagName: 'button',
                 template:'<button>Logout</button>',
                 events: { 'click': 'clickButton' },
-                clickButton: function(){
+                clickButton: function(e){
                     $.ajax({
                         type: "post",
-                        url: "/server/session.php/ConsoleSession",
-                        data: { username: 'random', password: 'logout' },
+                        url: "/server/session.php/logout",
+                        data: { logout: 'iphone' },
                         success: function(){
                             self.checkLoginStatus();
                             console.log('success from button')
@@ -78,7 +78,7 @@ define(['marionette',
                             title: 'Password',
                             name: 'password',
                             value: 'password',
-                            type: 'text'
+                            type: 'password'
                         }
                     ],
                     'form-class': 'login-form',
@@ -92,7 +92,7 @@ define(['marionette',
                     var test2 = el.find('#password').val();
                     $.ajax({
                         type: "post",
-                        url: "/server/session.php/ConsoleSession",
+                        url: "/server/session.php/login",
                         data: { username: test1, password: test2 },
                         success: function(){
                             console.log('success from login')

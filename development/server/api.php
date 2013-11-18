@@ -1,5 +1,6 @@
 <?php
     require_once "Restler/vendor/restler.php";
+    require_once "/utils.php";
     use Luracast\Restler\Restler;
     use Luracast\Restler\Defaults;
     Defaults::$smartAutoRouting = false;
@@ -9,9 +10,13 @@
     $r->handle();
 
     class Rest{
+        function __construct(){
+            $this->dbComms = new DbConnection();
+        }
+
         function post($request_data = null){
             $response = '';
-            $hd = $this->prepMySQLConnection();
+            $hd = $this->dbComms->prepMySQLConnection();
             if(isset($request_data)){
                 $author = $request_data['author'];
                 $status = $request_data['status'];
@@ -30,7 +35,7 @@
         }
 
         function put($id = null, $request_data = null){
-            $hd = $this->prepMySQLConnection();
+            $hd = $this->dbComms->prepMySQLConnection();
             if( isset($id) && isset( $request_data['author'] ) && isset( $request_data['status']) ){
                 $author = $request_data['author'];
                 $status = $request_data['status'];
@@ -45,7 +50,7 @@
         }
 
         function delete($id = null){
-            $hd = $this->prepMySQLConnection();
+            $hd = $this->dbComms->prepMySQLConnection();
             if(isset($id)){
                 $result = $hd->query("DELETE FROM tweets WHERE id = '$id'");
                 $successResponse = array("id"=>"$id");
@@ -61,7 +66,7 @@
         }
 
         function get(){
-            $hd = $this->prepMySQLConnection();
+            $hd = $this->dbComms->prepMySQLConnection();
             if($hd){
                 $res = $hd->query("SELECT * FROM tweets");
                 $app_info = array();
@@ -73,15 +78,6 @@
                 $hd->close();
                 return $app_list;
             }
-        }
-
-        function prepMySQLConnection(){
-            $hd = new mysqli("local-html5.com:3306", "root", "", "rest");
-            if($hd->connect_errno){
-                throw new RestException(500, "hey chum, what are you doing?");
-                $hd = false;
-            }
-            return $hd;
         }
     }
 ?>
