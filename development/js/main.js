@@ -14,7 +14,8 @@ requirejs.config({
         wreqr: "libs/backbone.wreqr",
         mustache: "libs/mustache",
         text: "libs/text",
-        comms: "helpers/comms",
+        router :"utils/router",
+        comms: "utils/comms",
 
         homePage: 'pages/home-page',
 

@@ -1,16 +1,19 @@
 define(['marionette',
     'app-console',
+    'comms',
     'formController',
     'formModel',
     'loginView'],
     function(Marionette,
              AppConsole,
+             Comms,
              FormController,
              FormModel,
              LoginView){
 
     var LoginController = Marionette.Controller.extend({
         initialize: function(){
+            //_.bindAll(this,['checkLoginStatus'])
             this.loginView = new LoginView();
             this.logoutButton = this.setupLogoutButton();
             this.setupForm();
@@ -27,12 +30,14 @@ define(['marionette',
         },
 
         showLoginForm: function(){
+            //TODO: this could be a console triggerLogout method
             this.loginView.el = this.formController.formview.render().el;
             this.formController.formview.delegateEvents();
             AppConsole.application.header.show(this.formController.formview);
         },
 
         showLogoutButton: function(){
+            //TODO: this could be a console triggerLoggedin method
             this.loginView.el = this.logoutButton.render().el
             this.logoutButton.delegateEvents();
             AppConsole.application.header.show(this.logoutButton);
@@ -44,21 +49,21 @@ define(['marionette',
                 tagName: 'button',
                 template:'<button>Logout</button>',
                 events: { 'click': 'clickButton' },
+                initialize: function(){
+                },
                 clickButton: function(e){
-                    $.ajax({
-                        type: "post",
-                        url: "/server/session.php/logout",
-                        data: { logout: 'iphone' },
-                        success: function(){
-                            self.checkLoginStatus();
-                            console.log('success from button')
-                        },
-                        error: function(){
-                            console.log('error from button')
-                        }
-                    }).done(function(msg){})
+                    var url = "/server/session.php/logout";
+                    var data = { logout: 'iphone' };
+                    AppConsole.comms.post(url, data, this.logoutButtonSuccess, this.logoutButtonError);
+                },
+                logoutButtonSuccess: function(){
+                    self.checkLoginStatus();
+                    console.log('success from button');
+                },
+                logoutButtonError: function(){
+                    console.log('error from button');
                 }
-            })
+            });
             return new LogoutButton();
         },
 
@@ -86,25 +91,23 @@ define(['marionette',
                 }),
 
                 onSubmitCallback: function(el){
-                    var self = this;
                     //TODO: noticed that if element ids return undefined. passes the un and pw login. not good.
                     var test1 = el.find('#username').val();
                     var test2 = el.find('#password').val();
-                    $.ajax({
-                        type: "post",
-                        url: "/server/session.php/login",
-                        data: { username: test1, password: test2 },
-                        success: function(){
-                            console.log('success from login')
-                            self.checkLoginStatus();
-                        },
-                        error: function(){
-                            console.log('error from login')
-                        }
-                    }).done(function(msg){});
+                    var url = "/server/session.php/login";
+                    var data = { username: test1, password: test2 };
+                    AppConsole.comms.post(url, data, this.loginSuccess.bind(this), this.loginError.bind(this));
                     //AppConsole.requestResponse.request("show-modal", 'Notice','you have entered '+test1+' and '+test2+'');
                 }.bind(this)
             });
+        },
+
+        loginSuccess: function(){
+            console.log('success from login');
+            this.checkLoginStatus();
+        },
+        loginError: function(){
+            console.log('error from login');
         }
 
     });

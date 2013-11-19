@@ -1,8 +1,10 @@
 define(['backbone',
     'marionette',
+    'comms',
     'twoColumnLayout'],
     function(Backbone,
              Marionette,
+             Comms,
              TwoColumnLayout){
     var AppConsole = function(){
         this.setApplicationRegions();
@@ -11,6 +13,7 @@ define(['backbone',
     AppConsole.prototype.application = new Marionette.Application();
     AppConsole.prototype.requestResponse = new Backbone.Wreqr.RequestResponse();
     AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
+    AppConsole.prototype.comms = new Comms();
 
     AppConsole.prototype.windowResize = function(){
        var args = _.toArray(arguments);
