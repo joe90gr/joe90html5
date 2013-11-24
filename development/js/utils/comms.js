@@ -9,7 +9,7 @@ define(['jquery'], function($){
             success: success,
             error: fail
         }).done(function(msg){
-            console.log('comms has completed this server request');
+            //console.log('comms has completed this server request');
         })
     }
 

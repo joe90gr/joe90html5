@@ -50,7 +50,8 @@ requirejs.config({
         tweeterTemplate: 'modules/tweeter/tweeter.template',
 
         loginController: 'modules/login/login-controller',
-        loginView: 'modules/login/login-view'
+        loginLayout: 'modules/login/login-layout',
+        loginTemplate: 'modules/login/login.template'
     },
     shim: {
         jquery : {

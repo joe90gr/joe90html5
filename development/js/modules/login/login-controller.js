@@ -1,46 +1,50 @@
 define(['marionette',
     'app-console',
-    'comms',
     'formController',
     'formModel',
-    'loginView'],
+    'loginLayout'],
     function(Marionette,
              AppConsole,
-             Comms,
              FormController,
              FormModel,
-             LoginView){
+             LoginLayout){
 
     var LoginController = Marionette.Controller.extend({
-        initialize: function(){
-            //_.bindAll(this,['checkLoginStatus'])
-            this.loginView = new LoginView();
+        initialize: function(fn){
+            this.bindEventListeners();
+            this.loginLayout = new LoginLayout();
+            this.loginLayout.render();
             this.logoutButton = this.setupLogoutButton();
-            this.setupForm();
+            this.loginForm = this.setupForm();
+            fn(this.loginLayout);
             this.checkLoginStatus();
         },
 
+        bindEventListeners: function(){
+            AppConsole.events.on('logged-in logged-out', function(){
+                this.checkLoginStatus();
+            }.bind(this));
+        },
+
         checkLoginStatus: function(){
-            if(!AppConsole.requestResponse.request("isloggedIn")){
-                this.showLoginForm();
+            if(AppConsole.isloggedIn()){
+                this.showLogoutButton();
             }
             else{
-                this.showLogoutButton();
+                this.showLoginForm();
             }
         },
 
         showLoginForm: function(){
             //TODO: this could be a console triggerLogout method
-            this.loginView.el = this.formController.formview.render().el;
-            this.formController.formview.delegateEvents();
-            AppConsole.application.header.show(this.formController.formview);
+            this.loginForm.formview.delegateEvents();
+            this.loginLayout.authModule.show(this.loginForm.formview);
         },
 
         showLogoutButton: function(){
             //TODO: this could be a console triggerLoggedin method
-            this.loginView.el = this.logoutButton.render().el
             this.logoutButton.delegateEvents();
-            AppConsole.application.header.show(this.logoutButton);
+            this.loginLayout.authModule.show(this.logoutButton);
         },
 
         setupLogoutButton: function(){
@@ -49,26 +53,18 @@ define(['marionette',
                 tagName: 'button',
                 template:'<button>Logout</button>',
                 events: { 'click': 'clickButton' },
-                initialize: function(){
-                },
                 clickButton: function(e){
-                    var url = "/server/session.php/logout";
-                    var data = { logout: 'iphone' };
-                    AppConsole.comms.post(url, data, this.logoutButtonSuccess, this.logoutButtonError);
-                },
-                logoutButtonSuccess: function(){
-                    self.checkLoginStatus();
-                    console.log('success from button');
-                },
-                logoutButtonError: function(){
-                    console.log('error from button');
+                    AppConsole.sessionManager().logoutRequest({
+                        logout: 'iphone'
+                    });
+                    //AppConsole.events.trigger('error','an error has occured during logging in')
                 }
             });
             return new LogoutButton();
         },
 
         setupForm: function(){
-            this.formController = new FormController({
+            var formController = new FormController({
                 model: new FormModel({
                     input: [
                         {
@@ -92,22 +88,14 @@ define(['marionette',
 
                 onSubmitCallback: function(el){
                     //TODO: noticed that if element ids return undefined. passes the un and pw login. not good.
-                    var test1 = el.find('#username').val();
-                    var test2 = el.find('#password').val();
-                    var url = "/server/session.php/login";
-                    var data = { username: test1, password: test2 };
-                    AppConsole.comms.post(url, data, this.loginSuccess.bind(this), this.loginError.bind(this));
+                    AppConsole.sessionManager().loginRequest({
+                        username: el.find('#username').val(),
+                        password: el.find('#password').val()
+                    });
                     //AppConsole.requestResponse.request("show-modal", 'Notice','you have entered '+test1+' and '+test2+'');
-                }.bind(this)
+                }
             });
-        },
-
-        loginSuccess: function(){
-            console.log('success from login');
-            this.checkLoginStatus();
-        },
-        loginError: function(){
-            console.log('error from login');
+            return formController
         }
 
     });

@@ -14,6 +14,11 @@ define(['backbone',
     AppConsole.prototype.requestResponse = new Backbone.Wreqr.RequestResponse();
     AppConsole.prototype.twoColumnLayout = new TwoColumnLayout();
     AppConsole.prototype.comms = new Comms();
+    AppConsole.prototype.events = {};
+
+    AppConsole.prototype.isloggedIn = function(){
+        return $.cookie('PHPSESSID')? true: false;
+    }
 
     AppConsole.prototype.windowResize = function(){
        var args = _.toArray(arguments);
@@ -33,10 +38,10 @@ define(['backbone',
     };
 
     AppConsole.prototype.setConsoleEventHandlers = function(){
+
+        _.extend(this.events, Backbone.Events);
+
         this.requestResponse.setHandlers({
-            'isloggedIn': function(){
-                return $.cookie('PHPSESSID')? true: false;
-            },
             'foo': function(){
                 console.log('hey foo');
             },
@@ -49,6 +54,42 @@ define(['backbone',
             this.requestResponse.request("on-window-resize");
         }.bind(this));
 
+        this.events.on('error',function(msg){
+            console.log(msg)
+        });
+        this.events.on('logged-out',function(){
+            console.log('just triggered logged out')
+        });
+        this.events.on('logged-in',function(){
+            console.log('just triggered logged in')
+        });
+    };
+
+    AppConsole.prototype.sessionManager = function(){
+        var self = this;
+
+        return {
+            loginRequest: function(data,fn1,fn2){
+                var url = "/server/session.php/login";
+                self.comms.post(url, data, this.loginSuccess, this.loginError);
+            },
+            logoutRequest:function(data){
+                var url = "/server/session.php/logout";
+                self.comms.post(url, data, this.logoutSuccess, this.loginError);
+            },
+            loginSuccess: function(msg){
+                self.events.trigger('logged-in');
+                console.log(msg);
+            },
+            logoutSuccess: function(msg){
+                self.events.trigger('logged-out');
+                console.log(msg);
+            },
+            loginError: function(msg){
+                //TODO: try to get the origin of the error and then do something.
+                //console.log(msg);
+            }
+        }
     };
 
     return new AppConsole();

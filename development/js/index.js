@@ -53,9 +53,10 @@ define(['modernizr',
             AppConsole.requestResponse.request("foo");
 
             //$.cookie('PHPSESSIDa','trtert')  test
-            console.log(AppConsole.requestResponse.request("isloggedIn"));
 
-            var loginController = new LoginController()
+            var loginController = new LoginController(function(thisView){
+                AppConsole.application.header.show(thisView);
+            });
 
             //this.modalRepeatedRunTest();
         },
