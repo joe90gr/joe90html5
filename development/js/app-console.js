@@ -18,7 +18,7 @@ define(['backbone',
 
     AppConsole.prototype.isloggedIn = function(){
         return $.cookie('PHPSESSID')? true: false;
-    }
+    };
 
     AppConsole.prototype.windowResize = function(){
        var args = _.toArray(arguments);
@@ -38,7 +38,7 @@ define(['backbone',
     };
 
     AppConsole.prototype.setConsoleEventHandlers = function(){
-
+        var self = this;
         _.extend(this.events, Backbone.Events);
 
         this.requestResponse.setHandlers({
@@ -51,17 +51,17 @@ define(['backbone',
         });
 
         this.windowResize(function(){
-            this.requestResponse.request("on-window-resize");
+            self.events.trigger("on-window-resize");
         }.bind(this));
 
         this.events.on('error',function(msg){
-            console.log(msg)
+            console.log(msg);
         });
         this.events.on('logged-out',function(){
-            console.log('just triggered logged out')
+            console.log('just triggered logged out');
         });
         this.events.on('logged-in',function(){
-            console.log('just triggered logged in')
+            console.log('just triggered logged in');
         });
     };
 
@@ -89,7 +89,7 @@ define(['backbone',
                 //TODO: try to get the origin of the error and then do something.
                 //console.log(msg);
             }
-        }
+        };
     };
 
     return new AppConsole();

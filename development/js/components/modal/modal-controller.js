@@ -22,12 +22,7 @@ define(['marionette',
 
                 "dismiss-modal": function(){
                     this.modalview.closeModal();
-                }.bind(this),
-
-                "on-window-resize": function(){
-                    this.modalview.refresh();
                 }.bind(this)
-
             });
         }
     });
