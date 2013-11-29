@@ -71,11 +71,12 @@ define(['backbone',
         return {
             loginRequest: function(data,fn1,fn2){
                 var url = "/server/session.php/login";
-                self.comms.post(url, data, this.loginSuccess, this.loginError);
+                self.comms.post(url, data).then(this.loginSuccess, this.loginError);
+                console.log('promise false')
             },
             logoutRequest:function(data){
                 var url = "/server/session.php/logout";
-                self.comms.post(url, data, this.logoutSuccess, this.loginError);
+                self.comms.post(url, data).then(this.logoutSuccess, this.loginError);
             },
             loginSuccess: function(msg){
                 self.events.trigger('logged-in');
