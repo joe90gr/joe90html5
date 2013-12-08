@@ -1,5 +1,5 @@
 define(['backbone','app-console'],function(Backbone, AppConsole){
-    var router = Backbone.Router.extend({
+    return Backbone.Router.extend({
         initialize: function(){},
         routes: {
             '': 'home',
@@ -16,5 +16,5 @@ define(['backbone','app-console'],function(Backbone, AppConsole){
             console.log('the id is',id);
         }
     });
-    return router;
+
 });

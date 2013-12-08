@@ -14,7 +14,7 @@ define(['marionette',
             this.bindEventListeners();
             this.loginLayout = new LoginLayout();
             this.loginLayout.render();
-            this.logoutButton = this.setupLogoutButton();
+            this.logoutButton = new this.setupLogoutButton();
             this.loginForm = this.setupForm();
             fn(this.loginLayout);
             this.checkLoginStatus();
@@ -47,21 +47,17 @@ define(['marionette',
             this.loginLayout.authModule.show(this.logoutButton);
         },
 
-        setupLogoutButton: function(){
-            var self = this;
-            var LogoutButton = Marionette.ItemView.extend({
-                tagName: 'button',
-                template:'<button>Logout</button>',
-                events: { 'click': 'clickButton' },
-                clickButton: function(e){
-                    AppConsole.sessionManager().logoutRequest({
-                        logout: 'iphone'
-                    });
-                    //AppConsole.events.trigger('error','an error has occured during logging in')
-                }
-            });
-            return new LogoutButton();
-        },
+        setupLogoutButton: Marionette.ItemView.extend({
+            tagName: 'button',
+            template:'<button>Logout</button>',
+            events: { 'click': 'clickButton' },
+            clickButton: function(e){
+                AppConsole.sessionManager().logoutRequest({
+                    logout: 'iphone'
+                });
+                //AppConsole.events.trigger('error','an error has occured during logging in')
+            }
+        }),
 
         setupForm: function(){
             var formController = new FormController({
