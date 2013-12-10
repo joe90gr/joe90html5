@@ -56,17 +56,18 @@ define(['backbone',
                 self.events.trigger("on-window-resize");
             }.bind(this));
 
-            this.events.on('error',function(msg){
+            this.events.listenTo(this.events, 'error',function(msg){
                 console.log(msg);
             });
 
-            this.events.on('logged-out',function(){
+            this.events.listenTo(this.events, 'logged-in',function(msg){
+                console.log('just triggered logged in');
+            });
+
+            this.events.listenTo(this.events, 'logged-out',function(){
                 console.log('just triggered logged out');
             });
 
-            this.events.on('logged-in',function(){
-                console.log('just triggered logged in');
-            });
         },
 
         sessionManager: function(){
