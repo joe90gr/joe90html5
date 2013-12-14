@@ -45,18 +45,21 @@ define(['modernizr',
                 AppConsole.twoColumnLayout.side.show(thisView);
             });
 
-            this.tweeterController = new TweeterController(function(thisLayout){
-                AppConsole.twoColumnLayout.content.show(thisLayout);
-            });
+            this.tweeterController = new TweeterController(AppConsole.twoColumnLayout.content);
+            this.tweeterController.showTweeterModule();
+//            var self=this;
+//            setTimeout(function(){
+//                self.tweeterController.closeTweeterModule();
+//                setTimeout(function(){
+//                    self.tweeterController.showTweeterModule();
+//                },500)
+//            },500);
 
-            AppConsole.requestResponse.request("bar");
-            AppConsole.requestResponse.request("foo");
 
             //$.cookie('PHPSESSIDa','trtert')  test
 
-            var loginController = new LoginController(function(thisView){
-                AppConsole.application.header.show(thisView);
-            });
+            var loginController = new LoginController(AppConsole.application.header);
+            loginController.showLoginModule();
 
             //this.modalRepeatedRunTest();
         },

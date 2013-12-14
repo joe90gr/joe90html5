@@ -14,23 +14,31 @@ define(['marionette',
              TweeterLayout){
     var TweeterController = Marionette.Controller.extend({
 
-        initialize: function(fn){
+        initialize: function(region){
+            this.registeredRegion = region;
             this.tweeterLayout = new TweeterLayout();
-
-            fn(this.tweeterLayout);
 
             this.tweetController = new TweetController();
             this.tweetView = this.tweetController.getTweetView();
             this.tweetCollection = this.tweetController.getTweetCollection();
 
-            this.setUpForm();
+            this.formController = this.setUpForm();
+        },
 
+        showTweeterModule: function(){
+            this.registeredRegion.show(this.tweeterLayout);
             this.tweeterLayout.head.show(this.formController.formview);
             this.tweeterLayout.subcontent.show(this.tweetView);
         },
 
+        closeTweeterModule: function(){
+            this.tweeterLayout.head.close();
+            this.tweeterLayout.subcontent.close();
+            this.registeredRegion.close();
+        },
+
         setUpForm: function(){
-            this.formController = new FormController({
+            return new FormController({
                 model: new FormModel({
                     input: [
                         {

@@ -43,15 +43,6 @@ define(['backbone',
             var self = this;
             _.extend(this.events, Backbone.Events);
 
-            this.requestResponse.setHandlers({
-                'foo': function(){
-                    console.log('hey foo');
-                },
-                'bar': function(){
-                    console.log('hey bar');
-                }
-            });
-
             this.windowResize(function(){
                 self.events.trigger("on-window-resize");
             }.bind(this));

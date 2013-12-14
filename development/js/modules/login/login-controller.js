@@ -10,14 +10,23 @@ define(['marionette',
              LoginLayout){
 
     var LoginController = Marionette.Controller.extend({
-        initialize: function(fn){
+        initialize: function(region){
             this.bindEventListeners();
             this.loginLayout = new LoginLayout();
             this.loginLayout.render();
             this.logoutButton = new this.setupLogoutButton();
             this.loginForm = this.setupForm();
-            fn(this.loginLayout);
+            this.registeredRegion = region;
+        },
+        registerRegion: function(region){
+            this.registeredRegion = region;
+        },
+        showLoginModule: function(){
+            this.registeredRegion.show(this.loginLayout);
             this.checkLoginStatus();
+        },
+        closeLoginModule: function(){
+            this.registeredRegion.close();
         },
 
         bindEventListeners: function(){
