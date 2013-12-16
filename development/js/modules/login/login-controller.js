@@ -11,21 +11,25 @@ define(['marionette',
 
     var LoginController = Marionette.Controller.extend({
         initialize: function(region){
-            this.bindEventListeners();
+            this.registerRegion(region);
             this.loginLayout = new LoginLayout();
             this.loginLayout.render();
             this.logoutButton = new this.setupLogoutButton();
             this.loginForm = this.setupForm();
-            this.registeredRegion = region;
         },
+
         registerRegion: function(region){
             this.registeredRegion = region;
         },
-        showLoginModule: function(){
+
+        showModule: function(){
             this.registeredRegion.show(this.loginLayout);
+            this.bindEventListeners();
             this.checkLoginStatus();
         },
+
         closeLoginModule: function(){
+            this.stopEventListeners()
             this.registeredRegion.close();
         },
 
@@ -33,6 +37,10 @@ define(['marionette',
             AppConsole.events.on('logged-in logged-out', function(){
                 this.checkLoginStatus();
             }.bind(this));
+        },
+
+        stopEventListeners: function(){
+            AppConsole.events.off('logged-in logged-out');
         },
 
         checkLoginStatus: function(){

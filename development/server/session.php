@@ -37,6 +37,8 @@
                     session_start();
                     $_SESSION["userID"] = $this->userID;
                     $_SESSION["username"] = $this->username;
+                    $json = '{"userID": "'.$this->userID.'", "username":"'.$this->username.'" }';
+                    setcookie('userinfo', $json, 0, '/');
                     return $_SESSION;
                 }
                 return array('message' => "password is incorrect");
@@ -58,6 +60,7 @@
                 session_unset();
                 $params = session_get_cookie_params();
                 setcookie(session_name(), '', 0, $params["path"], $params["domain"], $params["secure"], isset($params["httponly"]));
+                setcookie('userinfo', '', 0, '/');
                 session_destroy();
             }
         }

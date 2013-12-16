@@ -59,7 +59,9 @@ define(['modernizr',
             //$.cookie('PHPSESSIDa','trtert')  test
 
             var loginController = new LoginController(AppConsole.application.header);
-            loginController.showLoginModule();
+            loginController.showModule();
+
+            //loginController.stopEventListeners();
 
             //this.modalRepeatedRunTest();
         },

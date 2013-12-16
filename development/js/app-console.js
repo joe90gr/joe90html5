@@ -1,11 +1,10 @@
-define(['backbone',
+define(['jquery',
+    'backbone',
     'marionette',
+    'jqueryCookie',
     'comms',
     'twoColumnLayout'],
-    function(Backbone,
-             Marionette,
-             Comms,
-             TwoColumnLayout){
+    function($, Backbone, Marionette, JqueryCookie, Comms, TwoColumnLayout){
 
     var AppConsole = function(){
         this.setApplicationRegions();
@@ -64,30 +63,39 @@ define(['backbone',
         sessionManager: function(){
             var self = this;
 
+            function loginSuccess(msg){
+                self.events.trigger('logged-in');
+                console.log(msg);
+            }
+
+            function logoutSuccess(msg){
+                self.events.trigger('logged-out');
+                console.log(msg);
+            }
+
+            function loginError(msg){
+                //TODO: try to get the origin of the error and then do something.
+                //console.log(msg);
+            };
+
             return {
                 loginRequest: function(data,fn1,fn2){
                     var url = "/server/session.php/login";
-                    self.comms.post(url, data).then(this.loginSuccess, this.loginError);
+                    self.comms.post(url, data).then(loginSuccess, loginError);
                     console.log('promise false');
                 },
                 logoutRequest:function(data){
                     var url = "/server/session.php/logout";
-                    self.comms.post(url, data).then(this.logoutSuccess, this.loginError);
-                },
-                loginSuccess: function(msg){
-                    self.events.trigger('logged-in');
-                    console.log(msg);
-                },
-                logoutSuccess: function(msg){
-                    self.events.trigger('logged-out');
-                    console.log(msg);
-                },
-                loginError: function(msg){
-                    //TODO: try to get the origin of the error and then do something.
-                    //console.log(msg);
+                    self.comms.post(url, data).then(logoutSuccess, loginError);
                 }
             };
+        },
+
+        userData: function(){
+            var userInfo = $.cookie('userinfo');
+            return JSON.parse(userInfo ? userInfo : '{}')
         }
+
     };
 
     return new AppConsole();

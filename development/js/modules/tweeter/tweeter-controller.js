@@ -15,7 +15,7 @@ define(['marionette',
     var TweeterController = Marionette.Controller.extend({
 
         initialize: function(region){
-            this.registeredRegion = region;
+            this.registerRegion(region);
             this.tweeterLayout = new TweeterLayout();
 
             this.tweetController = new TweetController();
@@ -23,6 +23,10 @@ define(['marionette',
             this.tweetCollection = this.tweetController.getTweetCollection();
 
             this.formController = this.setUpForm();
+        },
+
+        registerRegion: function(region){
+            this.registeredRegion = region;
         },
 
         showTweeterModule: function(){
