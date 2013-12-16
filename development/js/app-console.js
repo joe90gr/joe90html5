@@ -76,7 +76,7 @@ define(['jquery',
             function loginError(msg){
                 //TODO: try to get the origin of the error and then do something.
                 //console.log(msg);
-            };
+            }
 
             return {
                 loginRequest: function(data,fn1,fn2){
@@ -93,7 +93,7 @@ define(['jquery',
 
         userData: function(){
             var userInfo = $.cookie('userinfo');
-            return JSON.parse(userInfo ? userInfo : '{}')
+            return JSON.parse(userInfo ? userInfo : '{}');
         }
 
     };
