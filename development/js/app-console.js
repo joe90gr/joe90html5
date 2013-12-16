@@ -46,15 +46,15 @@ define(['jquery',
                 self.events.trigger("on-window-resize");
             }.bind(this));
 
-            this.events.listenTo(this.events, 'error',function(msg){
+            this.events.on('error',function(msg){
                 console.log(msg);
             });
 
-            this.events.listenTo(this.events, 'logged-in',function(msg){
-                console.log('just triggered logged in');
+            this.events.on('logged-in',function(msg){
+                console.log('just triggered logged in',msg);
             });
 
-            this.events.listenTo(this.events, 'logged-out',function(){
+            this.events.on('logged-out',function(){
                 console.log('just triggered logged out');
             });
 
@@ -64,13 +64,11 @@ define(['jquery',
             var self = this;
 
             function loginSuccess(msg){
-                self.events.trigger('logged-in');
-                console.log(msg);
+                self.events.trigger('logged-in', self.userData());
             }
 
             function logoutSuccess(msg){
                 self.events.trigger('logged-out');
-                console.log(msg);
             }
 
             function loginError(msg){
@@ -79,10 +77,11 @@ define(['jquery',
             }
 
             return {
-                loginRequest: function(data,fn1,fn2){
+                sessionId: $.cookie('PHPSESSID'),
+
+                loginRequest: function(data){
                     var url = "/server/session.php/login";
                     self.comms.post(url, data).then(loginSuccess, loginError);
-                    console.log('promise false');
                 },
                 logoutRequest:function(data){
                     var url = "/server/session.php/logout";

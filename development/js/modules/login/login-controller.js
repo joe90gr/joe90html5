@@ -34,13 +34,14 @@ define(['marionette',
         },
 
         bindEventListeners: function(){
-            AppConsole.events.on('logged-in logged-out', function(){
+            AppConsole.events.listenTo(AppConsole.events,'logged-in logged-out', function(msg){
+                console.log('added use r objext in login',msg);
                 this.checkLoginStatus();
             }.bind(this));
         },
 
         stopEventListeners: function(){
-            AppConsole.events.off('logged-in logged-out');
+            AppConsole.events.stopListening(AppConsole.events,'logged-in logged-out');
         },
 
         checkLoginStatus: function(){
@@ -70,7 +71,7 @@ define(['marionette',
             events: { 'click': 'clickButton' },
             clickButton: function(e){
                 AppConsole.sessionManager().logoutRequest({
-                    logout: 'iphone'
+                    logout: AppConsole.sessionManager().sessionId
                 });
                 //AppConsole.events.trigger('error','an error has occured during logging in')
             }

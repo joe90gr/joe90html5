@@ -54,9 +54,9 @@
 
     class logout {
         function post($request_data = null){
-            if($request_data["logout"] == "iphone"){
+            session_start();
+            if($request_data["logout"] == session_id()){
                 $_SESSION = [];
-                session_start();
                 session_unset();
                 $params = session_get_cookie_params();
                 setcookie(session_name(), '', 0, $params["path"], $params["domain"], $params["secure"], isset($params["httponly"]));
