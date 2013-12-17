@@ -10,7 +10,6 @@ define(['marionette', 'mustache', 'text!loginTemplate'],
              authModule: '.login-module'
         },
         initialize: function(){
-            console.log('testing login view');
         }
 
     });

@@ -35,7 +35,6 @@ define(['marionette',
 
         bindEventListeners: function(){
             AppConsole.events.listenTo(AppConsole.events,'logged-in logged-out', function(msg){
-                console.log('added use r objext in login',msg);
                 this.checkLoginStatus();
             }.bind(this));
         },
