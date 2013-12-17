@@ -39,29 +39,25 @@ define(['modernizr',
 
             AppConsole.application.content.show(AppConsole.twoColumnLayout);
 
-            this.modal = new ModalController();
+            var modal = new ModalController();
 
-            this.testController = new TestController(function(thisView){
+            var testController = new TestController(function(thisView){
                 AppConsole.twoColumnLayout.side.show(thisView);
             });
 
-            this.tweeterController = new TweeterController(AppConsole.twoColumnLayout.content);
-            this.tweeterController.showTweeterModule();
-//            var self=this;
+            var tweeterController = new TweeterController(AppConsole.twoColumnLayout.content);
+            tweeterController.showModule();
+
 //            setTimeout(function(){
-//                self.tweeterController.closeTweeterModule();
+//                tweeterController.closeModule();
 //                setTimeout(function(){
-//                    self.tweeterController.showTweeterModule();
-//                },500)
-//            },500);
+//                    tweeterController.showModule(AppConsole.twoColumnLayout.side);
+//                },1000)
+//            },1000);
 
-
-            //$.cookie('PHPSESSIDa','trtert')  test
 
             var loginController = new LoginController(AppConsole.application.header);
             loginController.showModule();
-
-            //loginController.stopEventListeners();
 
             //this.modalRepeatedRunTest();
         },

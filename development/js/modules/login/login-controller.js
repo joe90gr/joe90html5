@@ -22,14 +22,20 @@ define(['marionette',
             this.registeredRegion = region;
         },
 
-        showModule: function(){
-            this.registeredRegion.show(this.loginLayout);
+        showModule: function(region){
+            if(region){
+                region.show((this.loginLayout))
+            }
+            else{
+                this.registeredRegion.show(this.loginLayout);
+            }
+
             this.bindEventListeners();
             this.checkLoginStatus();
         },
 
-        closeLoginModule: function(){
-            this.stopEventListeners()
+        closeModule: function(){
+            this.stopEventListeners();
             this.registeredRegion.close();
         },
 
@@ -54,12 +60,14 @@ define(['marionette',
 
         showLoginForm: function(){
             //TODO: this could be a console triggerLogout method
+            //TODO: reconsider show and close since really we need show hide
             this.loginForm.formview.delegateEvents();
             this.loginLayout.authModule.show(this.loginForm.formview);
         },
 
         showLogoutButton: function(){
             //TODO: this could be a console triggerLoggedin method
+            //TODO: reconsider show and close since really we need show hide
             this.logoutButton.delegateEvents();
             this.loginLayout.authModule.show(this.logoutButton);
         },

@@ -19,8 +19,8 @@ define(['marionette',
             this.tweeterLayout = new TweeterLayout();
 
             this.tweetController = new TweetController();
-            this.tweetView = this.tweetController.getTweetView();
-            this.tweetCollection = this.tweetController.getTweetCollection();
+            this.tweetView = this.tweetController.getView();
+            this.tweetCollection = this.tweetController.getCollection();
 
             this.formController = this.setUpForm();
         },
@@ -29,13 +29,18 @@ define(['marionette',
             this.registeredRegion = region;
         },
 
-        showTweeterModule: function(){
-            this.registeredRegion.show(this.tweeterLayout);
+        showModule: function(region){
+            if(region){
+                region.show(this.tweeterLayout);
+            }
+            else{
+                this.registeredRegion.show(this.tweeterLayout);
+            }
             this.tweeterLayout.head.show(this.formController.formview);
             this.tweeterLayout.subcontent.show(this.tweetView);
         },
 
-        closeTweeterModule: function(){
+        closeModule: function(){
             this.tweeterLayout.head.close();
             this.tweeterLayout.subcontent.close();
             this.registeredRegion.close();
