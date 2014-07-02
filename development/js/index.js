@@ -14,7 +14,8 @@ define(['modernizr',
         'formController',
         'testController',
         'tweeterController',
-        'loginController'],
+        'loginController',
+        'utils/deleteme'],
     function ( mod,
                Backbone,
                Marionette,
@@ -28,7 +29,8 @@ define(['modernizr',
                FormController,
                TestController,
                TweeterController,
-               LoginController) {
+               LoginController,
+               DeleteMe) {
     'use strict';
     var Console = Marionette.Controller.extend({
         initialize:function(){
@@ -58,7 +60,9 @@ define(['modernizr',
 
             var loginController = new LoginController(AppConsole.application.header);
             loginController.showModule();
-
+            var deleteme = new DeleteMe(AppConsole.events);
+            deleteme.init();
+            AppConsole.events.trigger('testfire');
             //this.modalRepeatedRunTest();
         },
 

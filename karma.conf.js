@@ -13,9 +13,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         {pattern: 'development/js/**/*.js', included: false},
+        {pattern: 'development/js/**/*.template', included: false},
         //{pattern: 'development/js/libs/*.js', included: false},
         //'test/*Spec.js' // same as {pattern: 'test/*Spec.js', included: true},
-        {pattern: 'test/components/**/*Spec.js', included: false},
+        {pattern: 'test/*/**/*Spec.js', included: false},
+       // {pattern: 'test/utils/**/*Spec.js', included: false},
         'test/test-main.js'
     ],
 
@@ -28,7 +30,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress'],
+    reporters: ['progress', 'junit'],
 
 
     // web server port
