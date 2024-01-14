@@ -1,6 +1,6 @@
 .idea
 .sass-cache
-bower_components/
-node_modules/
-production/
+bower_components
+node_modules
+production
 HTML5.iml
